@@ -227,7 +227,7 @@ public class Movement : MonoBehaviour
                 {
                     rolling = true;
                     anim.SetBool("Running", true);
-                    rollingTimer = 0.25f; //0.3f
+                    rollingTimer = 0.75f; //0.3f
                 }
 
                 anim.SetBool("Moving", true);
