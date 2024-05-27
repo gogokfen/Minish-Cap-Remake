@@ -27,6 +27,8 @@ public class Movement : MonoBehaviour
     float invulTimer;
     [SerializeField] Material linkMat; //for blinking effect
 
+    public static bool mud = false;
+
     //[SerializeField] TextMeshPro linkHp;
 
     [SerializeField] GameObject sword;
@@ -116,12 +118,12 @@ public class Movement : MonoBehaviour
             invulTimer -= Time.deltaTime;
 
             //linkMat.SetColor("_BaseColor", Color.yellow);
-            linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
+            //linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
 
             if (invulTimer<=0)
             {
                 invul = false;
-                linkMat.SetColor("_EmissionColor", Color.black);
+                //linkMat.SetColor("_EmissionColor", Color.black);
                 //linkMat.SetColor("_BaseColor", Color.white);
             }
         }
@@ -184,19 +186,29 @@ public class Movement : MonoBehaviour
             }
         }
 
+
+        if (mud)
+        {
+            moveSpeed = originalSpeed * 0.6f;
+        }
+        else if (shieldUp)
+        {
+            moveSpeed = originalSpeed * 0.75f; //6
+        }
+        else
+        {
+            moveSpeed = originalSpeed;
+        }
+
         if (Input.GetMouseButton(1) && !rolling && !busy) //shield
         {
             shield.SetActive(true);
             shieldUp = true;
-            moveSpeed = originalSpeed*0.75f; //6
-
-
         }
         else
         {
             shield.SetActive(false);
             shieldUp = false;
-            moveSpeed = originalSpeed;
         }
 
         if (rolling)
@@ -207,7 +219,7 @@ public class Movement : MonoBehaviour
             if (rollingTimer <= 0)
             {
                 rolling = false;
-                anim.SetBool("Running", false);
+                anim.SetBool("Rolling", false);
                 rollingCooldown = 0.10f;
             }
                 
@@ -226,8 +238,8 @@ public class Movement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0)
                 {
                     rolling = true;
-                    anim.SetBool("Running", true);
-                    rollingTimer = 0.75f; //0.3f
+                    anim.SetBool("Rolling", true);
+                    rollingTimer = 0.75f; //0.3f //original was 0.25f
                 }
 
                 anim.SetBool("Moving", true);
