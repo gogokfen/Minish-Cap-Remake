@@ -171,22 +171,22 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0)
+        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0 && !shieldUp)
         {
             swordSwing = true;
             swordTimer = 0; 
-            Stun(0.2f);
+            Stun(0.7f);
             sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             originalRot = transform.eulerAngles;
-            anim.SetTrigger("SwordSwing");
+            anim.Play("Attack");
         }
 
         if (swordSwing)
         {
             swordTimer += (Time.deltaTime * 5);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
-            sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
+            //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
 
             if (swordTimer >= 1)
             {
@@ -210,17 +210,21 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (Input.GetMouseButton(1) && !rolling && !busy && !potUp) //shield
+        if (Input.GetMouseButtonDown(1) && !rolling && !busy && !potUp) //shield
         {
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+
+            Debug.Log("Shield up!");
             shieldUp = true;
+            anim.Play("Block Start Anim");
             anim.SetBool("ShieldUp",true);
         }
-        else
+        if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
         {
             //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shieldUp = false;
             anim.SetBool("ShieldUp", false);
+
         }
 
         if (rolling)
@@ -250,6 +254,7 @@ public class Movement : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
                     rolling = true;
+                    anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
                     rollingTimer = 0.75f; //0.3f //original was 0.25f
                 }
