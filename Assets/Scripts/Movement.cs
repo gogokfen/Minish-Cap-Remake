@@ -72,6 +72,13 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (busy || rolling)
+        {
+            sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+        }
+
+
         if (backwardCheck.immoveable)
         {
             cantPull = true;
@@ -167,24 +174,25 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0)
         {
             swordSwing = true;
-            swordTimer = 0;
+            swordTimer = 0; 
             Stun(0.2f);
-            sword.SetActive(true);
+            sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             originalRot = transform.eulerAngles;
+            anim.SetTrigger("SwordSwing");
         }
 
         if (swordSwing)
         {
             swordTimer += (Time.deltaTime * 5);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
-            sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer);
+            sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
 
             if (swordTimer >= 1)
             {
                 swordSwing = false;
                 swordTimer = 0;
-                sword.SetActive(false);
+                //sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             }
         }
 
@@ -204,13 +212,15 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButton(1) && !rolling && !busy && !potUp) //shield
         {
-            shield.SetActive(true);
+            shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shieldUp = true;
+            anim.SetBool("ShieldUp",true);
         }
         else
         {
-            shield.SetActive(false);
+            //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shieldUp = false;
+            anim.SetBool("ShieldUp", false);
         }
 
         if (rolling)
