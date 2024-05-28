@@ -39,6 +39,8 @@ public class Movement : MonoBehaviour
     public static bool shieldUp;
     public static bool enemyShielded;
 
+    public static bool potUp;
+
     //Transform originalTrans;
     Vector3 originalRot;
 
@@ -162,7 +164,7 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !rolling && !busy && gotHitTimer<0)
+        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0)
         {
             swordSwing = true;
             swordTimer = 0;
@@ -200,7 +202,7 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (Input.GetMouseButton(1) && !rolling && !busy) //shield
+        if (Input.GetMouseButton(1) && !rolling && !busy && !potUp) //shield
         {
             shield.SetActive(true);
             shieldUp = true;
@@ -235,7 +237,7 @@ public class Movement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S ) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0)
+                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
                     rolling = true;
                     anim.SetBool("Rolling", true);

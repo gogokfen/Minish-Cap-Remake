@@ -12,7 +12,7 @@ public class Pillar : MonoBehaviour
     [SerializeField] Zone E;
     [SerializeField] Zone W;
 
-    [SerializeField] int pushAmount;
+    [SerializeField] float pushAmount;
 
     //[SerializeField] TextMeshProUGUI moveText;
     [SerializeField] GameObject moveText;
@@ -49,52 +49,52 @@ public class Pillar : MonoBehaviour
         {
             animationTime += Time.deltaTime;
 
-            Movement.Stun(1);
+            Movement.Stun(0.5f);
 
             if (n)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - pushAmount), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount/2)), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z - (pushAmount / 2)), animationTime*2);
             }
             if (s)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + pushAmount), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount/2)), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z + (pushAmount / 2)), animationTime*2);
             }
             if (e)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x-pushAmount, originalPos.y, originalPos.z), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x-(pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x - (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
             }
             if (w)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x+pushAmount, originalPos.y, originalPos.z), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x+(pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x + (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
             }
 
             if (nR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - pushAmount), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z -pushAmount*2), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount/2)), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z - (pushAmount / 2)), animationTime*2);
             }
             if (sR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + pushAmount), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x, playerOriginalPos.y, originalPos.z+pushAmount*2), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount/2)), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z+(pushAmount/2)), animationTime*2);
 
             }
             if (eR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x - pushAmount, originalPos.y, originalPos.z), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x -pushAmount*2, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x - (pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x - (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
             }
             if (wR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x + pushAmount, originalPos.y, originalPos.z), animationTime);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(originalPos.x +pushAmount*2, playerOriginalPos.y, originalPos.z), animationTime);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x + (pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x + (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
             }
 
-            if (animationTime>=1)
+            if (animationTime>=0.5)
             {
                 animationTime = 0;
 
@@ -136,12 +136,12 @@ public class Pillar : MonoBehaviour
                     playerOriginalPos = Movement.playerPosition;
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
-                        if (Input.GetKeyDown(KeyCode.W) && !S.immoveable)
+                        if (Input.GetKey(KeyCode.W) && !S.immoveable)
                         {
                             busy = true;
                             n = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.S) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
                         {
                             busy = true;
                             sR = true;
@@ -150,12 +150,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                     {
-                        if (Input.GetKeyDown(KeyCode.S) && !S.immoveable)
+                        if (Input.GetKey(KeyCode.S) && !S.immoveable)
                         {
                             busy = true;
                             n = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.W) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
                         {
                             busy = true;
                             sR = true;
@@ -164,12 +164,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                     {
-                        if (Input.GetKeyDown(KeyCode.D) && !S.immoveable)
+                        if (Input.GetKey(KeyCode.D) && !S.immoveable)
                         {
                             busy = true;
                             n = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.A) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
                         {
                             busy = true;
                             sR = true;
@@ -178,12 +178,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                     {
-                        if (Input.GetKeyDown(KeyCode.A) && !S.immoveable)
+                        if (Input.GetKey(KeyCode.A) && !S.immoveable)
                         {
                             busy = true;
                             n = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.D) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
                         {
                             busy = true;
                             sR = true;
@@ -214,12 +214,12 @@ public class Pillar : MonoBehaviour
                     playerOriginalPos = Movement.playerPosition;
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
-                        if (Input.GetKeyDown(KeyCode.S) && !N.immoveable)
+                        if (Input.GetKey(KeyCode.S) && !N.immoveable)
                         {
                             busy = true;
                             s = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.W) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
                         {
                             busy = true;
                             nR = true;
@@ -228,12 +228,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                     {
-                        if (Input.GetKeyDown(KeyCode.W) && !N.immoveable)
+                        if (Input.GetKey(KeyCode.W) && !N.immoveable)
                         {
                             busy = true;
                             s = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.S) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
                         {
                             busy = true;
                             nR = true;
@@ -242,12 +242,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                     {
-                        if (Input.GetKeyDown(KeyCode.A) && !N.immoveable)
+                        if (Input.GetKey(KeyCode.A) && !N.immoveable)
                         {
                             busy = true;
                             s = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.D) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
                         {
                             busy = true;
                             nR = true;
@@ -256,12 +256,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                     {
-                        if (Input.GetKeyDown(KeyCode.D) && !N.immoveable)
+                        if (Input.GetKey(KeyCode.D) && !N.immoveable)
                         {
                             busy = true;
                             s = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.A) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
                         {
                             busy = true;
                             nR = true;
@@ -293,12 +293,12 @@ public class Pillar : MonoBehaviour
                     playerOriginalPos = Movement.playerPosition;
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
-                        if (Input.GetKeyDown(KeyCode.D) && !W.immoveable)
+                        if (Input.GetKey(KeyCode.D) && !W.immoveable)
                         {
                             busy = true;
                             e = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.A) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
                         {
                             busy = true;
                             wR = true;
@@ -307,12 +307,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                     {
-                        if (Input.GetKeyDown(KeyCode.A) && !W.immoveable)
+                        if (Input.GetKey(KeyCode.A) && !W.immoveable)
                         {
                             busy = true;
                             e = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.D) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
                         {
                             busy = true;
                             wR = true;
@@ -321,12 +321,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                     {
-                        if (Input.GetKeyDown(KeyCode.S) && !W.immoveable)
+                        if (Input.GetKey(KeyCode.S) && !W.immoveable)
                         {
                             busy = true;
                             e = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.W) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
                         {
                             busy = true;
                             wR = true;
@@ -335,12 +335,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                     {
-                        if (Input.GetKeyDown(KeyCode.W) && !W.immoveable)
+                        if (Input.GetKey(KeyCode.W) && !W.immoveable)
                         {
                             busy = true;
                             e = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.S) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
                         {
                             busy = true;
                             wR = true;
@@ -371,12 +371,12 @@ public class Pillar : MonoBehaviour
                     playerOriginalPos = Movement.playerPosition;
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
-                        if (Input.GetKeyDown(KeyCode.A) && !E.immoveable)
+                        if (Input.GetKey(KeyCode.A) && !E.immoveable)
                         {
                             busy = true;
                             w = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.D) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
                         {
                             busy = true;
                             eR = true;
@@ -385,12 +385,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                     {
-                        if (Input.GetKeyDown(KeyCode.D) && !E.immoveable)
+                        if (Input.GetKey(KeyCode.D) && !E.immoveable)
                         {
                             busy = true;
                             w = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.A) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
                         {
                             busy = true;
                             eR = true;
@@ -399,12 +399,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                     {
-                        if (Input.GetKeyDown(KeyCode.W) && !E.immoveable)
+                        if (Input.GetKey(KeyCode.W) && !E.immoveable)
                         {
                             busy = true;
                             w = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.S) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
                         {
                             busy = true;
                             eR = true;
@@ -413,12 +413,12 @@ public class Pillar : MonoBehaviour
                     }
                     if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                     {
-                        if (Input.GetKeyDown(KeyCode.S) && !E.immoveable)
+                        if (Input.GetKey(KeyCode.S) && !E.immoveable)
                         {
                             busy = true;
                             w = true;
                         }
-                        else if (Input.GetKeyDown(KeyCode.W) && !Movement.cantPull)
+                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
                         {
                             busy = true;
                             eR = true;
