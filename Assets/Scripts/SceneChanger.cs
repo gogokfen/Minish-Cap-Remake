@@ -45,4 +45,14 @@ public class SceneChanger : MonoBehaviour
 
         SceneManager.LoadScene(sceneName);
     }
+
+    public void OsherScene()
+    {
+        SceneManager.LoadScene("OsherScene");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
