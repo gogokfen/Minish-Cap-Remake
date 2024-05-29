@@ -37,11 +37,13 @@ public class Movement : MonoBehaviour
     BoxCollider swordCol;
 
     [SerializeField] GameObject shield;
-    public static bool shieldUp;
-    public static bool enemyShielded;
+    public static bool shieldUp = false;
+    public static bool enemyShielded = false;
     BoxCollider shieldCol;
 
-    public static bool potUp;
+    public static bool potUp = false;
+
+    public static int push = -2; //idle
 
     //Transform originalTrans;
     Vector3 originalRot;
@@ -60,7 +62,8 @@ public class Movement : MonoBehaviour
     static float stunTime;
     float stunCount;
 
-
+    float DirectionX;
+    float DirectionY;
 
     void Start()
     {
@@ -73,10 +76,23 @@ public class Movement : MonoBehaviour
 
         swordCol = sword.GetComponent<BoxCollider>();
         shieldCol = shield.GetComponent<BoxCollider>();
+
+        potUp = false;
     }
 
     void Update()
     {
+        anim.SetInteger("Push", push);
+
+        if (potUp)
+        {
+            if(stunned)
+            {
+                anim.Play("Pot Lift");
+            }
+        }
+
+
         if (busy || rolling)
         {
             sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
@@ -100,7 +116,6 @@ public class Movement : MonoBehaviour
             playerYRotation = transform.eulerAngles.y;
 
         hp = HealthSystem.currentHealth;
-        //linkHp.text = "Hp: " + hp;
 
         if (gotHit)
         {
@@ -178,6 +193,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0 && !shieldUp)
         {
+            //Debug.Log("yes");
             swordCol.enabled = true;
             swordSwing = true;
             swordTimer = 0; 
@@ -186,7 +202,9 @@ public class Movement : MonoBehaviour
             shield.SetActive(true);
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             //originalRot = transform.eulerAngles; //???
-            anim.Play("Attack");
+            anim.Play("Attack",-1,0.15f);
+            //anim.Play("Attack");
+
         }
 
         if (swordSwing)
@@ -195,7 +213,7 @@ public class Movement : MonoBehaviour
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
 
-            if (swordTimer >= 0.7f)
+            if (swordTimer >= 0.7)
             {
                 swordCol.enabled = false;
                 swordSwing = false;
@@ -280,38 +298,110 @@ public class Movement : MonoBehaviour
                 if (Input.GetKey(KeyCode.W))
                 {
                     if (Input.GetKey(KeyCode.A))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
+                        DirectionX = -0.7f;
+                        DirectionY = 0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else if (Input.GetKey(KeyCode.D))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
+                        DirectionX = 0.7f;
+                        DirectionY = 0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 0f, 0);
+                        DirectionX = 0;
+                        DirectionY = 1;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                 }
                 else if (Input.GetKey(KeyCode.D))
                 {
                     if (Input.GetKey(KeyCode.W))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
+                        DirectionX = 0.7f;
+                        DirectionY = 0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else if (Input.GetKey(KeyCode.S))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
+                        DirectionX = 0.7f;
+                        DirectionY = -0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90f, 0);
+                        DirectionX = 1;
+                        DirectionY = 0;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
                     if (Input.GetKey(KeyCode.D))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
+                        DirectionX = 0.7f;
+                        DirectionY = -0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else if (Input.GetKey(KeyCode.A))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
+                        DirectionX = -0.7f;
+                        DirectionY = -0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 180f, 0);
+                        DirectionX = 0;
+                        DirectionY = -1;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
                     if (Input.GetKey(KeyCode.S))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
+                        DirectionX = -0.7f;
+                        DirectionY = -0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else if (Input.GetKey(KeyCode.W))
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
+                        DirectionX = -0.7f;
+                        DirectionY = 0.7f;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                     else
+                    {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 270f, 0);
+                        DirectionX = -1;
+                        DirectionY = 0;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
                 }
             }
             else
@@ -343,32 +433,3 @@ public class Movement : MonoBehaviour
     }
 }
 
-//Debug.Log(transform.eulerAngles.y);
-/*
-Debug.Log(mainCamera.transform.eulerAngles.y + 90f);
-if (transform.eulerAngles.y < mainCamera.transform.eulerAngles.y + 90f)
-{
-    transform.eulerAngles = new Vector3(0, transform.rotation.y + 0.1f,0);
-}
-*/
-
-//transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X"), 0) * Time.deltaTime * 500);
-/*
-if (transform.rotation.eulerAngles.y < mainCamera.transform.eulerAngles.y)
-{
-    transform.Rotate(new Vector3(0, 1f, 0));
-}
-*/
-
-//transform.Rotate(new Vector3(0, -Input.GetAxis("Mouse X"), 0) * Time.deltaTime * 500);
-
-/*
-this.transform.rotation = Camera.main.transform.rotation;
-Vector3 localHeadRotation = this.transform.localRotation.eulerAngles;
-localHeadRotation.y = Mathf.Clamp(localHeadRotation.y, 0, 360);
-this.transform.localRotation = Quaternion.Euler(localHeadRotation);
-
-*/
-
-
-//transform.Translate(transform. * Time.deltaTime * moveSpeed,Space.Self);
