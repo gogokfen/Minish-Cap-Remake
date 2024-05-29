@@ -34,10 +34,12 @@ public class Movement : MonoBehaviour
     [SerializeField] GameObject sword;
     bool swordSwing = false;
     float swordTimer = 0;
+    BoxCollider swordCol;
 
     [SerializeField] GameObject shield;
     public static bool shieldUp;
     public static bool enemyShielded;
+    BoxCollider shieldCol;
 
     public static bool potUp;
 
@@ -68,6 +70,9 @@ public class Movement : MonoBehaviour
         hp = 12;
 
         linkMat.EnableKeyword(("_EMISSION"));
+
+        swordCol = sword.GetComponent<BoxCollider>();
+        shieldCol = shield.GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -173,23 +178,26 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0 && !shieldUp)
         {
+            swordCol.enabled = true;
             swordSwing = true;
             swordTimer = 0; 
             Stun(0.7f);
             sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            shield.SetActive(true);
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
-            originalRot = transform.eulerAngles;
+            //originalRot = transform.eulerAngles; //???
             anim.Play("Attack");
         }
 
         if (swordSwing)
         {
-            swordTimer += (Time.deltaTime * 5);
+            swordTimer += (Time.deltaTime);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
 
-            if (swordTimer >= 1)
+            if (swordTimer >= 0.7f)
             {
+                swordCol.enabled = false;
                 swordSwing = false;
                 swordTimer = 0;
                 //sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
@@ -213,8 +221,10 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !rolling && !busy && !potUp) //shield
         {
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            sword.SetActive(true);
 
-            Debug.Log("Shield up!");
+            //Debug.Log("Shield up!");
+            shieldCol.enabled = true;
             shieldUp = true;
             anim.Play("Block Start Anim");
             anim.SetBool("ShieldUp",true);
@@ -222,6 +232,7 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
         {
             //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            shieldCol.enabled = false;
             shieldUp = false;
             anim.SetBool("ShieldUp", false);
 
@@ -230,7 +241,10 @@ public class Movement : MonoBehaviour
         if (rolling)
         {
             rollingTimer -= Time.deltaTime;
-            transform.Translate(Vector3.forward * Time.deltaTime * (moveSpeed * 2.0f)); 
+            transform.Translate(Vector3.forward * Time.deltaTime * (moveSpeed * 2.0f));
+
+            shieldUp = false; //making sure shield isn't up when rolling
+            anim.SetBool("ShieldUp", false);
 
             if (rollingTimer <= 0)
             {

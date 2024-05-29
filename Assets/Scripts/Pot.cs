@@ -64,7 +64,7 @@ public class Pot : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y - (Time.deltaTime*5), transform.position.z);
             
 
-            if (transform.position.y <= 0.5)
+            if (transform.position.y <= 0)
             {
                 Instantiate(particlePrefab, transform.position, Quaternion.identity);
                 Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
