@@ -168,7 +168,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111770282}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 34dd86aac65bd38488d491adf3d25905, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 674d4d9fa3de46c4892c64d2dd1a6378, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -307,7 +307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 533, y: -280}
+  m_AnchoredPosition: {x: 747, y: -247}
   m_SizeDelta: {x: 415, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418492025
@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 1592535331}
   - component: {fileID: 1592535330}
   m_Layer: 5
-  m_Name: StartButton (1)
+  m_Name: OsherButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,7 +1111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 533, y: -460}
+  m_AnchoredPosition: {x: 747, y: -427}
   m_SizeDelta: {x: 415, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1592535330
@@ -1171,19 +1171,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1592535332}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1945208078}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: OsherScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1592535332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,7 +1248,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 533, y: -100}
+  m_AnchoredPosition: {x: 747, y: -67}
   m_SizeDelta: {x: 415, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672665349
@@ -1668,6 +1656,7 @@ GameObject:
   - component: {fileID: 1945208077}
   - component: {fileID: 1945208076}
   - component: {fileID: 1945208078}
+  - component: {fileID: 1945208079}
   m_Layer: 0
   m_Name: BGM
   m_TagString: Untagged
@@ -1802,3 +1791,19 @@ MonoBehaviour:
   soundClip: {fileID: 8300000, guid: 904022711e481ba4ca559083a322c4fb, type: 3}
   sceneName: Rooms Design
   hoverActivator: {fileID: 1672665349}
+--- !u!114 &1945208079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945208075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 746449b8e32a0bb42b039db0d7b98ba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yourButton: {fileID: 1592535331}
+  soundClip: {fileID: 8300000, guid: 904022711e481ba4ca559083a322c4fb, type: 3}
+  sceneName: OsherScene
+  hoverActivator: {fileID: 1592535330}
