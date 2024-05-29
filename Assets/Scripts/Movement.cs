@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float moveSpeed = 2f;
     float originalSpeed; // in case of running allowed
     bool rolling;
+    float rollingSpeed;
     float rollingTimer;
     float rollingCooldown;
 
@@ -258,8 +259,11 @@ public class Movement : MonoBehaviour
 
         if (rolling)
         {
-            rollingTimer -= Time.deltaTime;
-            transform.Translate(Vector3.forward * Time.deltaTime * (moveSpeed * 2.0f));
+            rollingTimer -= Time.deltaTime; //0.75 seconds
+            //6 *3 = 18 (0.75)
+            Debug.Log(rollingSpeed);
+            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1-rollingTimer)*2) ));
+            transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
 
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
