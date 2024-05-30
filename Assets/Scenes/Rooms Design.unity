@@ -4705,7 +4705,7 @@ PrefabInstance:
     - target: {fileID: 8009987137999418058, guid: e3cf349ffa194f04ca2c5d93b8e07a20,
         type: 3}
       propertyPath: m_TagString
-      value: Moveable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3cf349ffa194f04ca2c5d93b8e07a20, type: 3}

@@ -5,45 +5,69 @@ using System.Collections;
 
 public class SceneChanger : MonoBehaviour
 {
-
     public Button yourButton;
     public AudioClip soundClip;
     public string sceneName;
-    [SerializeField] HoverActivator hoverActivator;
+    public Animator loadingAnimator;
+    public Image loadingSprite;
+
+    [SerializeField] private HoverActivator hoverActivator;
 
     private AudioSource audioSource;
 
     void Start()
     {
-
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = soundClip;
-
-
-        yourButton.onClick.AddListener(PlaySoundAndChangeScene);
+        yourButton.onClick.AddListener(OnButtonClick);
     }
 
-    void PlaySoundAndChangeScene()
+    private void OnButtonClick()
     {
-
-
         hoverActivator.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-
-        StartCoroutine(PlaySoundAndChangeSceneCoroutine());
+        StartCoroutine(PlaySoundAndLoadScene());
+        loadingAnimator.SetBool("Reverse", true);
+        loadingAnimator.Play("LeavesIntro");
+        StartCoroutine(FadeInSprite());
     }
 
-    IEnumerator PlaySoundAndChangeSceneCoroutine()
+    private IEnumerator PlaySoundAndLoadScene()
+    {
+        audioSource.Play();
+        yield return new WaitForSeconds(audioSource.clip.length);
+        StartCoroutine(LoadAsync(sceneName));
+    }
+
+    private IEnumerator LoadAsync(string sceneName)
     {
 
-        audioSource.Play();
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
+        while (!operation.isDone)
+        {
+            if (operation.progress >= 0.9f)
+            {
+                operation.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
 
+    private IEnumerator FadeInSprite()
+    {
+        Color spriteColor = loadingSprite.color;
+        float fadeDuration = 1.0f;
+        float fadeSpeed = 1.0f / fadeDuration;
 
-        yield return new WaitForSeconds(audioSource.clip.length);
-
-
-        SceneManager.LoadScene(sceneName);
+        while (spriteColor.a < 1.0f)
+        {
+            spriteColor.a += fadeSpeed * Time.deltaTime;
+            loadingSprite.color = spriteColor;
+            yield return null;
+        }
+        spriteColor.a = 1.0f;
+        loadingSprite.color = spriteColor;
     }
 
     public void OsherScene()
