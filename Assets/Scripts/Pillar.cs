@@ -30,6 +30,7 @@ public class Pillar : MonoBehaviour
     bool sR;
     bool eR;
     bool wR;
+    bool holdingPillar;
 
     Vector3 originalPos;
     Vector3 playerOriginalPos;
@@ -103,7 +104,7 @@ public class Pillar : MonoBehaviour
 
             if (animationTime>=0.5)
             {
-                Movement.push = -2;
+                //Movement.push = -2;
 
                 animationTime = 0;
 
@@ -143,7 +144,11 @@ public class Pillar : MonoBehaviour
                     Movement.playerYRotation = 180f;
                     Movement.UpdateYRotation();
                     playerOriginalPos = Movement.playerPosition;
-                    Movement.push = 0;
+                    if (!holdingPillar)
+                    {
+                        Movement.push = 0;
+                        holdingPillar = true;
+                    }
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
                         if (Input.GetKey(KeyCode.W) && !S.immoveable)
@@ -206,6 +211,7 @@ public class Pillar : MonoBehaviour
                 {
                     Movement.push = -2;
                     Movement.busy = false;
+                    holdingPillar = false;
                 }
 
 
@@ -226,8 +232,11 @@ public class Pillar : MonoBehaviour
                     Movement.playerYRotation = 0f;
                     Movement.UpdateYRotation();
                     playerOriginalPos = Movement.playerPosition;
-                    Movement.push = 0;
-
+                    if (!holdingPillar)
+                    {
+                        Movement.push = 0;
+                        holdingPillar = true;
+                    }
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
                         if (Input.GetKey(KeyCode.S) && !N.immoveable)
@@ -290,6 +299,7 @@ public class Pillar : MonoBehaviour
                 {
                     Movement.push = -2;
                     Movement.busy = false;
+                    holdingPillar = false;
                 }
 
             }
@@ -310,7 +320,11 @@ public class Pillar : MonoBehaviour
                     Movement.playerYRotation = 270f;
                     Movement.UpdateYRotation();
                     playerOriginalPos = Movement.playerPosition;
-                    Movement.push = 0;
+                    if (!holdingPillar)
+                    {
+                        Movement.push = 0;
+                        holdingPillar = true;
+                    }
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
                         if (Input.GetKey(KeyCode.D) && !W.immoveable)
@@ -373,6 +387,7 @@ public class Pillar : MonoBehaviour
                 {
                     Movement.push = -2;
                     Movement.busy = false;
+                    holdingPillar = false;
                 }
 
             }
@@ -392,7 +407,11 @@ public class Pillar : MonoBehaviour
                     Movement.playerYRotation = 90f;
                     Movement.UpdateYRotation();
                     playerOriginalPos = Movement.playerPosition;
-                    Movement.push = 0;
+                    if (!holdingPillar)
+                    {
+                        Movement.push = 0;
+                        holdingPillar = true;
+                    }
                     if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                     {
                         if (Input.GetKey(KeyCode.A) && !E.immoveable)
@@ -455,6 +474,7 @@ public class Pillar : MonoBehaviour
                 {
                     Movement.push = -2;
                     Movement.busy = false;
+                    holdingPillar = false;
                 }
 
             }
