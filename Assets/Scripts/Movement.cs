@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
 
     //[SerializeField] Camera mainCamera;
 
-    [SerializeField] Animator anim; 
+    [SerializeField] Animator anim;
 
     public static float hp;
     public static bool gotHit = false;
@@ -89,7 +89,7 @@ public class Movement : MonoBehaviour
 
         if (potUp)
         {
-            if(stunned)
+            if (stunned)
             {
                 anim.Play("Pot Lift");
             }
@@ -141,7 +141,7 @@ public class Movement : MonoBehaviour
         if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.deltaTime *20), transform.position.y, transform.position.z + (enemyDirection.y * Time.deltaTime *20)); //originally *2 and not timedeltatime
+            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.deltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.deltaTime * 20)); //originally *2 and not timedeltatime
         }
 
 
@@ -152,7 +152,7 @@ public class Movement : MonoBehaviour
             //linkMat.SetColor("_BaseColor", Color.yellow);
             //linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
 
-            if (invulTimer<=0)
+            if (invulTimer <= 0)
             {
                 invul = false;
                 //linkMat.SetColor("_EmissionColor", Color.black);
@@ -176,7 +176,7 @@ public class Movement : MonoBehaviour
         {
             stunCount += Time.deltaTime;
             transform.position = playerPosition;
-            if (stunCount>stunTime)
+            if (stunCount > stunTime)
             {
                 stunned = false;
                 stunCount = 0;
@@ -194,19 +194,19 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0 && !shieldUp)
+        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp)
         {
             midAction = true;
             //Debug.Log("yes");
             swordCol.enabled = true;
             swordSwing = true;
-            swordTimer = 0; 
+            swordTimer = 0;
             Stun(0.7f);
             sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shield.SetActive(true);
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             //originalRot = transform.eulerAngles; //???
-            anim.Play("Attack",-1,0.15f);
+            anim.Play("Attack", -1, 0.15f);
             //anim.Play("Attack");
 
         }
@@ -251,7 +251,7 @@ public class Movement : MonoBehaviour
             shieldCol.enabled = true;
             shieldUp = true;
             anim.Play("Block Start Anim");
-            anim.SetBool("ShieldUp",true);
+            anim.SetBool("ShieldUp", true);
         }
         if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
         {
@@ -268,7 +268,7 @@ public class Movement : MonoBehaviour
             rollingTimer -= Time.deltaTime; //0.75 seconds
             //6 *3 = 18 (0.75)
             //Debug.Log(rollingSpeed);
-            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1-rollingTimer)*2) ));
+            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
             transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
 
             shieldUp = false; //making sure shield isn't up when rolling
@@ -281,7 +281,7 @@ public class Movement : MonoBehaviour
                 anim.SetBool("Rolling", false);
                 rollingCooldown = 0.10f;
             }
-                
+
 
         }
         else
@@ -292,7 +292,7 @@ public class Movement : MonoBehaviour
         if (!stunned && !rolling && !busy)
         {
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S ) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {

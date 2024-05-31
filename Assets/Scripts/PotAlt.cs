@@ -10,9 +10,9 @@ public class PotAlt : MonoBehaviour
     //Vector2 throwDirection = new Vector2 (0,1);
     bool lifting;
     bool throwing;
-    Transform playerChild;
+    public Transform playerChild;
 
-    bool inZone = false;
+    public bool inZone = false;
     bool potUp = false;
 
     Ray raycast;
@@ -89,29 +89,5 @@ public class PotAlt : MonoBehaviour
         */
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Weapon")
-        {
-            Destroy(gameObject);
-            Instantiate(particlePrefab, transform.position, Quaternion.identity);
-            Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
-        }
-        if (other.tag == "Player")
-        {
-            inZone = true;
-            playerChild = other.transform;
-            ActionText.UpdateText("Lift");
-        }
 
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            inZone = false;
-            ActionText.UpdateText("");
-        }
-    }
 }

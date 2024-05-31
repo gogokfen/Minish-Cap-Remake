@@ -12,11 +12,12 @@ public class Slug : MonoBehaviour
     float animationTime;
     int rotation;
 
-    [SerializeField] int hp;
-    [SerializeField] TextMeshPro enemyText;
-    bool gotHit;
+    [SerializeField] public int hp;
+    [SerializeField] public TextMeshPro enemyText;
+
+    public bool gotHit;
     float gotHitTimer;
-    Vector2 direction;
+    public Vector2 direction;
     void Start()
     {
         
@@ -60,50 +61,5 @@ public class Slug : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Weapon")
-        {
-            Vector3 tempDirection = (transform.position - Movement.playerPosition);
-            direction.x = tempDirection.x;
-            direction.y = tempDirection.z;
-            if (!gotHit)
-            {
-                hp--;
-            }
-            if (hp<=0)
-            {
-                Destroy(gameObject);
-            }
 
-            gotHit = true;
-            enemyText.text = "Hp: " + hp;
-        }
-
-
-        if (other.tag == "Player")
-        {
-            Vector3 tempDirection = (Movement.playerPosition - transform.position);
-            direction.x = tempDirection.x;
-            direction.y = tempDirection.z;
-            Movement.enemyHitAmount = 1;
-            Movement.SmallHit(direction);
-        }
-
-
-        if (other.tag == "Shield")
-        {
-            Movement.enemyShielded = true;
-            Vector3 tempDirection = (Movement.playerPosition - transform.position);
-            direction.x = tempDirection.x;
-            direction.y = tempDirection.z;
-            Movement.SmallHit(direction);
-
-            gotHit = true;
-            tempDirection = (transform.position - Movement.playerPosition);
-            direction.x = tempDirection.x;
-            direction.y = tempDirection.z;
-
-        }
-    }
 }
