@@ -313,24 +313,36 @@ public class Movement : MonoBehaviour
                     if (Input.GetKey(KeyCode.A))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                        DirectionX = -0.7f;
-                        DirectionY = 0.7f;
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = -0.7f;
+                        //DirectionY = 0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else if (Input.GetKey(KeyCode.D))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                        DirectionX = 0.7f;
-                        DirectionY = 0.7f;
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = 0.7f;
+                        //DirectionY = 0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 0f, 0);
-                        DirectionX = 0;
-                        DirectionY = 1;
+                        if (DirectionX < 0)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 1)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = 0;
+                        //DirectionY = 1;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
@@ -341,24 +353,36 @@ public class Movement : MonoBehaviour
                     if (Input.GetKey(KeyCode.W))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                        DirectionX = 0.7f;
-                        DirectionY = 0.7f;
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = 0.7f;
+                        //DirectionY = 0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else if (Input.GetKey(KeyCode.S))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                        DirectionX = 0.7f;
-                        DirectionY = -0.7f;
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        //DirectionX = 0.7f;
+                        //DirectionY = -0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90f, 0);
-                        DirectionX = 1;
-                        DirectionY = 0;
+                        if (DirectionX < 1)
+                            DirectionX += Time.deltaTime*5;
+                        if (DirectionY < 0)
+                            DirectionY += Time.deltaTime*5;
+                        //DirectionX = 1;
+                        //DirectionY = 0;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
@@ -369,24 +393,36 @@ public class Movement : MonoBehaviour
                     if (Input.GetKey(KeyCode.D))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                        DirectionX = 0.7f;
-                        DirectionY = -0.7f;
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        //DirectionX = 0.7f;
+                        //DirectionY = -0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else if (Input.GetKey(KeyCode.A))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                        DirectionX = -0.7f;
-                        DirectionY = -0.7f;
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        //DirectionX = -0.7f;
+                        //DirectionY = -0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 180f, 0);
-                        DirectionX = 0;
-                        DirectionY = -1;
+                        if (DirectionX < 0)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -1)
+                            DirectionY -= Time.deltaTime * 5;
+                        //DirectionX = 0;
+                        //DirectionY = -1;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
@@ -397,24 +433,36 @@ public class Movement : MonoBehaviour
                     if (Input.GetKey(KeyCode.S))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                        DirectionX = -0.7f;
-                        DirectionY = -0.7f;
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        //DirectionX = -0.7f;
+                        //DirectionY = -0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else if (Input.GetKey(KeyCode.W))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                        DirectionX = -0.7f;
-                        DirectionY = 0.7f;
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = -0.7f;
+                        //DirectionY = 0.7f;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
                     else
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 270f, 0);
-                        DirectionX = -1;
-                        DirectionY = 0;
+                        if (DirectionX > -1)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0)
+                            DirectionY += Time.deltaTime * 5;
+                        //DirectionX = -1;
+                        //DirectionY = 0;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
                     }
@@ -422,6 +470,13 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                DirectionX = DirectionX / (1+Time.deltaTime*10);
+                DirectionY = DirectionY / (1 + Time.deltaTime*10);
+                //DirectionX = 0;
+                //DirectionY = 0;
+                anim.SetFloat("DirectionX", DirectionX);
+                anim.SetFloat("DirectionY", DirectionY);
+
                 anim.SetBool("Moving", false);
             }
 
