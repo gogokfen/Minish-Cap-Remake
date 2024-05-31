@@ -4,17 +4,24 @@ using UnityEngine.UI;
 public class HealthSystem : MonoBehaviour
 {
     public Image[] hearts;
+    private Animator[] heartAnimators;
     public static int maxHealth;
     [SerializeField] int maxHP;
     public static int currentHealth;
     [SerializeField] int currentHP;
     public static bool updatedHearts;
 
-
     void Start()
     {
         maxHealth = maxHP;
         currentHealth = currentHP;
+
+        heartAnimators = new Animator[hearts.Length];
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            heartAnimators[i] = hearts[i].GetComponent<Animator>();
+        }
+
         UpdateHearts();
     }
 
@@ -23,7 +30,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
         updatedHearts = true;
-        //UpdateHearts();
     }
 
     public static void Heal(int healAmount)
@@ -31,10 +37,9 @@ public class HealthSystem : MonoBehaviour
         currentHealth += healAmount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         updatedHearts = true;
-        //UpdateHearts();
     }
 
-    private void Update() 
+    private void Update()
     {
         if (updatedHearts)
         {
@@ -49,7 +54,7 @@ public class HealthSystem : MonoBehaviour
         {
             int heartIndex = i * 4;
 
-            hearts[i].transform.localScale = Vector3.one; //making sure the hearts return to normal size
+            hearts[i].transform.localScale = Vector3.one;
 
             if (currentHealth >= heartIndex + 4)
             {
@@ -70,10 +75,19 @@ public class HealthSystem : MonoBehaviour
             else
             {
                 hearts[i].fillAmount = 0f;
-                
             }
+
+
+            heartAnimators[i].SetBool("IsCurrentHeart", false);
         }
 
-        hearts[(currentHealth - 1) / 4].transform.localScale = new Vector3(1.5f, 1.5f, 1); //enlarging the latest heart effect
+        int currentHeartIndex = (currentHealth - 1) / 4;
+        if (currentHeartIndex >= 0 && currentHeartIndex < hearts.Length)
+        {
+            hearts[currentHeartIndex].transform.localScale = new Vector3(1.5f, 1.5f, 1);
+
+
+            heartAnimators[currentHeartIndex].SetBool("IsCurrentHeart", true);
+        }
     }
 }
