@@ -15,7 +15,7 @@ public class Pillar : MonoBehaviour
     [SerializeField] float pushAmount;
 
     //[SerializeField] TextMeshProUGUI moveText;
-    [SerializeField] GameObject moveText;
+    //[SerializeField] GameObject moveText;
 
     float animationTime;
 
@@ -135,8 +135,8 @@ public class Pillar : MonoBehaviour
         {
             if (Movement.playerYRotation >135 && Movement.playerYRotation <225) //checking if the player looking at the right direction
             {
-                moveText.SetActive(true);
-                if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
+                ActionText.UpdateText("Grab");
+                if (!busy && Input.GetKey(KeyCode.E)) //checking which direction the camera is facing :)
                 {
                     Movement.busy = true; //preventing the player from moving while holding space
                     originalPos = transform.position;
@@ -217,269 +217,272 @@ public class Pillar : MonoBehaviour
 
             }
             else
-                moveText.SetActive(false);
+                ActionText.UpdateText("");
         }
-        if (S.inZone)
+        if (!Movement.midAction)
         {
-            if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
+            if (S.inZone)
             {
-                moveText.SetActive(true);
-                if (!busy && Input.GetKey(KeyCode.Space)) 
+                if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
                 {
-                    Movement.busy = true;
-                    originalPos = transform.position;
-                    Movement.playerPosition = S.transform.position;
-                    Movement.playerYRotation = 0f;
-                    Movement.UpdateYRotation();
-                    playerOriginalPos = Movement.playerPosition;
-                    if (!holdingPillar)
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E)) 
                     {
-                        Movement.push = 0;
-                        holdingPillar = true;
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
-                    {
-                        if (Input.GetKey(KeyCode.S) && !N.immoveable)
+                        Movement.busy = true;
+                        originalPos = transform.position;
+                        Movement.playerPosition = S.transform.position;
+                        Movement.playerYRotation = 0f;
+                        Movement.UpdateYRotation();
+                        playerOriginalPos = Movement.playerPosition;
+                        if (!holdingPillar)
                         {
-                            busy = true;
-                            s = true;
+                            Movement.push = 0;
+                            holdingPillar = true;
                         }
-                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                        if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                         {
-                            busy = true;
-                            nR = true;
+                            if (Input.GetKey(KeyCode.S) && !N.immoveable)
+                            {
+                                busy = true;
+                                s = true;
+                            }
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                nR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                        {
+                            if (Input.GetKey(KeyCode.W) && !N.immoveable)
+                            {
+                                busy = true;
+                                s = true;
+                            }
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                nR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
+                        {
+                            if (Input.GetKey(KeyCode.A) && !N.immoveable)
+                            {
+                                busy = true;
+                                s = true;
+                            }
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                nR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
+                        {
+                            if (Input.GetKey(KeyCode.D) && !N.immoveable)
+                            {
+                                busy = true;
+                                s = true;
+                            }
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                nR = true;
+                            }
+
                         }
 
                     }
-                    if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                    else if (!busy)
                     {
-                        if (Input.GetKey(KeyCode.W) && !N.immoveable)
-                        {
-                            busy = true;
-                            s = true;
-                        }
-                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            nR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
-                    {
-                        if (Input.GetKey(KeyCode.A) && !N.immoveable)
-                        {
-                            busy = true;
-                            s = true;
-                        }
-                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            nR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
-                    {
-                        if (Input.GetKey(KeyCode.D) && !N.immoveable)
-                        {
-                            busy = true;
-                            s = true;
-                        }
-                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            nR = true;
-                        }
-
+                        Movement.push = -2;
+                        Movement.busy = false;
+                        holdingPillar = false;
                     }
 
                 }
-                else if (!busy)
-                {
-                    Movement.push = -2;
-                    Movement.busy = false;
-                    holdingPillar = false;
-                }
+                else
+                    ActionText.UpdateText("");
 
             }
-            else
-                moveText.SetActive(false);
-
-        }
-        if (E.inZone)
-        {
-            if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
+            if (E.inZone)
             {
-                moveText.SetActive(true);
-                if (!busy && Input.GetKey(KeyCode.Space)) 
+                if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
                 {
-                    Movement.busy = true;
-                    originalPos = transform.position;
-                    Movement.playerPosition = E.transform.position; 
-                    Movement.playerYRotation = 270f;
-                    Movement.UpdateYRotation();
-                    playerOriginalPos = Movement.playerPosition;
-                    if (!holdingPillar)
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E)) 
                     {
-                        Movement.push = 0;
-                        holdingPillar = true;
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
-                    {
-                        if (Input.GetKey(KeyCode.D) && !W.immoveable)
+                        Movement.busy = true;
+                        originalPos = transform.position;
+                        Movement.playerPosition = E.transform.position; 
+                        Movement.playerYRotation = 270f;
+                        Movement.UpdateYRotation();
+                        playerOriginalPos = Movement.playerPosition;
+                        if (!holdingPillar)
                         {
-                            busy = true;
-                            e = true;
+                            Movement.push = 0;
+                            holdingPillar = true;
                         }
-                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                        if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                         {
-                            busy = true;
-                            wR = true;
+                            if (Input.GetKey(KeyCode.D) && !W.immoveable)
+                            {
+                                busy = true;
+                                e = true;
+                            }
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                wR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                        {
+                            if (Input.GetKey(KeyCode.A) && !W.immoveable)
+                            {
+                                busy = true;
+                                e = true;
+                            }
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                wR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
+                        {
+                            if (Input.GetKey(KeyCode.S) && !W.immoveable)
+                            {
+                                busy = true;
+                                e = true;
+                            }
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                wR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
+                        {
+                            if (Input.GetKey(KeyCode.W) && !W.immoveable)
+                            {
+                                busy = true;
+                                e = true;
+                            }
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                wR = true;
+                            }
+
                         }
 
                     }
-                    if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                    else if (!busy)
                     {
-                        if (Input.GetKey(KeyCode.A) && !W.immoveable)
-                        {
-                            busy = true;
-                            e = true;
-                        }
-                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            wR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
-                    {
-                        if (Input.GetKey(KeyCode.S) && !W.immoveable)
-                        {
-                            busy = true;
-                            e = true;
-                        }
-                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            wR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
-                    {
-                        if (Input.GetKey(KeyCode.W) && !W.immoveable)
-                        {
-                            busy = true;
-                            e = true;
-                        }
-                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            wR = true;
-                        }
-
+                        Movement.push = -2;
+                        Movement.busy = false;
+                        holdingPillar = false;
                     }
 
                 }
-                else if (!busy)
-                {
-                    Movement.push = -2;
-                    Movement.busy = false;
-                    holdingPillar = false;
-                }
-
+                else
+                    ActionText.UpdateText("");
             }
-            else
-                moveText.SetActive(false);
-        }
-        if (W.inZone)
-        {
-            if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
+            if (W.inZone)
             {
-                moveText.SetActive(true);
-                if (!busy && Input.GetKey(KeyCode.Space)) 
+                if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
                 {
-                    Movement.busy = true;
-                    originalPos = transform.position;
-                    Movement.playerPosition = W.transform.position; 
-                    Movement.playerYRotation = 90f;
-                    Movement.UpdateYRotation();
-                    playerOriginalPos = Movement.playerPosition;
-                    if (!holdingPillar)
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E)) 
                     {
-                        Movement.push = 0;
-                        holdingPillar = true;
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
-                    {
-                        if (Input.GetKey(KeyCode.A) && !E.immoveable)
+                        Movement.busy = true;
+                        originalPos = transform.position;
+                        Movement.playerPosition = W.transform.position; 
+                        Movement.playerYRotation = 90f;
+                        Movement.UpdateYRotation();
+                        playerOriginalPos = Movement.playerPosition;
+                        if (!holdingPillar)
                         {
-                            busy = true;
-                            w = true;
+                            Movement.push = 0;
+                            holdingPillar = true;
                         }
-                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                        if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
                         {
-                            busy = true;
-                            eR = true;
+                            if (Input.GetKey(KeyCode.A) && !E.immoveable)
+                            {
+                                busy = true;
+                                w = true;
+                            }
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                eR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                        {
+                            if (Input.GetKey(KeyCode.D) && !E.immoveable)
+                            {
+                                busy = true;
+                                w = true;
+                            }
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                eR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
+                        {
+                            if (Input.GetKey(KeyCode.W) && !E.immoveable)
+                            {
+                                busy = true;
+                                w = true;
+                            }
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                eR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
+                        {
+                            if (Input.GetKey(KeyCode.S) && !E.immoveable)
+                            {
+                                busy = true;
+                                w = true;
+                            }
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            {
+                                busy = true;
+                                eR = true;
+                            }
+
                         }
 
                     }
-                    if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                    else if (!busy)
                     {
-                        if (Input.GetKey(KeyCode.D) && !E.immoveable)
-                        {
-                            busy = true;
-                            w = true;
-                        }
-                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            eR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
-                    {
-                        if (Input.GetKey(KeyCode.W) && !E.immoveable)
-                        {
-                            busy = true;
-                            w = true;
-                        }
-                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            eR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
-                    {
-                        if (Input.GetKey(KeyCode.S) && !E.immoveable)
-                        {
-                            busy = true;
-                            w = true;
-                        }
-                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            eR = true;
-                        }
-
+                        Movement.push = -2;
+                        Movement.busy = false;
+                        holdingPillar = false;
                     }
 
                 }
-                else if (!busy)
-                {
-                    Movement.push = -2;
-                    Movement.busy = false;
-                    holdingPillar = false;
-                }
-
+                else
+                    ActionText.UpdateText("");
             }
-            else
-                moveText.SetActive(false);
         }
     }
 

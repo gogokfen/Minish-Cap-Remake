@@ -59,6 +59,8 @@ public class Movement : MonoBehaviour
 
     public static bool busy = false;
 
+    public static bool midAction = false;
+
     static bool stunned;
     static float stunTime;
     float stunCount;
@@ -158,7 +160,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.Space) && busy)
+        if (Input.GetKey(KeyCode.E) && busy)
         {
             //busy = true;
             //stunned = true;
@@ -194,6 +196,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer<0 && !shieldUp)
         {
+            midAction = true;
             //Debug.Log("yes");
             swordCol.enabled = true;
             swordSwing = true;
@@ -216,6 +219,7 @@ public class Movement : MonoBehaviour
 
             if (swordTimer >= 0.7)
             {
+                midAction = false;
                 swordCol.enabled = false;
                 swordSwing = false;
                 swordTimer = 0;
@@ -239,6 +243,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && !rolling && !busy && !potUp) //shield
         {
+            midAction = true;
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             sword.SetActive(true);
 
@@ -250,6 +255,7 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
         {
+            midAction = false;
             //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shieldCol.enabled = false;
             shieldUp = false;
@@ -261,7 +267,7 @@ public class Movement : MonoBehaviour
         {
             rollingTimer -= Time.deltaTime; //0.75 seconds
             //6 *3 = 18 (0.75)
-            Debug.Log(rollingSpeed);
+            //Debug.Log(rollingSpeed);
             rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1-rollingTimer)*2) ));
             transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
 
@@ -270,6 +276,7 @@ public class Movement : MonoBehaviour
 
             if (rollingTimer <= 0)
             {
+                midAction = false;
                 rolling = false;
                 anim.SetBool("Rolling", false);
                 rollingCooldown = 0.10f;
@@ -289,6 +296,7 @@ public class Movement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
+                    midAction = true;
                     rolling = true;
                     anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
@@ -301,6 +309,7 @@ public class Movement : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.W))
                 {
+                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.A))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
@@ -328,6 +337,7 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.D))
                 {
+                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.W))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
@@ -355,6 +365,7 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
+                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.D))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
@@ -382,6 +393,7 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
+                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.S))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);

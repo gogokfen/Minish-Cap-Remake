@@ -48,6 +48,9 @@ public class HealthSystem : MonoBehaviour
         for (int i = 0; i < hearts.Length; i++)
         {
             int heartIndex = i * 4;
+
+            hearts[i].transform.localScale = Vector3.one; //making sure the hearts return to normal size
+
             if (currentHealth >= heartIndex + 4)
             {
                 hearts[i].fillAmount = 1f;
@@ -67,7 +70,10 @@ public class HealthSystem : MonoBehaviour
             else
             {
                 hearts[i].fillAmount = 0f;
+                
             }
         }
+
+        hearts[(currentHealth - 1) / 4].transform.localScale = new Vector3(1.5f, 1.5f, 1); //enlarging the latest heart effect
     }
 }

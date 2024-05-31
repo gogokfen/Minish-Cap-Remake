@@ -14,6 +14,8 @@ public class Mushroom : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI windUpText;
 
+    [SerializeField] int maximumWindup;
+
     float animationTime;
     //float windUpTiles = 0;
     float windUp = 0;
@@ -36,14 +38,20 @@ public class Mushroom : MonoBehaviour
 
 
         //Debug.Log(animationTime);
-        if (windUp>0f && !Input.GetKey(KeyCode.Space))
+        if (windUp>0f && !Input.GetKey(KeyCode.E))
         {
-
+            ActionText.UpdateText("");
             if (windUp>=1)
             {
                 animationTime += Time.deltaTime;
                 busy = true;
                 Movement.Stun(1);
+
+                if (windUp>maximumWindup)
+                {
+                    windUp = maximumWindup;
+                }
+
                 if (n)
                 {
                     halfWayPoint = new Vector3(playerOriginalPos.x,playerOriginalPos.y + (2 + (int)windUp)*1.5f, playerOriginalPos.z + ((2 + (int)windUp)/2));
@@ -114,79 +122,93 @@ public class Mushroom : MonoBehaviour
         }
             
 
-
-
-        if (N.inZone) 
+        if (!Movement.midAction)
         {
-            if (Movement.playerYRotation > 135 && Movement.playerYRotation < 225) //checking if the player looking at the right direction
+            if (N.inZone) 
             {
-                if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
+                if (Movement.playerYRotation > 135 && Movement.playerYRotation < 225) //checking if the player looking at the right direction
                 {
-                    Movement.busy = true;
-                    playerOriginalPos = Movement.playerPosition;
-                    windUp += (Time.deltaTime * 2);
-                    windUpText.text = "" + (int)windUp;
-                    //busy = true;
-                    s = true;
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E)) //checking which direction the camera is facing :)
+                    {
+                        Movement.busy = true;
+                        playerOriginalPos = Movement.playerPosition;
+                        windUp += (Time.deltaTime * 2);
+                        windUpText.text = "" + (int)windUp;
+                        //busy = true;
+                        s = true;
+                    }
+                    else
+                        Movement.busy = false;
                 }
                 else
-                    Movement.busy = false;
-            }
-
-        }
-        if (S.inZone)
-        {
-            if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
-            {
-                if (!busy && Input.GetKey(KeyCode.Space))
-                {
-                    Movement.busy = true;
-                    playerOriginalPos = Movement.playerPosition;
-                    windUp += (Time.deltaTime * 2);
-                    windUpText.text ="" + (int)windUp;
-                    //busy = true;
-                    n = true;
-                }
-                else
-                    Movement.busy = false;
+                    ActionText.UpdateText("");
 
             }
-        }
-        if (E.inZone)
-        {
-            if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
+            if (S.inZone)
             {
-                if (!busy && Input.GetKey(KeyCode.Space))
+                if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
                 {
-                    Movement.busy = true;
-                    playerOriginalPos = Movement.playerPosition;
-                    windUp += (Time.deltaTime *2);
-                    windUpText.text = "" + (int)windUp;
-                    //busy = true;
-                    w = true;
-                }
-                else
-                    Movement.busy = false;
-            }
-        }
-        if (W.inZone)
-        {
-            if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
-            {
-                if (!busy && Input.GetKey(KeyCode.Space))
-                {
-                    Movement.busy = true;
-                    playerOriginalPos = Movement.playerPosition;
-                    windUp += (Time.deltaTime * 2);
-                    windUpText.text = "" + (int)windUp;
-                    //busy = true;
-                    e = true;
-                }
-                else
-                    Movement.busy = false;
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E))
+                    {
+                        Movement.busy = true;
+                        playerOriginalPos = Movement.playerPosition;
+                        windUp += (Time.deltaTime * 2);
+                        windUpText.text ="" + (int)windUp;
+                        //busy = true;
+                        n = true;
+                    }
+                    else
+                        Movement.busy = false;
 
+                }
+                else
+                    ActionText.UpdateText("");
+            }
+            if (E.inZone)
+            {
+                if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
+                {
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E))
+                    {
+                        Movement.busy = true;
+                        playerOriginalPos = Movement.playerPosition;
+                        windUp += (Time.deltaTime *2);
+                        windUpText.text = "" + (int)windUp;
+                        //busy = true;
+                        w = true;
+                    }
+                    else
+                        Movement.busy = false;
+                }
+                else
+                    ActionText.UpdateText("");
+            }
+            if (W.inZone)
+            {
+                if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
+                {
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.E))
+                    {
+                        Movement.busy = true;
+                        playerOriginalPos = Movement.playerPosition;
+                        windUp += (Time.deltaTime * 2);
+                        windUpText.text = "" + (int)windUp;
+                        //busy = true;
+                        e = true;
+                    }
+                    else
+                        Movement.busy = false;
+
+                }
+                else
+                    ActionText.UpdateText("");
             }
         }
+
     }
 
 

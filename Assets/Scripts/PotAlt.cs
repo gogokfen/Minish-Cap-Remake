@@ -52,16 +52,24 @@ public class PotAlt : MonoBehaviour
             }
         }
 
-        if (potUp && !lifting && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) )) //|| Input.GetKeyDown(KeyCode.E)
+        if (potUp && !lifting) //|| Input.GetKeyDown(KeyCode.E) Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) 
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
-            throwing = true;
-            transform.SetParent(null);
-            Movement.potUp = false;
-            potUp = false;
+            ActionText.UpdateText("Throw");
+
+            if ((Input.GetKeyDown(KeyCode.E)))
+            {
+                ActionText.UpdateText("");
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
+                throwing = true;
+                transform.SetParent(null);
+                Movement.potUp = false;
+                potUp = false;
+            }
+
         }
 
         //4 directions raycast check
+        /*
         if (Physics.Raycast(transform.position,Vector3.forward, out player, 1, mask)) //north
         {
             //Debug.Log("north");
@@ -78,7 +86,7 @@ public class PotAlt : MonoBehaviour
         {
             //Debug.Log("west");
         }
-
+        */
     }
 
     private void OnTriggerEnter(Collider other)
@@ -93,6 +101,7 @@ public class PotAlt : MonoBehaviour
         {
             inZone = true;
             playerChild = other.transform;
+            ActionText.UpdateText("Lift");
         }
 
     }
@@ -102,6 +111,7 @@ public class PotAlt : MonoBehaviour
         if (other.tag == "Player")
         {
             inZone = false;
+            ActionText.UpdateText("");
         }
     }
 }
