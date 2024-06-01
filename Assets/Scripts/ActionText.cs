@@ -11,6 +11,7 @@ public class ActionText : MonoBehaviour
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
+        tempText = "";
     }
 
     void Update()

@@ -136,7 +136,7 @@ public class Pillar : MonoBehaviour
             if (Movement.playerYRotation >135 && Movement.playerYRotation <225) //checking if the player looking at the right direction
             {
                 ActionText.UpdateText("Grab");
-                if (!busy && Input.GetKey(KeyCode.E)) //checking which direction the camera is facing :)
+                if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
                 {
                     Movement.busy = true; //preventing the player from moving while holding space
                     originalPos = transform.position;
@@ -226,7 +226,7 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E)) 
+                    if (!busy && Input.GetKey(KeyCode.Space)) 
                     {
                         Movement.busy = true;
                         originalPos = transform.position;
@@ -314,7 +314,7 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E)) 
+                    if (!busy && Input.GetKey(KeyCode.Space)) 
                     {
                         Movement.busy = true;
                         originalPos = transform.position;
@@ -401,7 +401,7 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E)) 
+                    if (!busy && Input.GetKey(KeyCode.Space)) 
                     {
                         Movement.busy = true;
                         originalPos = transform.position;

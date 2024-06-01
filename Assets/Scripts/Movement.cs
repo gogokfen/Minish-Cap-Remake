@@ -160,7 +160,7 @@ public class Movement : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.E) && busy)
+        if (Input.GetKey(KeyCode.Space) && busy)
         {
             //busy = true;
             //stunned = true;

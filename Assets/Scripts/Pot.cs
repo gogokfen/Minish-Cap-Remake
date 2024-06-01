@@ -20,10 +20,10 @@ public class Pot : MonoBehaviour
     RaycastHit player;
     [SerializeField] LayerMask mask;
 
+
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.E) && !throwing && !Movement.potUp && inZone)
+        if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone)
         {
             lifting = true;
             potUp = true;
@@ -47,23 +47,25 @@ public class Pot : MonoBehaviour
             transform.Translate((Vector3.forward * 50 + -Vector3.up *15) *Time.deltaTime );
             if (transform.position.y <= 0)
             {
+                Movement.potUp = false;
+                //potUp = false;
                 Instantiate(particlePrefab, transform.position, Quaternion.identity);
                 Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
                 Destroy(gameObject);
             }
         }
 
-        if (potUp && !lifting) //|| Input.GetKeyDown(KeyCode.E) Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) 
+        if (potUp && !lifting) //|| Input.GetKeyDown(KeyCode.Space) Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) 
         {
             ActionText.UpdateText("Throw");
 
-            if ((Input.GetKeyDown(KeyCode.E)))
+            if ((Input.GetKeyDown(KeyCode.Space)))
             {
                 ActionText.UpdateText("");
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
                 throwing = true;
                 transform.SetParent(null);
-                Movement.potUp = false;
+                //Movement.potUp = false;
                 potUp = false;
             }
 

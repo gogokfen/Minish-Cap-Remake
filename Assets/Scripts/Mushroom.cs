@@ -38,7 +38,7 @@ public class Mushroom : MonoBehaviour
 
 
         //Debug.Log(animationTime);
-        if (windUp>0f && !Input.GetKey(KeyCode.E))
+        if (windUp>0f && !Input.GetKey(KeyCode.Space))
         {
             ActionText.UpdateText("");
             if (windUp>=1)
@@ -129,7 +129,7 @@ public class Mushroom : MonoBehaviour
                 if (Movement.playerYRotation > 135 && Movement.playerYRotation < 225) //checking if the player looking at the right direction
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E)) //checking which direction the camera is facing :)
+                    if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
                     {
                         Movement.busy = true;
                         playerOriginalPos = Movement.playerPosition;
@@ -150,7 +150,7 @@ public class Mushroom : MonoBehaviour
                 if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E))
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         playerOriginalPos = Movement.playerPosition;
@@ -171,7 +171,7 @@ public class Mushroom : MonoBehaviour
                 if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E))
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         playerOriginalPos = Movement.playerPosition;
@@ -191,7 +191,7 @@ public class Mushroom : MonoBehaviour
                 if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.E))
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         playerOriginalPos = Movement.playerPosition;
