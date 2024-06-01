@@ -18,12 +18,7 @@ public class Slug : MonoBehaviour
     public bool gotHit;
     float gotHitTimer;
     public Vector2 direction;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         enemyText.text = "hp: " + hp;
@@ -58,8 +53,5 @@ public class Slug : MonoBehaviour
             gotHitTimer -= Time.deltaTime;
             transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 8), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 8)); //originally *2 and not timedeltatime
         }
-
     }
-
-
 }

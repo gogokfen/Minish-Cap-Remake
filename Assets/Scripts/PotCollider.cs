@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PotCollider : MonoBehaviour
 {
-    [SerializeField] PotAlt pot;
+    [SerializeField] Pot pot;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Weapon")
