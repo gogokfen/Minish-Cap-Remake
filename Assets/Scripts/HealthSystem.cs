@@ -84,7 +84,7 @@ public class HealthSystem : MonoBehaviour
         int currentHeartIndex = (currentHealth - 1) / 4;
         if (currentHeartIndex >= 0 && currentHeartIndex < hearts.Length)
         {
-            hearts[currentHeartIndex].transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            //hearts[currentHeartIndex].transform.localScale = new Vector3(1.5f, 1.5f, 1);
 
 
             heartAnimators[currentHeartIndex].SetBool("IsCurrentHeart", true);
