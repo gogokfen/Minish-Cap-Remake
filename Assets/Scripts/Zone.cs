@@ -7,6 +7,8 @@ public class Zone : MonoBehaviour
     public bool inZone;
     public bool immoveable;
 
+
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -16,11 +18,20 @@ public class Zone : MonoBehaviour
             immoveable = true;
 
     }
+    */
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player")
+            inZone = true;
+
+        if (other.tag == "Moveable" || other.tag == "Invis") //|| other.tag == "Invis"
+            immoveable = true;
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
             inZone = false;
-        if (other.tag == "Moveable")
+        if (other.tag == "Moveable" || other.tag == "Invis")
             immoveable = false;
     }
 }

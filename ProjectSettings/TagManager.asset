@@ -9,6 +9,7 @@ TagManager:
   - Moveable
   - Enemy
   - Shield
+  - Invis
   layers:
   - Default
   - TransparentFX

@@ -10394,7 +10394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7377887993611873752}
   - component: {fileID: 7377887993611873767}
-  - component: {fileID: 7377887993611873766}
+  - component: {fileID: 4551398611556441435}
   m_Layer: 0
   m_Name: Backward Collider
   m_TagString: Untagged
@@ -10430,7 +10430,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 2, z: 0.75}
   m_Center: {x: 0, y: 1, z: 0.125}
---- !u!114 &7377887993611873766
+--- !u!114 &4551398611556441435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10439,7 +10439,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7377887993611873753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab0251694b2318c4e85590f174c6fb57, type: 3}
+  m_Script: {fileID: 11500000, guid: d3a1beb330f4b6c4caf35fd3272c19d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inZone: 0
@@ -11003,7 +11003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  backwardCheck: {fileID: 7377887993611873766}
+  backwardCheck: {fileID: 4551398611556441435}
   anim: {fileID: 7377887992224680145}
   linkMat: {fileID: 2100000, guid: c2e4976347cd18c44aebdc7f9f6b3efe, type: 2}
   sword: {fileID: 7377887993943685141}

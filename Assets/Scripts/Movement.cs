@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     float rollingTimer;
     float rollingCooldown;
 
-    [SerializeField] Zone backwardCheck;
+    [SerializeField] PlayerZone backwardCheck;
     public static bool cantPull;
 
     //[SerializeField] Camera mainCamera;
@@ -81,6 +81,8 @@ public class Movement : MonoBehaviour
         shieldCol = shield.GetComponent<BoxCollider>();
 
         potUp = false;
+
+        cantPull = false;
     }
 
     void Update()

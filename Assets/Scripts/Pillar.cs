@@ -131,96 +131,97 @@ public class Pillar : MonoBehaviour
 
 
 
-        if (N.inZone) //checking if I'm the pushing zone
-        {
-            if (Movement.playerYRotation >135 && Movement.playerYRotation <225) //checking if the player looking at the right direction
-            {
-                ActionText.UpdateText("Grab");
-                if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
-                {
-                    Movement.busy = true; //preventing the player from moving while holding space
-                    originalPos = transform.position;
-                    Movement.playerPosition = N.transform.position; //snapping to the tile
-                    Movement.playerYRotation = 180f;
-                    Movement.UpdateYRotation();
-                    playerOriginalPos = Movement.playerPosition;
-                    if (!holdingPillar)
-                    {
-                        Movement.push = 0;
-                        holdingPillar = true;
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
-                    {
-                        if (Input.GetKey(KeyCode.W) && !S.immoveable)
-                        {
-                            busy = true;
-                            n = true;
-                        }
-                        else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            sR = true;
-                        }
 
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
-                    {
-                        if (Input.GetKey(KeyCode.S) && !S.immoveable)
-                        {
-                            busy = true;
-                            n = true;
-                        }
-                        else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            sR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
-                    {
-                        if (Input.GetKey(KeyCode.D) && !S.immoveable)
-                        {
-                            busy = true;
-                            n = true;
-                        }
-                        else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            sR = true;
-                        }
-
-                    }
-                    if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
-                    {
-                        if (Input.GetKey(KeyCode.A) && !S.immoveable)
-                        {
-                            busy = true;
-                            n = true;
-                        }
-                        else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
-                        {
-                            busy = true;
-                            sR = true;
-                        }
-
-                    }
-
-                }
-                else if (!busy)
-                {
-                    Movement.push = -2;
-                    Movement.busy = false;
-                    holdingPillar = false;
-                }
-
-
-            }
-            else
-                ActionText.UpdateText("");
-        }
         if (!Movement.midAction)
         {
+            if (N.inZone) //checking if I'm the pushing zone
+            {
+                if (Movement.playerYRotation > 135 && Movement.playerYRotation < 225) //checking if the player looking at the right direction
+                {
+                    ActionText.UpdateText("Grab");
+                    if (!busy && Input.GetKey(KeyCode.Space)) //checking which direction the camera is facing :)
+                    {
+                        Movement.busy = true; //preventing the player from moving while holding space
+                        originalPos = transform.position;
+                        Movement.playerPosition = N.transform.position; //snapping to the tile
+                        Movement.playerYRotation = 180f;
+                        Movement.UpdateYRotation();
+                        playerOriginalPos = Movement.playerPosition;
+                        if (!holdingPillar)
+                        {
+                            Movement.push = 0;
+                            holdingPillar = true;
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 135 && Camera.main.transform.eulerAngles.y < 225))
+                        {
+                            if (Input.GetKey(KeyCode.W) && !S.immoveable)
+                            {
+                                busy = true;
+                                n = true;
+                            }
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull && !N.immoveable)
+                            {
+                                busy = true;
+                                sR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
+                        {
+                            if (Input.GetKey(KeyCode.S) && !S.immoveable)
+                            {
+                                busy = true;
+                                n = true;
+                            }
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull && !N.immoveable)
+                            {
+                                busy = true;
+                                sR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
+                        {
+                            if (Input.GetKey(KeyCode.D) && !S.immoveable)
+                            {
+                                busy = true;
+                                n = true;
+                            }
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull && !N.immoveable)
+                            {
+                                busy = true;
+                                sR = true;
+                            }
+
+                        }
+                        if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
+                        {
+                            if (Input.GetKey(KeyCode.A) && !S.immoveable)
+                            {
+                                busy = true;
+                                n = true;
+                            }
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull && !N.immoveable)
+                            {
+                                busy = true;
+                                sR = true;
+                            }
+
+                        }
+
+                    }
+                    else if (!busy)
+                    {
+                        Movement.push = -2;
+                        Movement.busy = false;
+                        holdingPillar = false;
+                    }
+
+
+                }
+                else
+                    ActionText.UpdateText("");
+            }
             if (S.inZone)
             {
                 if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
@@ -246,7 +247,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 s = true;
                             }
-                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull && !S.immoveable)
                             {
                                 busy = true;
                                 nR = true;
@@ -260,7 +261,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 s = true;
                             }
-                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull && !S.immoveable)
                             {
                                 busy = true;
                                 nR = true;
@@ -274,7 +275,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 s = true;
                             }
-                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull && !S.immoveable)
                             {
                                 busy = true;
                                 nR = true;
@@ -288,7 +289,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 s = true;
                             }
-                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull && !S.immoveable)
                             {
                                 busy = true;
                                 nR = true;
@@ -334,7 +335,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 e = true;
                             }
-                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull && !E.immoveable)
                             {
                                 busy = true;
                                 wR = true;
@@ -348,7 +349,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 e = true;
                             }
-                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull && !E.immoveable)
                             {
                                 busy = true;
                                 wR = true;
@@ -362,7 +363,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 e = true;
                             }
-                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull && !E.immoveable)
                             {
                                 busy = true;
                                 wR = true;
@@ -376,7 +377,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 e = true;
                             }
-                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull && !E.immoveable)
                             {
                                 busy = true;
                                 wR = true;
@@ -421,7 +422,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 w = true;
                             }
-                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.D) && !Movement.cantPull && !W.immoveable)
                             {
                                 busy = true;
                                 eR = true;
@@ -435,7 +436,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 w = true;
                             }
-                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.A) && !Movement.cantPull && !W.immoveable)
                             {
                                 busy = true;
                                 eR = true;
@@ -449,7 +450,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 w = true;
                             }
-                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.S) && !Movement.cantPull && !W.immoveable)
                             {
                                 busy = true;
                                 eR = true;
@@ -463,7 +464,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 w = true;
                             }
-                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull)
+                            else if (Input.GetKey(KeyCode.W) && !Movement.cantPull && !W.immoveable)
                             {
                                 busy = true;
                                 eR = true;
