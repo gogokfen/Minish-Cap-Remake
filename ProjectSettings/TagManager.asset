@@ -10,7 +10,6 @@ TagManager:
   - Enemy
   - Shield
   - Invis
-  - GustJar
   layers:
   - Default
   - TransparentFX

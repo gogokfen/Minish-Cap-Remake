@@ -9,8 +9,7 @@ public class Pot : MonoBehaviour
     Vector3 originalPos;
     //Vector2 throwDirection = new Vector2 (0,1);
     bool lifting;
-    [HideInInspector]
-    public bool throwing;
+    bool throwing;
     [HideInInspector]
     public Transform playerChild;
 
@@ -21,16 +20,6 @@ public class Pot : MonoBehaviour
     RaycastHit player;
     [SerializeField] LayerMask mask;
 
-    [HideInInspector]
-    public BoxCollider potPhysicalCol;
-
-    [HideInInspector]
-    public bool succed = false;
-
-    private void Start()
-    {
-        potPhysicalCol = GetComponent<BoxCollider>();
-    }
 
     private void Update()
     {
@@ -55,16 +44,14 @@ public class Pot : MonoBehaviour
         if (throwing)
         {
             //transform.Translate((Vector3.forward + -Vector3.up) * Time.deltaTime * 20);
-            if (succed) // in case launched from gust jar
-                transform.Translate(Vector3.forward * 50 * Time.deltaTime);
-            else
-                transform.Translate((Vector3.forward * 50 + -Vector3.up * 15) * Time.deltaTime);
-
+            transform.Translate((Vector3.forward * 50 + -Vector3.up *15) *Time.deltaTime );
             if (transform.position.y <= 0)
             {
                 Movement.potUp = false;
                 //potUp = false;
-                Explode();
+                Instantiate(particlePrefab, transform.position, Quaternion.identity);
+                Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+                Destroy(gameObject);
             }
         }
 
@@ -74,7 +61,12 @@ public class Pot : MonoBehaviour
 
             if ((Input.GetKeyDown(KeyCode.Space)))
             {
-                Throw();
+                ActionText.UpdateText("");
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
+                throwing = true;
+                transform.SetParent(null);
+                //Movement.potUp = false;
+                potUp = false;
             }
 
         }
@@ -100,30 +92,5 @@ public class Pot : MonoBehaviour
         */
     }
 
-    public void Throw()
-    {
-        ActionText.UpdateText("");
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
-        throwing = true;
-        transform.SetParent(null);
-        //Movement.potUp = false;
-        potUp = false;
-    }
-    //overload
-    public void Throw(float angleX,float angleY)
-    {
-        ActionText.UpdateText("");
-        transform.eulerAngles = new Vector3(angleX, angleY, transform.eulerAngles.z);
-        throwing = true;
-        transform.SetParent(null);
-        potUp = false;
-    }
-
-    public void Explode()
-    {
-        Instantiate(particlePrefab, transform.position, Quaternion.identity);
-        Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
-        Destroy(gameObject);
-    }
 
 }
