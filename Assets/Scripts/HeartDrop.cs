@@ -20,6 +20,7 @@ public class HeartDrop : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             HealthSystem.Heal(4);
+            SFXController.PlaySFX("GetHeart", 1.0f);
             DeactivateAfterTime.EnableHeart();
             Destroy(gameObject);
         }

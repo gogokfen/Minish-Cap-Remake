@@ -207,6 +207,7 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp)
         {
             midAction = true;
+            SFXController.PlaySFX("LinkAttack1", 1.0f);
             //Debug.Log("yes");
             swordCol.enabled = true;
             swordSwing = true;
@@ -328,6 +329,7 @@ public class Movement : MonoBehaviour
                 {
                     midAction = true;
                     rolling = true;
+                    SFXController.PlaySFX("LinkRoll", 1.0f);
                     anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
                     rollingTimer = 0.75f; //0.3f //original was 0.25f

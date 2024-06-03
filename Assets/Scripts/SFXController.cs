@@ -1,4 +1,5 @@
 using UnityEngine;
+
 public class SFXController : MonoBehaviour
 {
     private static SFXController instance;
@@ -9,23 +10,28 @@ public class SFXController : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
-    public static void PlaySFX(string clipName, float volume = 1.0f)
+
+    public static void PlaySFX(string clipName, float volume = 1.0f, bool loop = false)
     {
         if (instance != null && instance.audioSource != null && !string.IsNullOrEmpty(clipName))
         {
-            
             string path = $"Sounds/Sfx/{clipName}";
             AudioClip clip = Resources.Load<AudioClip>(path);
             if (clip != null)
             {
-                instance.audioSource.PlayOneShot(clip, volume);
+                if (loop)
+                {
+                    instance.audioSource.clip = clip;
+                    instance.audioSource.volume = volume;
+                    instance.audioSource.loop = true;
+                    instance.audioSource.Play();
+                }
+                else
+                {
+                    instance.audioSource.PlayOneShot(clip, volume);
+                }
             }
             else
             {
@@ -35,6 +41,19 @@ public class SFXController : MonoBehaviour
         else
         {
             Debug.Log("SFXController or AudioSource or clipName is missing.");
+        }
+    }
+
+    public static void StopSFX()
+    {
+        if (instance != null && instance.audioSource != null)
+        {
+            instance.audioSource.Stop();
+            instance.audioSource.loop = false;
+        }
+        else
+        {
+            Debug.Log("SFXController or AudioSource is missing.");
         }
     }
 }

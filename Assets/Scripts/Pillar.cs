@@ -31,6 +31,7 @@ public class Pillar : MonoBehaviour
     bool eR;
     bool wR;
     bool holdingPillar;
+    bool holdingPillarSound;
 
     Vector3 originalPos;
     Vector3 playerOriginalPos;
@@ -43,6 +44,18 @@ public class Pillar : MonoBehaviour
 
     void Update()
     {
+
+        if ((Movement.push == 1 || Movement.push == -1) && !holdingPillarSound)
+        {
+            SFXController.PlaySFX("LinkPush", 1.0f, true);
+            holdingPillarSound = true;
+        }
+
+        if ((Movement.push == -2  || Movement.push == 0) && holdingPillarSound)
+        {
+            SFXController.StopSFX();
+            holdingPillarSound = false;
+        }
 
 
         //Debug.Log(animationTime);
