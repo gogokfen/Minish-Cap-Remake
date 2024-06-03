@@ -23,7 +23,14 @@ public class PlayerBody : MonoBehaviour
         if (!Movement.shieldUp)
             transform.rotation = Quaternion.Lerp(transform.rotation, Link.rotation, animTime); // divided by 2. build speed is different for some reason
 
-
+        
+        if (Movement.gustJarUp)
+        {
+            //transform.rotation = Camera.main.transform.rotation;
+            //transform.rotation = new Quaternion(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z, transform.rotation.w);
+            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
+        }
+        
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A))
         {
             animTime = 0;

@@ -42,6 +42,14 @@ public class Movement : MonoBehaviour
     public static bool enemyShielded = false;
     BoxCollider shieldCol;
 
+    [SerializeField] GameObject gustJar;
+    public static bool gustJarUp = false;
+    //float gustJarWindup;
+    [SerializeField] GameObject gustJarShot;
+    [SerializeField] Transform gustJarTarget;
+    [SerializeField] GameObject corsair;
+
+
     public static bool potUp = false;
 
     public static int push = -2; //idle
@@ -242,6 +250,26 @@ public class Movement : MonoBehaviour
         {
             moveSpeed = originalSpeed;
         }
+
+        if (Input.GetMouseButton(2) && !rolling && !busy && !potUp && !stunned)
+        {
+            gustJarUp = true;
+            gustJar.SetActive(true);
+            gustJar.transform.LookAt(gustJarTarget);
+            corsair.SetActive(true);
+        }
+        else
+        {
+            if (gustJarUp)
+            {
+                Stun(0.25f);
+                Instantiate(gustJarShot,gustJar.transform.position,gustJar.transform.rotation);
+            }
+            gustJarUp = false;
+            gustJar.SetActive(false);
+            corsair.SetActive(false);
+        }
+
 
         if (Input.GetMouseButtonDown(1) && !rolling && !busy && !potUp) //shield
         {
