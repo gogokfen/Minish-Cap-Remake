@@ -18967,6 +18967,27 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 116
       objectReference: {fileID: 0}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: corsair
+      value: 
+      objectReference: {fileID: 371601355}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJar
+      value: 
+      objectReference: {fileID: 371601355}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJarShot
+      value: 
+      objectReference: {fileID: 5748265662309332883, guid: c14853dc5da54b94e9f3b457e33f7eeb,
+        type: 3}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJarTarget
+      value: 
+      objectReference: {fileID: 371601356}
     - target: {fileID: 7377887994186634355, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
         type: 3}
       propertyPath: m_LocalPosition.x
