@@ -5618,6 +5618,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3cf349ffa194f04ca2c5d93b8e07a20, type: 3}
+--- !u!1 &371601355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 371601356}
+  m_Layer: 0
+  m_Name: GustJar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &371601356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371601355}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5113367, y: -2.0751758, z: 12.580444}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &382578720 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -466329591000292508, guid: 50bbf7596002ba840bbc979bb089b560,
@@ -18936,6 +18967,27 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 116
       objectReference: {fileID: 0}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: corsair
+      value: 
+      objectReference: {fileID: 371601355}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJar
+      value: 
+      objectReference: {fileID: 371601355}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJarShot
+      value: 
+      objectReference: {fileID: 5748265662309332883, guid: c14853dc5da54b94e9f3b457e33f7eeb,
+        type: 3}
+    - target: {fileID: 7377887993781957863, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
+        type: 3}
+      propertyPath: gustJarTarget
+      value: 
+      objectReference: {fileID: 371601356}
     - target: {fileID: 7377887994186634355, guid: 1567d25b9546d0f4d8ffe528021ae3c2,
         type: 3}
       propertyPath: m_LocalPosition.x
