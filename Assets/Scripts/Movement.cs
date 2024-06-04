@@ -51,6 +51,7 @@ public class Movement : MonoBehaviour
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
     [SerializeField] GameObject corsair;
+    [SerializeField] TrailRenderer swordSlash;
 
 
     public static bool potUp = false;
@@ -243,6 +244,7 @@ public class Movement : MonoBehaviour
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             //originalRot = transform.eulerAngles; //???
             anim.Play("Attack", -1, 0.15f);
+            //swordSlash.emitting = true;
             //anim.Play("Attack");
 
         }
@@ -252,7 +254,14 @@ public class Movement : MonoBehaviour
             swordTimer += (Time.deltaTime);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
             //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
-
+            if (swordTimer >= 0.02)
+            {
+                swordSlash.emitting = true;
+            }
+            if (swordTimer >= 0.15)
+            {
+                swordSlash.emitting = false;
+            }
             if (swordTimer >= 0.7)
             {
                 midAction = false;
