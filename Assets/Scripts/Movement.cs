@@ -44,6 +44,9 @@ public class Movement : MonoBehaviour
 
     [SerializeField] GameObject gustJar;
     public static bool gustJarUp = false;
+    public static bool succed = false;
+    [SerializeField] Transform gustJarHoleTrans;
+    public static Vector3 gustJarPos;
     //float gustJarWindup;
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
@@ -91,6 +94,8 @@ public class Movement : MonoBehaviour
         potUp = false;
 
         cantPull = false;
+
+        succed = false;
     }
 
     void Update()
@@ -207,8 +212,28 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp)
         {
             midAction = true;
-            SFXController.PlaySFX("LinkAttack1", 1.0f);
-            //Debug.Log("yes");
+            int randomSFX = Random.Range(1, 6);
+            
+            switch (randomSFX)
+            {
+                case 1:
+                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    break;
+                case 2:
+                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    break;
+                case 3:
+                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    break;
+                case 4:
+                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    break;
+                case 5:
+                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    break;
+            }
+
+            //SFXController.PlaySFX("LinkAttack1", 1.0f);
             swordCol.enabled = true;
             swordSwing = true;
             swordTimer = 0;
@@ -252,12 +277,13 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (Input.GetMouseButton(2) && !rolling && !busy && !potUp && !stunned)
+        if (Input.GetMouseButton(2) && !rolling && !busy && !potUp && !stunned && !shieldUp)
         {
             gustJarUp = true;
             gustJar.SetActive(true);
             gustJar.transform.LookAt(gustJarTarget);
             corsair.SetActive(true);
+            gustJarPos = gustJarHoleTrans.position;
         }
         else
         {

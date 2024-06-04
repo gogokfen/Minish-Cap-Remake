@@ -34,6 +34,7 @@ public class Pot : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone)
         {
             lifting = true;
@@ -62,7 +63,6 @@ public class Pot : MonoBehaviour
 
             if (transform.position.y <= 0)
             {
-                Movement.potUp = false;
                 //potUp = false;
                 Explode();
             }
@@ -121,6 +121,7 @@ public class Pot : MonoBehaviour
 
     public void Explode()
     {
+        Movement.potUp = false;
         Instantiate(particlePrefab, transform.position, Quaternion.identity);
         Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
         Destroy(gameObject);

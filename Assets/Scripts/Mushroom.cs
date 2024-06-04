@@ -33,12 +33,17 @@ public class Mushroom : MonoBehaviour
 
     Vector3 halfWayPoint;
 
+
+    Ray raycast;
+    RaycastHit player;
+    [SerializeField] LayerMask mask;
+
     void Update()
     {
 
 
         //Debug.Log(animationTime);
-        if (windUp>0f && !Input.GetKey(KeyCode.Space))
+        if (windUp > 0f && !(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(2)))
         {
             ActionText.UpdateText("");
             if (windUp>=1)
@@ -212,5 +217,37 @@ public class Mushroom : MonoBehaviour
     }
 
 
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "GustJar")
+        {/*
+            if (Physics.Raycast(transform.position, Vector3.forward, out player, 10, mask)) //north
+            {
+                
+                Movement.busy = true;
+                windUp += Time.deltaTime*2;
+                windUpText.text = "" + (int)windUp;
+                Debug.Log("north"+windUp);
+                s = true;
+                
+
+            }
+            if (Physics.Raycast(transform.position, -Vector3.forward, out player, 10, mask)) //south
+            {
+                Debug.Log("south");
+            }
+            if (Physics.Raycast(transform.position, Vector3.right, out player, 10, mask)) //east
+            {
+                Debug.Log("east");
+            }
+            if (Physics.Raycast(transform.position, -Vector3.right, out player, 10, mask)) //west
+            {
+                Debug.Log("west");
+            }
+            */
+        }
+
+    }
 
 }
