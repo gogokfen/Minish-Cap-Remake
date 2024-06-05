@@ -7,6 +7,7 @@ public class Slug : MonoBehaviour
 {
     [SerializeField] bool fallingFromSky = false;
     [SerializeField] float fallingTimer;
+    private float maxFall;
     [SerializeField] float moveSpeed;
     float rotationTimer;
     float animationTime;
@@ -15,9 +16,16 @@ public class Slug : MonoBehaviour
     [SerializeField] public int hp;
     [SerializeField] public TextMeshPro enemyText;
 
+    [SerializeField] GameObject slugShadow;
+
     public bool gotHit;
     float gotHitTimer;
     public Vector2 direction;
+
+    private void Start()
+    {
+        maxFall = fallingTimer;
+    }
 
     void Update()
     {
@@ -39,7 +47,21 @@ public class Slug : MonoBehaviour
         {
             fallingTimer -= Time.deltaTime;
             if (fallingTimer <= 0)
+            {
                 fallingFromSky = false;
+            }
+
+            if (fallingTimer>2f)
+            {
+                Color shadow = new Color(0, 0, 0, Mathf.InverseLerp(maxFall - 2.5f, 0, fallingTimer - 2.5f));
+                slugShadow.GetComponent<Renderer>().material.SetColor("_BaseColor", shadow);
+            }
+            else
+                slugShadow.SetActive(false);
+
+
+
+
         }
 
         if (gotHit)

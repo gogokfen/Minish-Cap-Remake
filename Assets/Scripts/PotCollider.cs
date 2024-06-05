@@ -8,6 +8,22 @@ public class PotCollider : MonoBehaviour
     float suctionWindup;
     float angleX;
     float angleY;
+
+    bool exploding;
+
+    private void Update()
+    {
+        if (Movement.gustJarUp == false && suctionWindup >= 1)
+        {
+            //pot.succed = true;
+            Movement.succed = false;
+            suctionWindup = 0;
+            pot.Throw(angleX, angleY);
+
+            //pot.potPhysicalCol.enabled = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Weapon")
@@ -24,8 +40,9 @@ public class PotCollider : MonoBehaviour
             ActionText.UpdateText("Lift");
         }
 
-        if (pot.throwing) //&& other.tag == "Moveable"
+        if (pot.throwing && !exploding) //&& other.tag == "Moveable"
         {
+            exploding = true; //prevents from multiple explosions happening simutaniously
             pot.Explode();
         }
     }
@@ -54,21 +71,13 @@ public class PotCollider : MonoBehaviour
             }
             else //shake effect
             {
-                Vector3 randomShake = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), Random.Range(-5f, 5f)); //in case no animation
+                Vector3 randomShake = new Vector3(Random.Range(-5f, 5f), Random.Range(0, 1f), Random.Range(-5f, 5f)); //in case no animation
 
                 pot.transform.Translate(randomShake * Time.deltaTime);
             }
         }
 
-        if (Movement.gustJarUp == false && suctionWindup>=1)
-        {
-            //pot.succed = true;
-            Movement.succed = false;
-            suctionWindup = 0;
-            pot.Throw(angleX,angleY);
 
-            //pot.potPhysicalCol.enabled = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)

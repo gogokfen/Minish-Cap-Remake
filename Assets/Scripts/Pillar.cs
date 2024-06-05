@@ -38,7 +38,7 @@ public class Pillar : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
 
@@ -51,7 +51,7 @@ public class Pillar : MonoBehaviour
             holdingPillarSound = true;
         }
 
-        if ((Movement.push == -2  || Movement.push == 0) && holdingPillarSound)
+        if ((Movement.push == -2 || Movement.push == 0) && holdingPillarSound)
         {
             SFXController.StopSFX();
             holdingPillarSound = false;
@@ -67,57 +67,62 @@ public class Pillar : MonoBehaviour
 
             if (n)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount/2)), animationTime*2);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z - (pushAmount / 2)), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount / 2)), animationTime * 2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z - (pushAmount / 2)), animationTime * 2);
                 Movement.push = 1;
             }
             if (s)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount/2)), animationTime*2);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z + (pushAmount / 2)), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount / 2)), animationTime * 2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z + (pushAmount / 2)), animationTime * 2);
                 Movement.push = 1;
             }
             if (e)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x-(pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x - (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x - (pushAmount / 2), originalPos.y, originalPos.z), animationTime * 2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x - (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime * 2);
                 Movement.push = 1;
             }
             if (w)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x+(pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x + (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x + (pushAmount / 2), originalPos.y, originalPos.z), animationTime * 2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x + (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime * 2);
                 Movement.push = 1;
             }
 
             if (nR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount/2)), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z - (pushAmount / 2)), animationTime * 2);
                 Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z - (pushAmount / 2)), animationTime * 2);
                 Movement.push = -1;
             }
             if (sR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount/2)), animationTime*2);
-                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z+(pushAmount/2)), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x, originalPos.y, originalPos.z + (pushAmount / 2)), animationTime * 2);
+                Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x, playerOriginalPos.y, playerOriginalPos.z + (pushAmount / 2)), animationTime * 2);
                 Movement.push = -1;
             }
             if (eR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x - (pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x - (pushAmount / 2), originalPos.y, originalPos.z), animationTime * 2);
                 Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x - (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime * 2);
                 Movement.push = -1;
             }
             if (wR)
             {
-                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x + (pushAmount/2), originalPos.y, originalPos.z), animationTime*2);
+                transform.position = Vector3.Lerp(originalPos, new Vector3(originalPos.x + (pushAmount / 2), originalPos.y, originalPos.z), animationTime * 2);
                 Movement.playerPosition = Vector3.Lerp(playerOriginalPos, new Vector3(playerOriginalPos.x + (pushAmount / 2), playerOriginalPos.y, playerOriginalPos.z), animationTime * 2);
                 Movement.push = -1;
             }
 
-            if (animationTime>=0.5)
+            if (animationTime >= 0.5)
             {
                 //Movement.push = -2;
+
+                if (!(Input.GetKey(KeyCode.Space) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))))
+                    Movement.push = 0;
+
+
 
                 animationTime = 0;
 
@@ -240,7 +245,7 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 315 || Movement.playerYRotation < 45)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.Space)) 
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         originalPos = transform.position;
@@ -328,11 +333,11 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 225 && Movement.playerYRotation < 315)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.Space)) 
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         originalPos = transform.position;
-                        Movement.playerPosition = E.transform.position; 
+                        Movement.playerPosition = E.transform.position;
                         Movement.playerYRotation = 270f;
                         Movement.UpdateYRotation();
                         playerOriginalPos = Movement.playerPosition;
@@ -415,11 +420,11 @@ public class Pillar : MonoBehaviour
                 if (Movement.playerYRotation > 45 && Movement.playerYRotation < 135)
                 {
                     ActionText.UpdateText("Grab");
-                    if (!busy && Input.GetKey(KeyCode.Space)) 
+                    if (!busy && Input.GetKey(KeyCode.Space))
                     {
                         Movement.busy = true;
                         originalPos = transform.position;
-                        Movement.playerPosition = W.transform.position; 
+                        Movement.playerPosition = W.transform.position;
                         Movement.playerYRotation = 90f;
                         Movement.UpdateYRotation();
                         playerOriginalPos = Movement.playerPosition;

@@ -299,11 +299,17 @@ public class Movement : MonoBehaviour
             if (gustJarUp)
             {
                 Stun(0.25f);
-                Instantiate(gustJarShot,gustJar.transform.position,gustJar.transform.rotation);
+                gustJarUp = false;
+                gustJar.SetActive(false);
+                corsair.SetActive(false);
+
+                if (!succed)
+                {
+                    Instantiate(gustJarShot, gustJar.transform.position, gustJar.transform.rotation);
+                }
+
             }
-            gustJarUp = false;
-            gustJar.SetActive(false);
-            corsair.SetActive(false);
+
         }
 
 

@@ -57,6 +57,19 @@ public class CameraCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Moveable")
+        {
+            if (other.GetHashCode() == lastCollision)
+            {
+                maxTimeout *= 1.5f;
+
+                if (maxTimeout > 2f)
+                    maxTimeout = 2f;
+            }
+            else
+                maxTimeout = 0.125f;
+        }
+
         //Debug.Log("enter");
         /*
         if (other.tag == "moveable")
@@ -77,12 +90,15 @@ public class CameraCollider : MonoBehaviour
             collisionTimeout = 0;
             collided = true;
 
+            /*
             if (other.GetHashCode() == lastCollision)
             {
-                maxTimeout *= 2;
+                Debug.Log(maxTimeout);
+                maxTimeout *= 1.5f;
             }
             else
                 maxTimeout = 0.125f;
+            */
 
             //Debug.Log("stay");
             //Vector3 tempDirection = (other.transform.position - transform.position);
@@ -108,6 +124,7 @@ public class CameraCollider : MonoBehaviour
     {
         if (other.tag == "Moveable")
         {
+
             lastCollision = other.GetHashCode();
             collided = false;
             //lastCollision = other.name;
