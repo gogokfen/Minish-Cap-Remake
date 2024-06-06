@@ -55,6 +55,7 @@ public class Movement : MonoBehaviour
 
 
     public static bool potUp = false;
+    public static bool throwing = false;
 
     public static int push = -2; //idle
 
@@ -105,10 +106,18 @@ public class Movement : MonoBehaviour
 
         if (potUp)
         {
+            sword.SetActive(false);
+            shield.SetActive(false);
             if (stunned)
             {
                 anim.Play("Pot Lift");
             }
+        }
+
+        if (throwing)
+        {
+            throwing = false;
+            anim.SetTrigger("Throwing");
         }
 
 

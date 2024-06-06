@@ -23,10 +23,6 @@ public class ActionText : MonoBehaviour
         if (canvasGroup == null)
         {
             canvasGroup = GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                Debug.Log("CanvasGroup component not found.");
-            }
         }
         tempText = "";
     }

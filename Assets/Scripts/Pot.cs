@@ -41,12 +41,12 @@ public class Pot : MonoBehaviour
             potUp = true;
             animationTime = 0;
             originalPos = transform.position;
-            Movement.Stun(0.15f);
+            Movement.Stun(0.4f);
             Movement.potUp = true;
         }
         if (lifting)
         {
-            animationTime += (Time.deltaTime *6.65f);
+            animationTime += (Time.deltaTime *2f);
             if (animationTime >= 1)
                 lifting = false;
             transform.position = Vector3.Lerp(originalPos, new Vector3(Movement.playerPosition.x, Movement.playerPosition.y + 2.5f, Movement.playerPosition.z), animationTime);
@@ -107,6 +107,7 @@ public class Pot : MonoBehaviour
         throwing = true;
         transform.SetParent(null);
         //Movement.potUp = false;
+        Movement.throwing = true;
         potUp = false;
     }
     //overload
