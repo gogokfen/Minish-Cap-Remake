@@ -123,7 +123,10 @@ public class Pot : MonoBehaviour
     {
         Movement.potUp = false;
         Instantiate(particlePrefab, transform.position, Quaternion.identity);
-        Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        if (Random.Range(1, HealthSystem.currentHealth) == 1)
+        {
+            Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 

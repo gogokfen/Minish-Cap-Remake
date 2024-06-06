@@ -29,9 +29,10 @@ public class PotCollider : MonoBehaviour
         if (other.tag == "Weapon")
         {
             ActionText.UpdateText("");
-            Destroy(pot.gameObject);
-            Instantiate(pot.particlePrefab, transform.position, Quaternion.identity);
-            Instantiate(pot.heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+            pot.Explode();
+            //Destroy(pot.gameObject);
+            // Instantiate(pot.particlePrefab, transform.position, Quaternion.identity);
+            // Instantiate(pot.heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
         }
         if (other.tag == "Player")
         {
