@@ -219,7 +219,7 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp)
+        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp && (swordTimer == 0 || swordTimer>0.25f))
         {
             midAction = true;
             int randomSFX = Random.Range(1, 6);
