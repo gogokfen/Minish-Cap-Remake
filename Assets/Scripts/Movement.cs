@@ -222,7 +222,7 @@ public class Movement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp && (swordTimer == 0 || swordTimer>0.25f))
         {
             midAction = true;
-            int randomSFX = Random.Range(1, 6);
+            int randomSFX = Random.Range(1, 5);
             
             switch (randomSFX)
             {
@@ -230,16 +230,13 @@ public class Movement : MonoBehaviour
                     SFXController.PlaySFX("LinkAttack1", 1.0f);
                     break;
                 case 2:
-                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    SFXController.PlaySFX("LinkAttack2", 1.0f);
                     break;
                 case 3:
-                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    SFXController.PlaySFX("LinkAttack3", 1.0f);
                     break;
                 case 4:
-                    SFXController.PlaySFX("LinkAttack1", 1.0f);
-                    break;
-                case 5:
-                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    SFXController.PlaySFX("LinkAttack4", 1.0f);
                     break;
             }
 
