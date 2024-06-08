@@ -227,16 +227,16 @@ public class Movement : MonoBehaviour
             switch (randomSFX)
             {
                 case 1:
-                    SFXController.PlaySFX("LinkAttack1", 1.0f);
+                    SFXController.PlaySFX("LinkAttack1", 0.55f);
                     break;
                 case 2:
-                    SFXController.PlaySFX("LinkAttack2", 1.0f);
+                    SFXController.PlaySFX("LinkAttack2", 0.55f);
                     break;
                 case 3:
-                    SFXController.PlaySFX("LinkAttack3", 1.0f);
+                    SFXController.PlaySFX("LinkAttack3", 0.55f);
                     break;
                 case 4:
-                    SFXController.PlaySFX("LinkAttack4", 1.0f);
+                    SFXController.PlaySFX("LinkAttack4", 0.55f);
                     break;
             }
 
@@ -376,7 +376,7 @@ public class Movement : MonoBehaviour
                 {
                     midAction = true;
                     rolling = true;
-                    SFXController.PlaySFX("LinkRoll", 1.0f);
+                    SFXController.PlaySFX("LinkRoll", 0.5f);
                     anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
                     rollingTimer = 0.75f; //0.3f //original was 0.25f
