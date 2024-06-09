@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.844
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1961453633}
-  m_IndirectSpecularColor: {r: 0.08162786, g: 0.18387742, b: 0.31110805, a: 0.844}
+  m_IndirectSpecularColor: {r: 0.061897174, g: 0.13523045, b: 0.23074034, a: 0.844}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5006,7 +5006,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 314707963}
-  - component: {fileID: 314707964}
   m_Layer: 0
   m_Name: Pots
   m_TagString: Untagged
@@ -5033,18 +5032,6 @@ Transform:
   m_Father: {fileID: 1462093064}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &314707964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314707962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1607e77752afbf448a37531fd942c7a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &315657968 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9217234437682292332, guid: 0346cdcf37856fd4bb6815d591287a93,
@@ -8973,6 +8960,7 @@ GameObject:
   - component: {fileID: 589257385}
   - component: {fileID: 589257384}
   - component: {fileID: 589257386}
+  - component: {fileID: 589257387}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: Untagged
@@ -9052,6 +9040,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3054cbdb52b9b4f96b63fa0f9ddb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &589257387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589257381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0fd745bf4e952408e8295a24c31ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionalLight: {fileID: 1961453634}
 --- !u!1 &590018914
 GameObject:
   m_ObjectHideFlags: 0
@@ -14875,6 +14876,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1713568443178103265, guid: 777327492ed05224e82ce9be23d635e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2141851933689342067, guid: 777327492ed05224e82ce9be23d635e3,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4460349909108103170, guid: 777327492ed05224e82ce9be23d635e3,
         type: 3}
       propertyPath: m_RootOrder
@@ -24116,6 +24127,12 @@ BoxCollider:
 --- !u!108 &1961453633 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 3024101686641972877, guid: 6d76b9b723fd3e742b799ab085d0f8f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1404734180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1961453634 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3024101686641972876, guid: 6d76b9b723fd3e742b799ab085d0f8f8,
     type: 3}
   m_PrefabInstance: {fileID: 1404734180}
   m_PrefabAsset: {fileID: 0}

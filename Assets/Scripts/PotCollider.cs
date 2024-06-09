@@ -30,9 +30,6 @@ public class PotCollider : MonoBehaviour
         {
             ActionText.UpdateText("");
             pot.Explode();
-            //Destroy(pot.gameObject);
-            // Instantiate(pot.particlePrefab, transform.position, Quaternion.identity);
-            // Instantiate(pot.heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
         }
         if (other.tag == "Player")
         {

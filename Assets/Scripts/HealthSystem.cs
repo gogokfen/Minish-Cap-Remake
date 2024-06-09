@@ -32,7 +32,6 @@ public class HealthSystem : MonoBehaviour
     public static void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log(currentHealth);
         if (currentHealth < 0) currentHealth = 0;
         updatedHearts = true;
     }
