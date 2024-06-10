@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ActionText : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class ActionText : MonoBehaviour
     private static ActionText instance;
     private bool fadedIn;
     //public bool needsFading;
+
+    [SerializeField] GameObject textOnObject;
+
+    [SerializeField] TextMeshProUGUI textObject;
+
+    static Vector3 pos;
+    static float YRotation;
 
     void Awake()
     {
@@ -29,7 +37,20 @@ public class ActionText : MonoBehaviour
 
     void Update()
     {
+        //transform.position = pos;
+        //text.transform.position = pos;
+        //text.rectTransform.position = pos;
+
         text.text = tempText;
+        textObject.text = tempText;
+
+        if (text.text == "")
+        {
+            textOnObject.SetActive(false);
+        }
+        else
+            textOnObject.SetActive(true);
+
     }
 
     public static void UpdateText(string newText)
@@ -101,4 +122,5 @@ public class ActionText : MonoBehaviour
             canvasGroup.alpha = 0f;
         }
     }
+
 }
