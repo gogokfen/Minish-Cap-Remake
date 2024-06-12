@@ -28,6 +28,7 @@ public class CameraCollider : MonoBehaviour
 
     void Update()
     {
+        
         if (!collided)
         {
             collisionTimeout += Time.deltaTime;
@@ -48,12 +49,39 @@ public class CameraCollider : MonoBehaviour
             accelAmount = Mathf.Pow(accelAmount, 2); //making it non linear
             transform.Translate(direction * Time.deltaTime * accelAmount, Space.World);
         }
-
+        
 
         //Vector3 tempDirection = (playerPos.position - transform.position);
 
         //transform.Translate(tempDirection * Time.deltaTime * pushAmount,Space.World);
     }
+
+    private void FixedUpdate()
+    {
+        /**
+        if (!collided)
+        {
+            collisionTimeout += Time.fixedDeltaTime;
+
+            if (collisionTimeout > maxTimeout) //0.125f
+            {
+                revDirection = (CameraOriginalPos.position - transform.position);
+                transform.Translate(revDirection * Time.fixedDeltaTime * pushAmount * 2, Space.World);
+            }
+
+        }
+        else
+        {
+            Vector3 direction = (playerPos.position - transform.position);
+
+            accelAmount = Vector3.Distance(transform.position, playerPos.position);
+            accelAmount /= 2f;
+            accelAmount = Mathf.Pow(accelAmount, 2); //making it non linear
+            transform.Translate(direction * Time.fixedDeltaTime * accelAmount, Space.World);
+        }
+        */
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

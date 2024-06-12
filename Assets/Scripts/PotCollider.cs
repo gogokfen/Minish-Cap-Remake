@@ -20,7 +20,7 @@ public class PotCollider : MonoBehaviour
             suctionWindup = 0;
             pot.Throw(angleX, angleY);
 
-            //pot.potPhysicalCol.enabled = true;
+            pot.potPhysicalCol.enabled = true;
         }
     }
 

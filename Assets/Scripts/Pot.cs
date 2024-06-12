@@ -102,6 +102,7 @@ public class Pot : MonoBehaviour
 
     public void Throw()
     {
+        transform.tag = "Weapon";
         ActionText.UpdateText("");
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
         throwing = true;
@@ -113,6 +114,7 @@ public class Pot : MonoBehaviour
     //overload
     public void Throw(float angleX,float angleY)
     {
+        transform.tag = "Weapon";
         ActionText.UpdateText("");
         transform.eulerAngles = new Vector3(angleX, angleY, transform.eulerAngles.z);
         throwing = true;
