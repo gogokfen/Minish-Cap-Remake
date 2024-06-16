@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class PressureButton : MonoBehaviour
 {
     public bool hardButton;
+    bool pressed;
     [SerializeField] Animator animator;
     [SerializeField] UnityEvent hardButtonPressed;
     [SerializeField] UnityEvent softButtonPressed;
@@ -24,22 +25,28 @@ public class PressureButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if (hardButton)
+        if (other.tag == "Player" && hardButton && !pressed)
         {
             animator.SetTrigger("HardPress");
             hardButtonPressed.Invoke();
+            pressed = true;
         }
 
-        if (!hardButton)
+        if (other.tag == "Player" && !hardButton && !pressed)
         {
             animator.SetBool("SoftPress", true);
             softButtonPressed.Invoke();
+            pressed = true;
         }
     }
 
     private void OnTriggerExit(Collider other) 
     {
+        if (other.tag == "Player" && !hardButton && pressed)
+        {
         animator.SetBool("SoftPress", false);
         softButtonReleased.Invoke();
+        pressed = false;
+        }
     }
 }
