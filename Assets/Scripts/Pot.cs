@@ -102,6 +102,7 @@ public class Pot : MonoBehaviour
 
     public void Throw()
     {
+        Destroy(gameObject, 3); //making sure pot is destroyed when thrown out of room
         transform.tag = "Weapon";
         ActionText.UpdateText("");
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
@@ -114,6 +115,7 @@ public class Pot : MonoBehaviour
     //overload
     public void Throw(float angleX,float angleY)
     {
+        Destroy(gameObject, 3);
         transform.tag = "Weapon";
         ActionText.UpdateText("");
         transform.eulerAngles = new Vector3(angleX, angleY, transform.eulerAngles.z);

@@ -9,18 +9,20 @@ public class SlugCollider : MonoBehaviour
     {
         if (other.tag == "Weapon")
         {
+            slug.hitEffect.Play();
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
             if (!slug.gotHit)
             {
                 slug.hp--;
+                if (slug.hp <= 0)
+                {
+                     //SFXController.PlaySFX("SlugHit", 0.55f); //Play slug dying SFX
+                    Destroy(slug.gameObject);
+                }
+                //SFXController.PlaySFX("SlugDie", 0.55f); //Play slug getting hit SFX
             }
-            if (slug.hp<= 0)
-            {
-                Destroy(slug.gameObject);
-            }
-
             slug.gotHit = true;
             slug.enemyText.text = "Hp: " + slug.hp;
         }

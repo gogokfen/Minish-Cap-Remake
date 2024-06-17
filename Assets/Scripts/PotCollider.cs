@@ -70,7 +70,6 @@ public class PotCollider : MonoBehaviour
             else //shake effect
             {
                 Vector3 randomShake = new Vector3(Random.Range(-5f, 5f), Random.Range(0, 1f), Random.Range(-5f, 5f)); //in case no animation
-
                 pot.transform.Translate(randomShake * Time.deltaTime);
             }
         }

@@ -84,6 +84,8 @@ public class Movement : MonoBehaviour
     Rigidbody rigid;
     Vector3 velocityRestter;
 
+    [SerializeField] GameObject gameOverScreen;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -103,10 +105,23 @@ public class Movement : MonoBehaviour
         cantPull = false;
 
         succed = false;
+
+        mud = false;
     }
 
     void Update()
     {
+        if (HealthSystem.currentHealth<=0)
+        {
+            //oron implement these parts
+            //anim.SetTrigger("death");
+            //SFXController.PlaySFX("LinkAttack1", 0.55f); //play death sound
+            transform.eulerAngles = new Vector3(90, 0, 0);
+            gameOverScreen.SetActive(true);
+            anim.Play("Idle");
+            return;
+        }
+
         anim.SetInteger("Push", push);
 
         if (potUp)
@@ -586,6 +601,11 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() //for all movements related to collision with rigid body
     {
+        if (HealthSystem.currentHealth <= 0)
+        {
+            return;
+        }
+
         if (!stunned && !rolling && !busy)
         {
 
@@ -781,7 +801,7 @@ public class Movement : MonoBehaviour
         if (gotHitTimer >= 0) //currently strictly changes position, might need to change later with collision problems
         {
             gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.deltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
+            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
         }
     }
 
