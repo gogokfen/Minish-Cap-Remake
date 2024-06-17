@@ -69,7 +69,8 @@ public class Chest : MonoBehaviour
     {
         if (keyChest)
         {
-            KeyInventory.Key++;
+            //KeyInventory.Key++;
+            KeyInventory.AddKey();
             chestOpened = true;
             ActionText.UpdateText("");
             Debug.Log("you got " + KeyInventory.Key);
