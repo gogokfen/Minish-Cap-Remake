@@ -85,6 +85,9 @@ public class Movement : MonoBehaviour
     Vector3 velocityRestter;
 
     [SerializeField] GameObject gameOverScreen;
+    private bool deadLink;
+    [SerializeField] AudioSource BGM;
+    [SerializeField] GameObject deathCamera;
 
     void Start()
     {
@@ -111,14 +114,15 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (HealthSystem.currentHealth<=0)
+        if (HealthSystem.currentHealth<=0 && !deadLink)
         {
-            //oron implement these parts
-            //anim.SetTrigger("death");
-            //SFXController.PlaySFX("LinkAttack1", 0.55f); //play death sound
-            transform.eulerAngles = new Vector3(90, 0, 0);
+            rolling = true;
+            anim.Play("Death");
+            SFXController.PlaySFX("DeathScreenSound", 0.55f); 
+            deathCamera.SetActive(true);
             gameOverScreen.SetActive(true);
-            anim.Play("Idle");
+            BGM.Stop();
+            deadLink = true;
             return;
         }
 

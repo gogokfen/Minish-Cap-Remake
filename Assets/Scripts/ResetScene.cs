@@ -9,8 +9,13 @@ public class ResetScene : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
+            SceneReset();
         }
+    }
+
+    public void SceneReset()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 }
