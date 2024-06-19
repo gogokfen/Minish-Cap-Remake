@@ -50,7 +50,7 @@ public class Movement : MonoBehaviour
     //float gustJarWindup;
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
-    [SerializeField] GameObject corsair;
+    [SerializeField] GameObject crosshair;
     [SerializeField] TrailRenderer swordSlash;
 
 
@@ -122,6 +122,7 @@ public class Movement : MonoBehaviour
                 SFXController.PlaySFX("DeathScreenSound", 0.55f);
                 deathCamera.SetActive(true);
                 gameOverScreen.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
                 BGM.Stop();
             }
             deadLink = true;
@@ -339,12 +340,12 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (Input.GetMouseButton(2) && !rolling && !busy && !potUp && !stunned && !shieldUp)
+        if (Input.GetKey(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp)
         {
             gustJarUp = true;
             gustJar.SetActive(true);
             gustJar.transform.LookAt(gustJarTarget);
-            corsair.SetActive(true);
+            crosshair.SetActive(true);
             gustJarPos = gustJarHoleTrans.position;
         }
         else
@@ -354,7 +355,7 @@ public class Movement : MonoBehaviour
                 Stun(0.25f);
                 gustJarUp = false;
                 gustJar.SetActive(false);
-                corsair.SetActive(false);
+                crosshair.SetActive(false);
 
                 if (!succed)
                 {

@@ -34,5 +34,10 @@ public class CameraRotator : MonoBehaviour
             turn.y = -min;
         }
         transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+
+        if (HealthSystem.currentHealth<=0)
+        {
+            Destroy(this);
+        }
     }
 }
