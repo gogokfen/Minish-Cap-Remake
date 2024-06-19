@@ -20,10 +20,6 @@ public class CameraCollider : MonoBehaviour
 
     //string lastCollision;
     int lastCollision;
-    void Start()
-    {
-
-    }
 
 
     void Update()
@@ -55,10 +51,10 @@ public class CameraCollider : MonoBehaviour
 
         //transform.Translate(tempDirection * Time.deltaTime * pushAmount,Space.World);
     }
-
+    /**
     private void FixedUpdate()
     {
-        /**
+        
         if (!collided)
         {
             collisionTimeout += Time.fixedDeltaTime;
@@ -79,13 +75,13 @@ public class CameraCollider : MonoBehaviour
             accelAmount = Mathf.Pow(accelAmount, 2); //making it non linear
             transform.Translate(direction * Time.fixedDeltaTime * accelAmount, Space.World);
         }
-        */
+       
     }
-
+     */
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Moveable")
+        if (other.tag.Equals("Moveable"))
         {
             if (other.GetHashCode() == lastCollision)
             {
@@ -113,7 +109,7 @@ public class CameraCollider : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.tag == "Moveable") //&& other.GetHashCode() !=lastCollision
+        if (other.tag.Equals("Moveable")) //&& other.GetHashCode() !=lastCollision
         {
             collisionTimeout = 0;
             collided = true;
@@ -150,7 +146,7 @@ public class CameraCollider : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Moveable")
+        if (other.tag.Equals("Moveable"))
         {
 
             lastCollision = other.GetHashCode();

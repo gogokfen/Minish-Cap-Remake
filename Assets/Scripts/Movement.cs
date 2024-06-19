@@ -114,14 +114,16 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (HealthSystem.currentHealth<=0 && !deadLink)
+        if (HealthSystem.currentHealth<=0)
         {
-            rolling = true;
-            anim.Play("Death");
-            SFXController.PlaySFX("DeathScreenSound", 0.55f); 
-            deathCamera.SetActive(true);
-            gameOverScreen.SetActive(true);
-            BGM.Stop();
+            if (!deadLink)
+            {
+                anim.Play("Death");
+                SFXController.PlaySFX("DeathScreenSound", 0.55f);
+                deathCamera.SetActive(true);
+                gameOverScreen.SetActive(true);
+                BGM.Stop();
+            }
             deadLink = true;
             return;
         }

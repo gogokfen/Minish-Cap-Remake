@@ -13,8 +13,8 @@ public class Slug : MonoBehaviour
     float animationTime;
     int rotation;
 
-    [SerializeField] public int hp;
-    [SerializeField] public TextMeshPro enemyText;
+    public int hp;
+    public TextMeshPro enemyText;
 
     [SerializeField] GameObject slugShadow;
 

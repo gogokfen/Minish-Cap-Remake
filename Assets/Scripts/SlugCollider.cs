@@ -7,7 +7,7 @@ public class SlugCollider : MonoBehaviour
     [SerializeField] Slug slug;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Weapon")
+        if (other.tag.Equals("Weapon"))
         {
             slug.hitEffect.Play();
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
@@ -28,7 +28,7 @@ public class SlugCollider : MonoBehaviour
         }
 
 
-        if (other.tag == "Player")
+        if (other.tag.Equals("Player"))
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
             slug.direction.x = tempDirection.x;
@@ -38,7 +38,7 @@ public class SlugCollider : MonoBehaviour
         }
 
 
-        if (other.tag == "Shield")
+        if (other.tag.Equals("Shield"))
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
