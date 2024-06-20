@@ -114,6 +114,10 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenu.paused)
+        {
+            return;
+        }
         if (HealthSystem.currentHealth<=0)
         {
             if (!deadLink)
@@ -608,6 +612,10 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() //for all movements related to collision with rigid body
     {
+        if (PauseMenu.paused)
+        {
+            return;
+        }
         if (HealthSystem.currentHealth <= 0)
         {
             return;

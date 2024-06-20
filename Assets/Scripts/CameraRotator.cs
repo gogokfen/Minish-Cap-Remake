@@ -18,7 +18,10 @@ public class CameraRotator : MonoBehaviour
 
     void Update()
     {
-
+        if (PauseMenu.paused)
+        {
+            return;
+        }
         transform.position = playerPos.position;
 
         turn.x += Input.GetAxis("Mouse X") * sens;
