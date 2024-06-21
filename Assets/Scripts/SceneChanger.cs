@@ -74,9 +74,4 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene("OsherScene");
     }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
 }

@@ -25,6 +25,11 @@ public class Dialogue : MonoBehaviour
             CloseDialogue();
             dialogueOpen = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Dialogue.StartDialogue(0);
+        }
     }
 
     IEnumerator TypeLine()
@@ -32,6 +37,31 @@ public class Dialogue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             text.text += c;
+            int randomSFX = Random.Range(1, 8);
+            switch (randomSFX)
+            {
+                case 1:
+                    SFXController.PlaySFX("EzioCaw1", 0.55f);
+                    break;
+                case 2:
+                    SFXController.PlaySFX("EzioCaw2", 0.55f);
+                    break;
+                case 3:
+                    SFXController.PlaySFX("EzioCaw3", 0.55f);
+                    break;
+                case 4:
+                    SFXController.PlaySFX("EzioCaw4", 0.55f);
+                    break;
+                case 5:
+                    SFXController.PlaySFX("EzioCaw5", 0.55f);
+                    break;
+                case 6:
+                    SFXController.PlaySFX("EzioCaw6", 0.55f);
+                    break;
+                case 7:
+                    SFXController.PlaySFX("EzioCaw7", 0.55f);
+                    break;
+            }
             yield return new WaitForSeconds(textSpeed);
         }
     }
