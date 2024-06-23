@@ -10,6 +10,7 @@ public class ClimbCheck : MonoBehaviour
     float smoothTime;
     [SerializeField]float smoothSpeed = 5;
     Vector3 newPos;
+    //Vector3 playerOriginalPos;
     bool smooth = false;
     float groundY;
     void Start()

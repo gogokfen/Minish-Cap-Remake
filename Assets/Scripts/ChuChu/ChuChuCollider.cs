@@ -56,7 +56,7 @@ public class ChuChuCollider : MonoBehaviour
                 gotHitTimer = 0.25f;
                 if (chuchu.hp <= 0)
                 {
-                    Destroy(chuchu.gameObject);
+                    Destroy(chuchu.gameObject,1f);
                 }
                 //Debug.Log(chuchu.hp);
             }

@@ -335,7 +335,7 @@ public class Movement : MonoBehaviour
         {
             moveSpeed = originalSpeed * 0.6f;
         }
-        else if (shieldUp)
+        else if (shieldUp || gustJarUp)
         {
             moveSpeed = originalSpeed * 0.75f; //6
         }

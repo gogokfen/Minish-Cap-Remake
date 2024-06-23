@@ -5212,7 +5212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallingFromSky: 0
   fallingTimer: 0
-  moveSpeed: 1
+  moveSpeed: 2
   hp: 2
   enemyText: {fileID: 7001174188501098640}
   slugShadow: {fileID: 0}
@@ -10176,7 +10176,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a96347958317b52438ba3b6b1cd908ab,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10285,7 +10285,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e3c007bd941090b4e9d88b0940d50386,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4431670454091400558, guid: e3c007bd941090b4e9d88b0940d50386,
         type: 3}

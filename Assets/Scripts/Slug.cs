@@ -9,12 +9,14 @@ public class Slug : MonoBehaviour
     [SerializeField] float fallingTimer;
     private float maxFall;
     [SerializeField] float moveSpeed;
+    float randomizer;
+    float originalSpeed;
     float rotationTimer;
     float animationTime;
     int rotation;
 
     public int hp;
-    public TextMeshPro enemyText;
+    //public TextMeshPro enemyText;
 
     [SerializeField] GameObject slugShadow;
 
@@ -32,23 +34,29 @@ public class Slug : MonoBehaviour
 
     private void Start()
     {
+        randomizer = Random.Range(0, 10f);
         maxFall = fallingTimer;
         slugMat = slugBody.GetComponent<Renderer>().material;
         slugColor = new Color32(255, 250, 146, 255);
+
+        originalSpeed = moveSpeed;
     }
 
     void Update()
     {
-        enemyText.text = "hp: " + hp;
+        //enemyText.text = "hp: " + hp;
         if (!fallingFromSky)
         {
+            moveSpeed = 0.20f + originalSpeed* Mathf.Abs(Mathf.Sin(((Time.time/1.5f)+randomizer)))*Mathf.Pow(((Time.time/1.5f)+randomizer)%Mathf.PI/2f,3); //riz cooked?
+            //Debug.Log(moveSpeed);
+            //moveSpeed = originalSpeed* Mathf.Abs(Mathf.Sin((Time.time+randomizer)))*Mathf.Pow((Time.time+randomizer)%Mathf.PI/2f,2); //riz cooked?
             rotationTimer -= Time.deltaTime;
-            animationTime += Time.deltaTime; //*4
+            animationTime += Time.deltaTime/4; //*4
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotation * 90, 0), animationTime);
             if (rotationTimer <= 0)
             {
                 animationTime = 0;
-                rotationTimer = 4;
+                rotationTimer = 4 + Random.Range(-1,1);
                 rotation = Random.Range(1, 5);
             }
             if (gotHitTimer <= 0)

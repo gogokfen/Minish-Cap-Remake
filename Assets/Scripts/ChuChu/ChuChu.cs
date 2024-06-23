@@ -100,7 +100,7 @@ public class ChuChu : MonoBehaviour
         }
 
 
-        if (attackTimer >= attackCooldown)
+        if (attackTimer >= attackCooldown && !vulnerable)
         {
             if (!attacking)
             {
@@ -202,11 +202,13 @@ public class ChuChu : MonoBehaviour
         {
             waddleTime += Time.deltaTime;
 
+            //transform.eulerAngles = new Vector3(30*Mathf.Sin(Time.time), transform.eulerAngles.y, transform.eulerAngles.z);
 
             if (waddleTime >= 5)
             {
                 if (fallDirection == 0)
                 {
+                    //GFX.transform.eulerAngles = new Vector3(0, 0, 0);
                     fallDirection = Random.Range(1, 3);
                     if (fallDirection == 2)
                     {
@@ -238,6 +240,8 @@ public class ChuChu : MonoBehaviour
             }
             else
             {
+                //GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+                GFX.transform.eulerAngles = new Vector3(0, 0, 30 * Mathf.Sin(Time.time * 2f));
                 direction = (Movement.playerPosition - transform.position);
                 transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
             }

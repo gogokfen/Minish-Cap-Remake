@@ -5,8 +5,26 @@ using UnityEngine;
 public class PuffstoolCollider : MonoBehaviour
 {
     [SerializeField] Puffstool puffstool;
+    [SerializeField] GameObject GFX;
+
+    float newRot;
+
+    GameObject tempBody;
 
     float vulnerableWindup;
+
+    private void Start()
+    {
+        tempBody = new GameObject();
+    }
+
+    private void Update()
+    {
+        if (!puffstool.stunned)
+        {
+            GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Weapon")
@@ -16,7 +34,7 @@ public class PuffstoolCollider : MonoBehaviour
             puffstool.direction.y = tempDirection.z;
             if (puffstool.vulnerable)
             {
-                Destroy(puffstool.gameObject);
+                Destroy(puffstool.gameObject,0.5f);
             }
 
             puffstool.gotHit = true;
@@ -56,12 +74,30 @@ public class PuffstoolCollider : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+
         if (other.tag == "GustJar")
         {
             vulnerableWindup += Time.deltaTime;
             puffstool.stunned = true;
 
-            if (vulnerableWindup>=2)
+            //Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            //Debug.Log(tempDirection.normalized);
+            //puffstool.transform.Rotate(10 *Time.deltaTime,0,0);
+            /*
+            newRot = vulnerableWindup * 60;
+            if (newRot > 35)
+                newRot = 35;
+            */
+            tempBody.transform.position = Movement.playerPosition;
+            puffstool.transform.LookAt(tempBody.transform.position);
+            //GFX.transform.eulerAngles = new Vector3(newRot, 0, 0);
+            GFX.transform.Rotate(60 *Time.deltaTime, 0, 0);
+            if (GFX.transform.eulerAngles.x>=35)
+            {
+                GFX.transform.eulerAngles = new Vector3(35, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z);
+            }
+
+            if (vulnerableWindup >= 2)
             {
                 puffstool.vulnerable = true;
                 puffstool.stunDuration = 10;
@@ -71,7 +107,9 @@ public class PuffstoolCollider : MonoBehaviour
                 puffstool.stunDuration = 2;
             }
         }
+
     }
+    
 
     private void OnTriggerExit(Collider other)
     {

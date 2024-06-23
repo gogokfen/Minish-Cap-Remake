@@ -17,7 +17,8 @@ public class ChuChuLegs : MonoBehaviour
         {
             if (transform.localScale.x<1)
             {
-                transform.localScale *= 1.0015f;
+                //transform.localScale *= 1.0015f;
+                transform.localScale *= 1+(Time.deltaTime/1.25f);
             }
         }
     }
@@ -26,9 +27,10 @@ public class ChuChuLegs : MonoBehaviour
     {
         if (other.tag == "GustJar")
         {
-            if (transform.localScale.magnitude > 0.85f)
+            if (transform.localScale.magnitude > 0.80f) //0.85f
             {
-                transform.localScale /= 1.004f;
+                //transform.localScale /= 1.004f;
+                transform.localScale /= 1 + (Time.deltaTime/6f);
             }
             else
             {

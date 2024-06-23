@@ -26,9 +26,14 @@ public class Puffstool : MonoBehaviour
     public float stunDuration;
 
     [SerializeField] GameObject sporePrefab;
+
+    [SerializeField] GameObject puffstoolBody;
+    Material puffstoolMat;
+    Color32 puffstoolColor;
     void Start()
     {
-
+        puffstoolMat = puffstoolBody.GetComponent<Renderer>().material;
+        puffstoolColor = new Color32(255, 250, 146, 255);
     }
 
     // Update is called once per frame
@@ -66,7 +71,7 @@ public class Puffstool : MonoBehaviour
 
                 if (sporesTimer >= 2 && !pooped)
                 {
-                    Instantiate(sporePrefab, new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z), Quaternion.identity);
+                    Instantiate(sporePrefab, transform.position, Quaternion.identity);
                     pooped = true;
                 }
 
@@ -89,6 +94,20 @@ public class Puffstool : MonoBehaviour
             }
         }
 
+
+        if (vulnerable)
+        {
+            puffstoolMat.SetColor("_BaseColor", puffstoolColor);
+
+            //puffstoolColor = new Color32(255, 255, 255, 255);
+            puffstoolColor = Color.white;
+        }
+        else
+        {
+            puffstoolMat.SetColor("_BaseColor", puffstoolColor);
+
+            puffstoolColor = new Color32(255, 250, 146, 255);
+        }
 
         if (gotHit)
         {
