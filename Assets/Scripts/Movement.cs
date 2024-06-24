@@ -225,7 +225,6 @@ public class Movement : MonoBehaviour
             //Debug.Log(playerPosition);
             transform.position = playerPosition;
             //return; //stunned while holding space
-
             //rigid.isKinematic = true;
             rigid.constraints = (RigidbodyConstraints)116; //I can't believe this actually worked
             //rigid.constraints = RigidbodyConstraints.FreezePositionY;
