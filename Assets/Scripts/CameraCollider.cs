@@ -21,9 +21,21 @@ public class CameraCollider : MonoBehaviour
     //string lastCollision;
     int lastCollision;
 
+    float lerpValue;
 
     void Update()
     {
+        if (Movement.gustJarUp)
+        {
+            lerpValue += Time.deltaTime/3f;
+            transform.position = Vector3.Lerp(transform.position, new Vector3(CameraOriginalPos.position.x, CameraOriginalPos.position.y+1.5f, CameraOriginalPos.position.z),lerpValue);
+        }
+        else
+        {
+            lerpValue = 0;
+        }
+            
+
         
         if (!collided)
         {

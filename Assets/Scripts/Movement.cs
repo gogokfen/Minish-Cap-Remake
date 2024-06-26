@@ -319,10 +319,14 @@ public class Movement : MonoBehaviour
             {
                 swordSlash.emitting = false;
             }
+            if (swordTimer >= 0.35)
+            {
+                swordCol.enabled = false;
+            }
             if (swordTimer >= 0.7)
             {
                 midAction = false;
-                swordCol.enabled = false;
+                //swordCol.enabled = false;
                 swordSwing = false;
                 swordTimer = 0;
                 //sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING

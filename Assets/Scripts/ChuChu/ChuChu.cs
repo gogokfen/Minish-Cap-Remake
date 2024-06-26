@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ChuChu : MonoBehaviour
 {
@@ -198,7 +199,22 @@ public class ChuChu : MonoBehaviour
             }
         }
 
-        if (vulnerable)
+        if (vulnerable) //v2
+        {
+            waddleTime += Time.deltaTime;
+
+
+            
+            if (waddleTime<5)
+            {
+                //GFX.transform.eulerAngles = new Vector3(GFX.transform.eulerAngles.x, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z+30 * Mathf.Sin(Time.time * 2f));
+                GFX.transform.Rotate(0, 0, (Mathf.Sin(Time.time * 2f) * Time.deltaTime)*60) ;
+                direction = (Movement.playerPosition - transform.position);
+                transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
+            }
+        }
+        /**
+        if (vulnerable) //v1
         {
             waddleTime += Time.deltaTime;
 
@@ -232,7 +248,7 @@ public class ChuChu : MonoBehaviour
                     transform.eulerAngles = Vector3.zero;
                     fallDirection = 0;
                     vulnerable = false;
-                    wakingUp = false;
+                    //wakingUp = false;
                     fallen = false;
                     waddleTime = 0;
                 }
@@ -246,6 +262,42 @@ public class ChuChu : MonoBehaviour
                 transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
             }
         }
+        */
+    }
 
+    public void Waddle()
+    {
+        waddleTime = 0;
+
+        fallDirection = Random.Range(1, 3);
+        if (fallDirection == 2)
+        {
+            fallDirection = -1;
+        }
+
+        Sequence vulnerableSeq = DOTween.Sequence();
+        Tween fall = transform.DORotate(new Vector3(0, 0, 0 + 90 * fallDirection), 1);
+        fall.SetDelay(6);
+        Tween wakeUp = transform.DORotate(Vector3.zero, 1);
+        fall.OnComplete(() =>
+        {
+            fallen = true;
+        });
+        wakeUp.OnComplete(() =>
+        {
+            wakingUp = true;
+        });
+        vulnerableSeq.Append(fall);
+        vulnerableSeq.AppendInterval(4);
+        vulnerableSeq.Append(wakeUp);
+        vulnerableSeq.AppendInterval(1);
+        vulnerableSeq.OnComplete(() =>
+        {
+            vulnerable = false;
+            fallen = false;
+            wakingUp = false;
+        });
+        //vulnerableSeq.SetDelay(4).OnComplete(()=> { wakingUp = true; });
+        //vulnerableSeq.Append(wakeUp);
     }
 }
