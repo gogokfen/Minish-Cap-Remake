@@ -7,7 +7,7 @@ public class KeyInventory : MonoBehaviour
 {
     public static int Key = 0;
     public static int bossKey = 0;
-    private static bool addingKey;
+    private static bool changeKey;
     [SerializeField] TextMeshProUGUI keyText;
 
     private void Start()
@@ -16,10 +16,10 @@ public class KeyInventory : MonoBehaviour
     }
     private void Update() 
     {
-        if (addingKey)
+        if (changeKey)
         {
         keyText.text = Key.ToString();
-        addingKey = false;
+        changeKey = false;
         }
     }
 
@@ -27,6 +27,12 @@ public class KeyInventory : MonoBehaviour
     public static void AddKey()
     {
         Key++;
-        addingKey = true;
+        changeKey = true;
+    }
+
+    public static void RemoveKey()
+    {
+        Key--;
+        changeKey = true;
     }
 }
