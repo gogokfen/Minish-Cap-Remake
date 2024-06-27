@@ -15,17 +15,19 @@ public class ChuChu : MonoBehaviour
     float jumpTimer;
     [SerializeField] float jumpCooldown = 6;
     bool jumping = false;
-    bool located = false;
-    float jumpAnim;
-    Vector3 playerLastPos;
+    bool jumped = false;
+    //bool located = false;
+    //float jumpAnim;
+    //Vector3 playerLastPos;
     Vector3 halfWayPoint;
-    Vector3 chuchuLastPos;
+    //Vector3 chuchuLastPos;
 
     [HideInInspector]
     public bool vulnerable = false;
     [HideInInspector]
     public bool fallen = false;
     float waddleTime;
+    float waddleControl =Mathf.PI/4;
     int fallDirection = 0; //consider deleteing later
     [HideInInspector]
     public bool wakingUp = false;
@@ -40,6 +42,7 @@ public class ChuChu : MonoBehaviour
     [SerializeField] Transform shakeSpot;
     float shakeTimer;
     Vector3 shakeDir;
+    Quaternion lastGFXRot;
 
 
     //GameObject tempBody;
@@ -106,10 +109,14 @@ public class ChuChu : MonoBehaviour
             if (!attacking)
             {
                 attackRoll = Random.Range(0, 2);
+                if (attackRoll ==0)
+                {
+                    lastGFXRot = GFX.transform.rotation;
+                }
             }
             attacking = true;
 
-            if (attackRoll == 1)
+            if (attackRoll == 1) //spit
             {
                 if (attackTimer >= attackCooldown + 2)
                 {
@@ -139,7 +146,7 @@ public class ChuChu : MonoBehaviour
                 }
             }
 
-            else if (attackRoll == 0)
+            else if (attackRoll == 0) //shake
             {
                 if (attackTimer >= attackCooldown + 2)
                 {
@@ -156,7 +163,8 @@ public class ChuChu : MonoBehaviour
                     shakeDir = new Vector3(Random.Range(-45, 15), Random.Range(0, 360), 0);
                     GameObject tempShake = Instantiate(shakeSpit, shakeSpot.position,Quaternion.Euler(shakeDir)); //Quaternion.Euler(shakeSpot.eulerAngles+shakeSpit.transform.eulerAngles)
                     shakeTimer = 0.05f;
-                    GFX.transform.rotation = Quaternion.identity;
+                    //GFX.transform.rotation = Quaternion.identity;
+                    GFX.transform.rotation = lastGFXRot;
                     shakeDir = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
                 }
                 
@@ -167,7 +175,29 @@ public class ChuChu : MonoBehaviour
 
         }
 
-        if (jumpTimer >= jumpCooldown) //10
+
+        if (jumpTimer >= jumpCooldown) //V2
+        {
+            if (!jumping && !attacking)
+            {
+                jumping = true;
+            }
+            if (jumpTimer >= jumpCooldown + 1 && !jumped)
+            {
+                Jump();
+            }
+
+            /*
+            if (jumpTimer >jumpCooldown +0.5f)
+            {
+                jumpAnim += Time.deltaTime;
+                transform.position = Vector3.Lerp(chuchuLastPos, playerLastPos, jumpAnim);
+            }
+            */
+        }
+
+        /**
+        if (jumpTimer >= jumpCooldown) //10 V1
         {
             if (!jumping && !attacking)
             {
@@ -199,6 +229,8 @@ public class ChuChu : MonoBehaviour
             }
         }
 
+        */
+
         if (vulnerable) //v2
         {
             waddleTime += Time.deltaTime;
@@ -207,10 +239,12 @@ public class ChuChu : MonoBehaviour
             
             if (waddleTime<5)
             {
+                waddleControl += Time.deltaTime;
                 //GFX.transform.eulerAngles = new Vector3(GFX.transform.eulerAngles.x, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z+30 * Mathf.Sin(Time.time * 2f));
-                GFX.transform.Rotate(0, 0, (Mathf.Sin(Time.time * 2f) * Time.deltaTime)*60) ;
+                GFX.transform.Rotate(0, 0, (Mathf.Sin(waddleControl * 2f) * Time.deltaTime)*60) ;
                 direction = (Movement.playerPosition - transform.position);
-                transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
+                //transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
+                transform.Translate(new Vector3(direction.x,0,0) * moveSpeed * Time.deltaTime);
             }
         }
         /**
@@ -269,6 +303,8 @@ public class ChuChu : MonoBehaviour
     {
         waddleTime = 0;
 
+        GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+
         fallDirection = Random.Range(1, 3);
         if (fallDirection == 2)
         {
@@ -276,8 +312,12 @@ public class ChuChu : MonoBehaviour
         }
 
         Sequence vulnerableSeq = DOTween.Sequence();
-        Tween fall = transform.DORotate(new Vector3(0, 0, 0 + 90 * fallDirection), 1);
+        //Tween fall = transform.DORotate(new Vector3(0, 0, 0 + 90 * fallDirection), 1);
+        Tween fall = transform.DORotate(GFX.transform.forward*90*fallDirection, 1);
         fall.SetDelay(6);
+        fall.OnStart(() => { 
+            GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+        });
         Tween wakeUp = transform.DORotate(Vector3.zero, 1);
         fall.OnComplete(() =>
         {
@@ -296,8 +336,54 @@ public class ChuChu : MonoBehaviour
             vulnerable = false;
             fallen = false;
             wakingUp = false;
+            waddleControl = Mathf.PI / 4;
         });
         //vulnerableSeq.SetDelay(4).OnComplete(()=> { wakingUp = true; });
         //vulnerableSeq.Append(wakeUp);
+    }
+
+    void Jump()
+    {
+        jumped = true;
+        //V2
+        /**
+        playerLastPos = Movement.playerPosition;
+        chuchuLastPos = transform.position;
+
+        //Tween forward = transform.DOMove(Movement.playerPosition, 1);
+        Tween up = transform.DOMoveY(transform.position.y+6, 0.5f).SetEase(Ease.InQuad);
+        Tween down = transform.DOMoveY(transform.position.y+0, 0.5f).SetEase(Ease.InQuad);
+
+        Sequence jump = DOTween.Sequence();
+        jump.PrependInterval(0.5f); //1
+        jump.Append(up);
+        jump.Append(down);
+        //jump.Insert(0.5f, forward);
+        jump.OnComplete(() =>
+        {
+            jumpTimer = 0;
+            jumping = false;
+            jumpAnim = 0;
+        });
+        */
+
+
+        //V1
+
+        halfWayPoint = new Vector3((Movement.playerPosition.x + transform.position.x) / 2, 6, (Movement.playerPosition.z + transform.position.z) / 2);
+        Tween up = transform.DOMove(halfWayPoint, 0.5f).SetEase(Ease.OutQuad);
+        Tween down = transform.DOMove(Movement.playerPosition, 0.5f).SetEase(Ease.InQuad);
+
+        Sequence jump = DOTween.Sequence();
+        //jump.PrependInterval(0.5f); //1
+        jump.Append(up);
+        jump.Append(down);
+        jump.OnComplete(() =>
+        {
+            jumpTimer = 0;
+            jumping = false;
+            jumped = false;
+        });
+        
     }
 }

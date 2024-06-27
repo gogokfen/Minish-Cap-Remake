@@ -33,6 +33,7 @@ public class ChuChuTargetedSpit : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection /= 2; //reduce knockback
             Movement.enemyHitAmount = 1;
             Movement.SmallHit(new Vector2(tempDirection.x,tempDirection.z));
             Destroy(gameObject);
@@ -42,6 +43,7 @@ public class ChuChuTargetedSpit : MonoBehaviour
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection /= 2; //reduce knockback
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
             Destroy(gameObject);
         }

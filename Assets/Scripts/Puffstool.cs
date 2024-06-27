@@ -30,6 +30,8 @@ public class Puffstool : MonoBehaviour
     [SerializeField] GameObject puffstoolBody;
     Material puffstoolMat;
     Color32 puffstoolColor;
+
+    [SerializeField] ParticleSystem hitEffect;
     void Start()
     {
         puffstoolMat = puffstoolBody.GetComponent<Renderer>().material;
@@ -113,12 +115,14 @@ public class Puffstool : MonoBehaviour
         {
             gotHit = false;
             gotHitTimer = 0.15f;
+            if (vulnerable)
+                hitEffect.Play();
         }
 
         if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 8), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 8)); //originally *2 and not timedeltatime
+            transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 5), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 5)); //originally *2 and not timedeltatime
         }
     }
 }
