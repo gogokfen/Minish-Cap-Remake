@@ -12660,7 +12660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPos: {fileID: 6794255310680784659}
   maxHightDiff: 0.2
-  smoothSpeed: 1.5
+  smoothSpeed: 0.25
 --- !u!1 &4632848126292106456
 GameObject:
   m_ObjectHideFlags: 0

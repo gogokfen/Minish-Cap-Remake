@@ -43,13 +43,16 @@ public class Movement : MonoBehaviour
     BoxCollider shieldCol;
 
     [SerializeField] GameObject gustJar;
+    CapsuleCollider gustJarCol;
     public static bool gustJarUp = false;
+    public static bool gustCamera = false;
     public static bool succed = false;
     [SerializeField] Transform gustJarHoleTrans;
     public static Vector3 gustJarPos;
     //float gustJarWindup;
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
+    [SerializeField] ParticleSystem gustJarSuction;
     [SerializeField] GameObject crosshair;
     [SerializeField] TrailRenderer swordSlash;
 
@@ -83,6 +86,7 @@ public class Movement : MonoBehaviour
 
     Rigidbody rigid;
     Vector3 velocityRestter;
+    public static bool disableGravity = false;
 
     [SerializeField] GameObject gameOverScreen;
     private bool deadLink;
@@ -91,6 +95,8 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        gustJarCol = gustJar.GetComponent<CapsuleCollider>();
+
         rigid = GetComponent<Rigidbody>();
 
         originalSpeed = moveSpeed;
@@ -105,11 +111,29 @@ public class Movement : MonoBehaviour
 
         potUp = false;
 
+        throwing = false;
+
         cantPull = false;
 
         succed = false;
 
+        gustJarUp = false;
+
+        gustCamera = false;
+
         mud = false;
+
+        disableGravity = false;
+
+        midAction = false;
+
+        busy = false;
+
+        shieldUp = false;
+
+        enemyShielded = false;
+
+        gotHit = false;
     }
 
     void Update()
@@ -118,7 +142,7 @@ public class Movement : MonoBehaviour
         {
             return;
         }
-        if (HealthSystem.currentHealth<=0)
+        if (HealthSystem.currentHealth <= 0)
         {
             if (!deadLink)
             {
@@ -202,6 +226,7 @@ public class Movement : MonoBehaviour
 
         */
 
+
         if (invul)
         {
             invulTimer -= Time.deltaTime;
@@ -217,6 +242,13 @@ public class Movement : MonoBehaviour
             }
         }
 
+        if (disableGravity)
+        {
+            rigid.useGravity = false;
+        }
+        else
+            rigid.useGravity = true;
+
 
         if (Input.GetKey(KeyCode.Space) && busy)
         {
@@ -229,8 +261,14 @@ public class Movement : MonoBehaviour
             rigid.constraints = (RigidbodyConstraints)116; //I can't believe this actually worked
             //rigid.constraints = RigidbodyConstraints.FreezePositionY;
             //rigid.freezeRotation = true;
+
+            gustJar.SetActive(false);
+            crosshair.SetActive(false);
+            gustJarUp = false;
+            gustCamera = false;
+
         }
-        else 
+        else
         {
             //rigid.isKinematic = false;
             if (rigid.constraints == (RigidbodyConstraints)116)
@@ -270,11 +308,11 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp && (swordTimer == 0 || swordTimer>0.25f))
+        if (Input.GetMouseButtonDown(0) && !gustJar.activeSelf && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp && (swordTimer == 0 || swordTimer > 0.25f))
         {
             midAction = true;
             int randomSFX = Random.Range(1, 5);
-            
+
             switch (randomSFX)
             {
                 case 1:
@@ -347,13 +385,78 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (Input.GetKey(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp)
+        if (gustJar.activeSelf && !rolling && !midAction && !stunned && !potUp)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                gustJar.SetActive(false);
+                crosshair.SetActive(false);
+                gustJarUp = false;
+                gustCamera = false;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                gustJarUp = true;
+                gustJarCol.enabled = true;
+                if (!gustJarSuction.isPlaying && !succed)
+                {
+                    gustJarSuction.Play();
+                }
+                else if (succed)
+                {
+                    gustJarSuction.Stop();
+                }
+            }
+            else
+            {
+                gustJarUp = false;
+                gustJarCol.enabled = false;
+                gustJarSuction.Stop();
+            }
+                
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                gustJarUp = false;
+                if (!succed)
+                {
+                    Stun(0.25f);
+                    Instantiate(gustJarShot, gustJar.transform.position, gustJar.transform.rotation);
+                }
+            }
+
+
+            gustJar.transform.LookAt(gustJarTarget);
+            gustJarPos = gustJarHoleTrans.position;
+        }
+
+        else if (Input.GetKeyDown(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp)
+        {
+            gustJar.SetActive(true);
+            crosshair.SetActive(true);
+            gustCamera = true;
+        }
+
+
+        /**
+        if ((Input.GetKey(KeyCode.E) ||Input.GetMouseButton(2) ) && !rolling && !busy && !potUp && !stunned && !shieldUp)
         {
             gustJarUp = true;
             gustJar.SetActive(true);
             gustJar.transform.LookAt(gustJarTarget);
             crosshair.SetActive(true);
             gustJarPos = gustJarHoleTrans.position;
+
+            if (!gustJarSuction.isPlaying && !succed)
+            {
+                gustJarSuction.Play();
+            }
+            else if (succed)
+            {
+                gustJarSuction.Stop();
+            }
+
         }
         else
         {
@@ -372,9 +475,9 @@ public class Movement : MonoBehaviour
             }
 
         }
+        */
 
-
-        if (Input.GetMouseButtonDown(1) && !rolling && !busy && !potUp) //shield
+        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !rolling && !busy && !potUp) //shield
         {
             midAction = true;
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
@@ -413,205 +516,205 @@ public class Movement : MonoBehaviour
             }
         }
 
-                /**
-                if (rolling)
+        /**
+        if (rolling)
+        {
+            rollingTimer -= Time.deltaTime; //0.75 seconds
+            //6 *3 = 18 (0.75)
+            //Debug.Log(rollingSpeed);
+            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
+            transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
+
+            shieldUp = false; //making sure shield isn't up when rolling
+            anim.SetBool("ShieldUp", false);
+
+            if (rollingTimer <= 0)
+            {
+                midAction = false;
+                rolling = false;
+                anim.SetBool("Rolling", false);
+                rollingCooldown = 0.10f;
+            }
+
+
+        }
+        else
+        {
+            rollingCooldown -= Time.deltaTime;
+        }
+        */
+        /**
+        if (!stunned && !rolling && !busy)
+        {
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
+            {
+                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
-                    rollingTimer -= Time.deltaTime; //0.75 seconds
-                    //6 *3 = 18 (0.75)
-                    //Debug.Log(rollingSpeed);
-                    rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
-                    transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
+                    midAction = true;
+                    rolling = true;
+                    SFXController.PlaySFX("LinkRoll", 0.5f);
+                    anim.Play("Rolling");
+                    anim.SetBool("Rolling", true);
+                    rollingTimer = 0.75f; //0.3f //original was 0.25f
+                }
 
-                    shieldUp = false; //making sure shield isn't up when rolling
-                    anim.SetBool("ShieldUp", false);
+                anim.SetBool("Moving", true);
 
-                    if (rollingTimer <= 0)
+                transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    //ActionText.UpdateText("Roll");
+                    if (Input.GetKey(KeyCode.A))
                     {
-                        midAction = false;
-                        rolling = false;
-                        anim.SetBool("Rolling", false);
-                        rollingCooldown = 0.10f;
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
                     }
-
-
-                }
-                else
-                {
-                    rollingCooldown -= Time.deltaTime;
-                }
-                */
-                /**
-                if (!stunned && !rolling && !busy)
-                {
-
-                    if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
+                    else if (Input.GetKey(KeyCode.D))
                     {
-                        if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
-                        {
-                            midAction = true;
-                            rolling = true;
-                            SFXController.PlaySFX("LinkRoll", 0.5f);
-                            anim.Play("Rolling");
-                            anim.SetBool("Rolling", true);
-                            rollingTimer = 0.75f; //0.3f //original was 0.25f
-                        }
-
-                        anim.SetBool("Moving", true);
-
-                        transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
-
-                        if (Input.GetKey(KeyCode.W))
-                        {
-                            //ActionText.UpdateText("Roll");
-                            if (Input.GetKey(KeyCode.A))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                                if (DirectionX > -0.7)
-                                    DirectionX -= Time.deltaTime * 5;
-                                if (DirectionY < 0.7)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else if (Input.GetKey(KeyCode.D))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                                if (DirectionX < 0.7)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY < 0.7)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 0f, 0);
-                                if (DirectionX < 0)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY < 1)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                        }
-                        else if (Input.GetKey(KeyCode.D))
-                        {
-                            //ActionText.UpdateText("Roll");
-                            if (Input.GetKey(KeyCode.W))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                                if (DirectionX < 0.7)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY < 0.7)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else if (Input.GetKey(KeyCode.S))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                                if (DirectionX < 0.7)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY > -0.7)
-                                    DirectionY -= Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90f, 0);
-                                if (DirectionX < 1)
-                                    DirectionX += Time.deltaTime*5;
-                                if (DirectionY < 0)
-                                    DirectionY += Time.deltaTime*5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                        }
-                        else if (Input.GetKey(KeyCode.S))
-                        {
-                            //ActionText.UpdateText("Roll");
-                            if (Input.GetKey(KeyCode.D))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                                if (DirectionX < 0.7)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY > -0.7)
-                                    DirectionY -= Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else if (Input.GetKey(KeyCode.A))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                                if (DirectionX > -0.7)
-                                    DirectionX -= Time.deltaTime * 5;
-                                if (DirectionY > -0.7)
-                                    DirectionY -= Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 180f, 0);
-                                if (DirectionX < 0)
-                                    DirectionX += Time.deltaTime * 5;
-                                if (DirectionY > -1)
-                                    DirectionY -= Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                        }
-                        else if (Input.GetKey(KeyCode.A))
-                        {
-                            //ActionText.UpdateText("Roll");
-                            if (Input.GetKey(KeyCode.S))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                                if (DirectionX > -0.7)
-                                    DirectionX -= Time.deltaTime * 5;
-                                if (DirectionY > -0.7)
-                                    DirectionY -= Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else if (Input.GetKey(KeyCode.W))
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                                if (DirectionX > -0.7)
-                                    DirectionX -= Time.deltaTime * 5;
-                                if (DirectionY < 0.7)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                            else
-                            {
-                                transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 270f, 0);
-                                if (DirectionX > -1)
-                                    DirectionX -= Time.deltaTime * 5;
-                                if (DirectionY < 0)
-                                    DirectionY += Time.deltaTime * 5;
-                                anim.SetFloat("DirectionX", DirectionX);
-                                anim.SetFloat("DirectionY", DirectionY);
-                            }
-                        }
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
                     }
                     else
                     {
-                        DirectionX = DirectionX / (1+Time.deltaTime*10);
-                        DirectionY = DirectionY / (1 + Time.deltaTime*10);
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 0f, 0);
+                        if (DirectionX < 0)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 1)
+                            DirectionY += Time.deltaTime * 5;
                         anim.SetFloat("DirectionX", DirectionX);
                         anim.SetFloat("DirectionY", DirectionY);
-
-                        anim.SetBool("Moving", false);
                     }
-
                 }
-                else
-                    anim.SetBool("Moving", false);
-                */
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    //ActionText.UpdateText("Roll");
+                    if (Input.GetKey(KeyCode.W))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else if (Input.GetKey(KeyCode.S))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90f, 0);
+                        if (DirectionX < 1)
+                            DirectionX += Time.deltaTime*5;
+                        if (DirectionY < 0)
+                            DirectionY += Time.deltaTime*5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+                    //ActionText.UpdateText("Roll");
+                    if (Input.GetKey(KeyCode.D))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
+                        if (DirectionX < 0.7)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else if (Input.GetKey(KeyCode.A))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 180f, 0);
+                        if (DirectionX < 0)
+                            DirectionX += Time.deltaTime * 5;
+                        if (DirectionY > -1)
+                            DirectionY -= Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    //ActionText.UpdateText("Roll");
+                    if (Input.GetKey(KeyCode.S))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY > -0.7)
+                            DirectionY -= Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else if (Input.GetKey(KeyCode.W))
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
+                        if (DirectionX > -0.7)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0.7)
+                            DirectionY += Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                    else
+                    {
+                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 270f, 0);
+                        if (DirectionX > -1)
+                            DirectionX -= Time.deltaTime * 5;
+                        if (DirectionY < 0)
+                            DirectionY += Time.deltaTime * 5;
+                        anim.SetFloat("DirectionX", DirectionX);
+                        anim.SetFloat("DirectionY", DirectionY);
+                    }
+                }
             }
+            else
+            {
+                DirectionX = DirectionX / (1+Time.deltaTime*10);
+                DirectionY = DirectionY / (1 + Time.deltaTime*10);
+                anim.SetFloat("DirectionX", DirectionX);
+                anim.SetFloat("DirectionY", DirectionY);
+
+                anim.SetBool("Moving", false);
+            }
+
+        }
+        else
+            anim.SetBool("Moving", false);
+        */
+    }
 
     private void FixedUpdate() //for all movements related to collision with rigid body
     {
@@ -795,14 +898,14 @@ public class Movement : MonoBehaviour
             rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
             //transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed);
 
-            rigid.velocity = rollingSpeed*transform.forward +velocityRestter;
+            rigid.velocity = rollingSpeed * transform.forward + velocityRestter;
 
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
 
             if (rollingTimer <= 0)
             {
-                rigid.velocity = Vector3.zero+velocityRestter;
+                rigid.velocity = Vector3.zero + velocityRestter;
                 midAction = false;
                 rolling = false;
                 anim.SetBool("Rolling", false);

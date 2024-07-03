@@ -111,6 +111,7 @@ MonoBehaviour:
     m_Bits: 256
   potPhysicalCol: {fileID: 0}
   succed: 0
+  interactableEffect: {fileID: 0}
 --- !u!65 &6218927798444331606
 BoxCollider:
   m_ObjectHideFlags: 0

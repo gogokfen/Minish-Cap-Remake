@@ -34,7 +34,7 @@ public class ChuChuTargetedSpit : MonoBehaviour
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
             tempDirection /= 2; //reduce knockback
-            Movement.enemyHitAmount = 1;
+            Movement.enemyHitAmount = 3;
             Movement.SmallHit(new Vector2(tempDirection.x,tempDirection.z));
             Destroy(gameObject);
         }
