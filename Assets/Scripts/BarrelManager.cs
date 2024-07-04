@@ -6,13 +6,19 @@ public class BarrelManager : MonoBehaviour
 {
     [SerializeField] GameObject barrelCam;
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        barrelCam.SetActive(true);
+        if (other.CompareTag("Player"))
+        {
+            barrelCam.SetActive(true);
+        }
     }
 
-    private void OnTriggerExit(Collider other) 
+    private void OnTriggerExit(Collider other)
     {
-        barrelCam.SetActive(false);
+        if (other.CompareTag("Player"))
+        {
+            barrelCam.SetActive(false);
+        }
     }
 }

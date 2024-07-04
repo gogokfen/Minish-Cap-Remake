@@ -24,6 +24,7 @@ public class Chest : MonoBehaviour
 
     private bool playerInBox = false;
     private bool chestOpened = false;
+    private bool textUpdated = false;
 
     void Update()
     {
@@ -48,13 +49,15 @@ public class Chest : MonoBehaviour
                 if (!chestOpened)
                 {   
                 ActionText.UpdateText("Open");
+                textUpdated = true;
                 }
                 break;
             }
         }
-        if (!playerInBox)
+        if (!playerInBox && textUpdated)
         {
             ActionText.UpdateText("");
+            textUpdated = false;
         }
     }
 

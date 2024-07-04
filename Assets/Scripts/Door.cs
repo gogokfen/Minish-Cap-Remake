@@ -31,11 +31,11 @@ public class Door : MonoBehaviour
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.position = pos1way1.position;
-                    doorSequence.Append(door.transform.DOMoveY(-5, 2));
+                    doorSequence.Append(door.transform.DOMoveY(-5, 2)).SetEase(Ease.InCubic);
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
                     doorSequence.Append(player.transform.DOMove(pos2way1.transform.position, 1));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.Append(door.transform.DOMoveY(3f, 1));
+                    doorSequence.Append(door.transform.DOMoveY(3f, 1)).SetEase(Ease.OutExpo);
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
                     ActionText.UpdateText("");
                 }

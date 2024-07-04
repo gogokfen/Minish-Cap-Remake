@@ -5,7 +5,7 @@ using UnityEngine;
 public class ToggleMap : MonoBehaviour
 {
     public GameObject mapUI;
-    private bool mapOpen = true;
+    private bool mapOpen = false;
     void Start()
     {
 
