@@ -21,6 +21,13 @@ public class SlugCollider : MonoBehaviour
                 if (slug.hp <= 0)
                 {
                     //SFXController.PlaySFX("SlugHit", 0.55f); //Play slug dying SFX
+                    slug.trail.transform.SetParent(slug.parent);
+
+                    var main = slug.trail.main;
+                    main.simulationSpeed = 3;
+
+                    slug.trail.Stop();
+                    //slug.trail.main.loop
                     dying = true;
                     Destroy(slug.gameObject,0.25f);
                 }

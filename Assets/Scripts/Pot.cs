@@ -27,6 +27,9 @@ public class Pot : MonoBehaviour
     [HideInInspector]
     public bool succed = false;
 
+    //public ParticleSystem interactableEffect;
+    //public GameObject interactableEffect;
+
     private void Start()
     {
         potPhysicalCol = GetComponent<BoxCollider>();
@@ -35,7 +38,7 @@ public class Pot : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone)
+        if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone && !Movement.gustCamera)
         {
             lifting = true;
             potUp = true;

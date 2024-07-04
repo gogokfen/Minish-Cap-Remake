@@ -24,7 +24,7 @@ public class PlayerBody : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Link.rotation, animTime); // divided by 2. build speed is different for some reason
 
         
-        if (Movement.gustJarUp)
+        if (Movement.gustCamera) //Movement.gustJarUp
         {
             //transform.rotation = Camera.main.transform.rotation;
             //transform.rotation = new Quaternion(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z, transform.rotation.w);

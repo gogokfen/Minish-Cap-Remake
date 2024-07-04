@@ -33,6 +33,9 @@ public class PotCollider : MonoBehaviour
         }
         if (other.tag == "Player")
         {
+            //pot.interactableEffect.Play();
+            //pot.interactableEffect.SetActive(true);
+
             pot.inZone = true;
             pot.playerChild = other.transform;
             ActionText.UpdateText("Lift");
@@ -81,6 +84,9 @@ public class PotCollider : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            //pot.interactableEffect.Stop();
+            //pot.interactableEffect.SetActive(false);
+
             pot.inZone = false;
             ActionText.UpdateText("");
         }

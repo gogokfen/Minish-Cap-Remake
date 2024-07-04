@@ -36,6 +36,10 @@ public class Slug : MonoBehaviour
 
     public ParticleSystem hitEffect;
 
+    public ParticleSystem trail;
+
+    public Transform parent;
+
     Tween slugDrop;
 
     private void Start()

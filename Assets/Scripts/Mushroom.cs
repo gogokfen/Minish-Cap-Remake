@@ -60,6 +60,8 @@ public class Mushroom : MonoBehaviour
 
                 if (n)
                 {
+                    Movement.disableGravity = true;
+
                     halfWayPoint = new Vector3(playerOriginalPos.x,playerOriginalPos.y + (2 + (int)windUp)*1.5f, playerOriginalPos.z + ((2 + (int)windUp)/2));
                     
                     if (animationTime<=0.5f)
@@ -70,6 +72,8 @@ public class Mushroom : MonoBehaviour
                 }
                 if (s)
                 {
+                    Movement.disableGravity = true;
+
                     halfWayPoint = new Vector3(playerOriginalPos.x, playerOriginalPos.y + (2 + (int)windUp)*1.5f, playerOriginalPos.z - ((2 + (int)windUp) / 2));
 
                     if (animationTime <= 0.5f)
@@ -80,6 +84,8 @@ public class Mushroom : MonoBehaviour
                 }
                 if (e)
                 {
+                    Movement.disableGravity = true;
+
                     halfWayPoint = new Vector3(playerOriginalPos.x + ((2 + (int)windUp) / 2), playerOriginalPos.y + (2 + (int)windUp)*1.5f, playerOriginalPos.z);
 
                     if (animationTime <= 0.5f)
@@ -90,6 +96,8 @@ public class Mushroom : MonoBehaviour
                 }
                 if (w)
                 {
+                    Movement.disableGravity = true;
+
                     halfWayPoint = new Vector3(playerOriginalPos.x - ((2 + (int)windUp) / 2), playerOriginalPos.y + (2 + (int)windUp)*1.5f, playerOriginalPos.z);
 
                     if (animationTime <= 0.5f)
@@ -117,6 +125,7 @@ public class Mushroom : MonoBehaviour
                 e = false;
                 w = false;
 
+                Movement.disableGravity = false;
             }
 
         }

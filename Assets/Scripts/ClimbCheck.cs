@@ -30,7 +30,7 @@ public class ClimbCheck : MonoBehaviour
             //if (smoothTime >= 1/smoothSpeed) //smoothspeed = 1.5f
             //    smooth = false;
 
-            playerPos.DOMove(new Vector3(playerPos.position.x, groundY, playerPos.position.z),smoothSpeed); //consider disabling gravity on trigger enter and reactivating on ontriggerexit
+            playerPos.DOMove(new Vector3(playerPos.position.x, groundY, playerPos.position.z),smoothSpeed).SetEase(Ease.InCirc); //consider disabling gravity on trigger enter and reactivating on ontriggerexit
             smooth = false;
         }
 
@@ -42,6 +42,7 @@ public class ClimbCheck : MonoBehaviour
         //Debug.Log("ground");
         if (other.transform.position.y > playerPos.position.y && (other.transform.position.y - playerPos.position.y< maxHightDiff))
         {
+            //Movement.disableGravity = true;
             //Debug.Log("yes");
             smooth = true;
             //smoothTime = 0;
@@ -52,5 +53,10 @@ public class ClimbCheck : MonoBehaviour
             groundY = playerPos.position.y + ((other.transform.position.y - playerPos.position.y) * 2);
 
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //Movement.disableGravity = false;
     }
 }
