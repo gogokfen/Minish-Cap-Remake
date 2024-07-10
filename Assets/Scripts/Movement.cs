@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class Movement : MonoBehaviour
     public static Vector2 enemyDirection;
     bool invul = false;
     float invulTimer;
-    [SerializeField] Material linkMat; //for blinking effect
+    [SerializeField] GameObject linkModel; //for blinking effect
+    Material linkMat;
 
     public static bool mud = false;
 
@@ -97,6 +99,8 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        linkMat = linkModel.GetComponent<Renderer>().material;
+
         gustJarCol = gustJar.GetComponent<CapsuleCollider>();
 
         rigid = GetComponent<Rigidbody>();
@@ -217,6 +221,10 @@ public class Movement : MonoBehaviour
             }
             if (!invul && !enemyShielded) //checking if the enemy actually got shielded or the shield was just up
             {
+                Sequence linkHit = DOTween.Sequence();
+                linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
+                linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
+
                 gotHitTimer = 0.15f;
                 invulTimer = 0.5f;
                 invul = true;

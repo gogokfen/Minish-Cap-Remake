@@ -34,6 +34,8 @@ public class SlugCollider : MonoBehaviour
                 //SFXController.PlaySFX("SlugDie", 0.55f); //Play slug getting hit SFX
             }
             slug.gotHit = true;
+            slug.gameObject.layer = 8; //character layer
+            //gameObject.layer = 8; 
             //slug.enemyText.text = "Hp: " + slug.hp;
         }
 
@@ -58,9 +60,12 @@ public class SlugCollider : MonoBehaviour
 
             slug.gotHit = true;
             tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection *= 2;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
 
+            slug.gameObject.layer = 8; //character layer
+            //gameObject.layer = 8; 
         }
     }
 }

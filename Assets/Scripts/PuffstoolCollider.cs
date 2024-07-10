@@ -37,14 +37,15 @@ public class PuffstoolCollider : MonoBehaviour
             {
                 puffstool.dying = true;
                 puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
-                Destroy(puffstool.gameObject,0.75f); 
+                //puffstool.Die();
+                //Destroy(puffstool.gameObject,0.75f); 
             }
 
             puffstool.gotHit = true;
         }
 
 
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !puffstool.vulnerable)
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
             puffstool.direction.x = tempDirection.x;
@@ -104,6 +105,7 @@ public class PuffstoolCollider : MonoBehaviour
             {
                 if (!puffstool.whitend)
                 {
+                    puffstool.stunEffect.SetActive(true);
                     puffstool.whitend = true;
                     puffstool.puffstoolMat.DOColor(new Color32(255, 255, 255, 255), 1);
                 }

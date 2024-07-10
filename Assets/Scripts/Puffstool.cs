@@ -11,6 +11,7 @@ public class Puffstool : MonoBehaviour
     bool doSpores;
     bool pooped;
     float sporesTimer;
+    float dyingTimer  = 0.75f;
     int doRotate;
 
     [HideInInspector]
@@ -40,6 +41,12 @@ public class Puffstool : MonoBehaviour
     public bool dying = false;
 
     [SerializeField] ParticleSystem hitEffect;
+
+    public ParticleSystem dyingEffect;
+
+    public GameObject stunEffect;
+
+    //[SerializeField] Transform parent;
     void Start()
     {
         puffstoolMat = puffstoolBody.GetComponent<Renderer>().material;
@@ -48,7 +55,7 @@ public class Puffstool : MonoBehaviour
 
     void Update()
     {
-        if (!stunned)
+        if (!stunned && !dying)
         {
             if (!doSpores)
             {
@@ -98,10 +105,21 @@ public class Puffstool : MonoBehaviour
             stunDuration -= Time.deltaTime;
             if (stunDuration<=0)
             {
+                stunEffect.SetActive(false);
                 stunned = false;
                 vulnerable = false;
                 whitend = false;
                 puffstoolMat.DOColor(new Color32(255, 250, 146, 255), 3);
+            }
+        }
+
+        if (dying)
+        {
+            dyingTimer -= Time.deltaTime;
+            if (dyingTimer<=0)
+            {
+                dying = false;
+                Die();
             }
         }
 
@@ -134,5 +152,15 @@ public class Puffstool : MonoBehaviour
             gotHitTimer -= Time.deltaTime;
             transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 5), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 5)); //originally *2 and not timedeltatime
         }
+    }
+
+    public void Die()
+    {
+        dyingEffect.transform.SetParent(null);
+        dyingEffect.transform.rotation = Quaternion.identity;
+        dyingEffect.transform.localScale = Vector3.one;
+        dyingEffect.Play();
+        Destroy(gameObject);
+        Destroy(dyingEffect.gameObject, 3);
     }
 }

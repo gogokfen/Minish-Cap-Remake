@@ -11,6 +11,8 @@ public class CameraRotator : MonoBehaviour
 
     [SerializeField] float min;
     [SerializeField] float max;
+
+    [SerializeField] float yEasing;
     void Start()
     {
         
@@ -22,7 +24,10 @@ public class CameraRotator : MonoBehaviour
         {
             return;
         }
-        transform.position = playerPos.position;
+        //transform.position = playerPos.position;
+
+        transform.position = new Vector3(playerPos.position.x, transform.position.y + ((playerPos.position.y - transform.position.y)*yEasing), playerPos.position.z);
+        
 
         turn.x += Input.GetAxis("Mouse X") * sens;
         turn.y += Input.GetAxis("Mouse Y") * sens;

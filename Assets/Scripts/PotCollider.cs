@@ -11,6 +11,13 @@ public class PotCollider : MonoBehaviour
 
     bool exploding;
 
+    private BoxCollider triggerCollider;
+
+    private void Start()
+    {
+        triggerCollider = GetComponent<BoxCollider>();
+    }
+
     private void Update()
     {
         if (Movement.gustJarUp == false && suctionWindup >= 1)
@@ -20,7 +27,9 @@ public class PotCollider : MonoBehaviour
             suctionWindup = 0;
             pot.Throw(angleX, angleY);
 
-            pot.potPhysicalCol.enabled = true;
+            //pot.potPhysicalCol.enabled = true;
+            triggerCollider.tag = "Weapon";
+            triggerCollider.size = new Vector3(0.1f, 0.1f, 0.1f);
         }
     }
 

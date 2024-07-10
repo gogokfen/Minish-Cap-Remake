@@ -91,6 +91,8 @@ public class Slug : MonoBehaviour
 
             if (!idle)
                 transform.localScale = new Vector3(0.85f + strechValue, 1, 1);
+            else
+                transform.localScale = new Vector3( transform.localScale.x / (1 + ((transform.localScale.x-1)/100)),1,1);
 
 
             //Debug.Log(moveSpeed);
@@ -176,6 +178,11 @@ public class Slug : MonoBehaviour
             }
             */
         }
+        else
+        {
+            gameObject.layer = 0; //untagged layer
+        }
+
     }
 
     public void Die()
