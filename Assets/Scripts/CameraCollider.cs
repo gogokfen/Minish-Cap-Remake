@@ -37,7 +37,7 @@ public class CameraCollider : MonoBehaviour
         else
         {
             lerpValue = 0;
-        };
+        }
 
 
         if (!collided)
@@ -128,6 +128,8 @@ public class CameraCollider : MonoBehaviour
         {
             collisionTimeout = 0;
             collided = true;
+
+            //transform.position = Vector3.Lerp(transform.position, playerPos.position, 0.1f);
 
             /*
             if (other.GetHashCode() == lastCollision)

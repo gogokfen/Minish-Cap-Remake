@@ -36,6 +36,8 @@ public class Movement : MonoBehaviour
     bool swordSwing = false;
     float swordTimer = 0;
     BoxCollider swordCol;
+    public static bool swordHit = false;
+    [SerializeField] ParticleSystem swordHitEffect;
 
     [SerializeField] GameObject shield;
     public static bool shieldUp = false;
@@ -158,6 +160,12 @@ public class Movement : MonoBehaviour
         }
 
         anim.SetInteger("Push", push);
+
+        if (swordHit)
+        {
+            swordHitEffect.Play();
+            swordHit = false;
+        }
 
         if (potUp)
         {
@@ -891,21 +899,22 @@ public class Movement : MonoBehaviour
 
         if (rolling)
         {
-            velocityRestter = new Vector3(0, rigid.velocity.y, 0);
+            //velocityRestter = new Vector3(0, rigid.velocity.y, 0); //1
+
             rollingTimer -= Time.deltaTime; //0.75 seconds
             //6 *3 = 18 (0.75)
             //Debug.Log(rollingSpeed);
             rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
-            //transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed);
+            transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed); //remember
 
-            rigid.velocity = rollingSpeed * transform.forward + velocityRestter;
+            //rigid.velocity = rollingSpeed * transform.forward + velocityRestter; //2
 
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
 
             if (rollingTimer <= 0)
             {
-                rigid.velocity = Vector3.zero + velocityRestter;
+                //rigid.velocity = Vector3.zero + velocityRestter; //3
                 midAction = false;
                 rolling = false;
                 anim.SetBool("Rolling", false);

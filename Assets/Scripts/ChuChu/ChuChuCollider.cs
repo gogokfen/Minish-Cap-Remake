@@ -49,7 +49,8 @@ public class ChuChuCollider : MonoBehaviour
         {
             if (chuchu.fallen)
             {
-                hitEffect.Play();
+                Movement.swordHit = true;
+                //hitEffect.Play();
                 //SFXController.PlaySFX("ChuchuHurt", 1); //add getting hit sound
 
                 chuchu.hp--;

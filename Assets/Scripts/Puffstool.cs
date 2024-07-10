@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Puffstool : MonoBehaviour
 {
@@ -28,8 +29,15 @@ public class Puffstool : MonoBehaviour
     [SerializeField] GameObject sporePrefab;
 
     [SerializeField] GameObject puffstoolBody;
-    Material puffstoolMat;
+    [HideInInspector]
+    public Material puffstoolMat;
     Color32 puffstoolColor;
+
+    [HideInInspector]
+    public bool whitend = false;
+
+    [HideInInspector]
+    public bool dying = false;
 
     [SerializeField] ParticleSystem hitEffect;
     void Start()
@@ -38,7 +46,6 @@ public class Puffstool : MonoBehaviour
         puffstoolColor = new Color32(255, 250, 146, 255);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!stunned)
@@ -93,10 +100,12 @@ public class Puffstool : MonoBehaviour
             {
                 stunned = false;
                 vulnerable = false;
+                whitend = false;
+                puffstoolMat.DOColor(new Color32(255, 250, 146, 255), 3);
             }
         }
 
-
+        /**
         if (vulnerable)
         {
             puffstoolMat.SetColor("_BaseColor", puffstoolColor);
@@ -110,13 +119,14 @@ public class Puffstool : MonoBehaviour
 
             puffstoolColor = new Color32(255, 250, 146, 255);
         }
-
+        */
         if (gotHit)
         {
             gotHit = false;
             gotHitTimer = 0.15f;
             if (vulnerable)
-                hitEffect.Play();
+                Movement.swordHit = true;
+                //hitEffect.Play();
         }
 
         if (gotHitTimer >= 0)

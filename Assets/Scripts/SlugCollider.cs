@@ -6,12 +6,12 @@ public class SlugCollider : MonoBehaviour
 {
     [SerializeField] Slug slug;
 
-    bool dying = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Weapon") && !dying)
+        if (other.tag.Equals("Weapon") && !slug.dying)
         {
-            slug.hitEffect.Play();
+            Movement.swordHit = true;
+            //slug.hitEffect.Play();
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
@@ -21,15 +21,15 @@ public class SlugCollider : MonoBehaviour
                 if (slug.hp <= 0)
                 {
                     //SFXController.PlaySFX("SlugHit", 0.55f); //Play slug dying SFX
-                    slug.trail.transform.SetParent(slug.parent);
-
+                    slug.trail.transform.SetParent(slug.parent);   
                     var main = slug.trail.main;
                     main.simulationSpeed = 3;
 
                     slug.trail.Stop();
                     //slug.trail.main.loop
-                    dying = true;
-                    Destroy(slug.gameObject,0.25f);
+                    slug.dying = true;
+                    slug.BecomeRed();
+                    //Destroy(slug.gameObject,0.25f);
                 }
                 //SFXController.PlaySFX("SlugDie", 0.55f); //Play slug getting hit SFX
             }
@@ -38,7 +38,7 @@ public class SlugCollider : MonoBehaviour
         }
 
 
-        if (other.tag.Equals("Player") && !dying)
+        if (other.tag.Equals("Player") && !slug.dying)
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
             slug.direction.x = tempDirection.x;
@@ -48,7 +48,7 @@ public class SlugCollider : MonoBehaviour
         }
 
 
-        if (other.tag.Equals("Shield") && !dying)
+        if (other.tag.Equals("Shield") && !slug.dying)
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);

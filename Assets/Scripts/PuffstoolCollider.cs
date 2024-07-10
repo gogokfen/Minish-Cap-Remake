@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PuffstoolCollider : MonoBehaviour
 {
@@ -27,14 +28,16 @@ public class PuffstoolCollider : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Weapon")
+        if (other.tag == "Weapon" && !puffstool.dying)
         {
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             puffstool.direction.x = tempDirection.x;
             puffstool.direction.y = tempDirection.z;
             if (puffstool.vulnerable)
             {
-                Destroy(puffstool.gameObject,0.5f);
+                puffstool.dying = true;
+                puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                Destroy(puffstool.gameObject,0.75f); 
             }
 
             puffstool.gotHit = true;
@@ -99,6 +102,11 @@ public class PuffstoolCollider : MonoBehaviour
 
             if (vulnerableWindup >= 2)
             {
+                if (!puffstool.whitend)
+                {
+                    puffstool.whitend = true;
+                    puffstool.puffstoolMat.DOColor(new Color32(255, 255, 255, 255), 1);
+                }
                 puffstool.vulnerable = true;
                 puffstool.stunDuration = 10;
             }

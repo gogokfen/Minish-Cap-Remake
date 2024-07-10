@@ -38,7 +38,13 @@ public class Slug : MonoBehaviour
 
     public ParticleSystem trail;
 
+    public ParticleSystem dyingEffect;
+
     public Transform parent;
+
+    public float deathTimer = 1.5f;
+
+    public bool dying = false;
 
     Tween slugDrop;
 
@@ -47,7 +53,7 @@ public class Slug : MonoBehaviour
         randomizer = Random.Range(0, 10f);
         maxFall = fallingTimer;
         slugMat = slugBody.GetComponent<Renderer>().material;
-        slugColor = new Color32(255, 250, 146, 255);
+        slugColor = new Color32(255, 255, 255, 255);
         slugMat.SetColor("_BaseColor", slugColor);
 
         originalSpeed = moveSpeed;
@@ -65,10 +71,27 @@ public class Slug : MonoBehaviour
 
     void Update()
     {
+        if (dying)
+        {
+            deathTimer -= Time.deltaTime;
+            if (deathTimer<=0)
+            {
+                dying = false;
+                Die();
+            }
+        }
+
         //enemyText.text = "hp: " + hp;
-        if (!fallingFromSky)
+        else if (!fallingFromSky)
         {
             moveSpeed = 0.2f + originalSpeed * Mathf.Abs(Mathf.Sin(((Time.time / 1.5f) + randomizer + rotRandomizer))) * Mathf.Pow(((Time.time / 1.5f) + randomizer + rotRandomizer) % Mathf.PI / 2f, 3); //riz cooked? base move speed 0.2f? in inspector 1.75?
+
+            float strechValue = Mathf.InverseLerp(0.2f, 3, moveSpeed);
+            strechValue = strechValue * 2 / 3;
+
+            if (!idle)
+                transform.localScale = new Vector3(0.85f + strechValue, 1, 1);
+
 
             //Debug.Log(moveSpeed);
             //moveSpeed = originalSpeed* Mathf.Abs(Mathf.Sin((Time.time+randomizer)))*Mathf.Pow((Time.time+randomizer)%Mathf.PI/2f,2); //riz cooked?
@@ -120,9 +143,15 @@ public class Slug : MonoBehaviour
         {
             gotHit = false;
             gotHitTimer = 0.4f;
-            Sequence slugHit = DOTween.Sequence();
-            slugHit.Append(slugMat.DOColor(new Color32(255, 125, 146, 255), 0.25f));
-            slugHit.Append(slugMat.DOColor(new Color32(255, 255, 146, 255), 0.25f));
+            if (!dying)
+            {
+                Sequence slugHit = DOTween.Sequence();
+                //slugHit.Append(slugMat.DOColor(new Color32(255, 125, 146, 255), 0.25f));
+                //slugHit.Append(slugMat.DOColor(new Color32(255, 255, 146, 255), 0.25f));
+                slugHit.Append(slugMat.DOColor(new Color32(255, 125, 255, 255), 0.25f));
+                slugHit.Append(slugMat.DOColor(new Color32(255, 255, 255, 255), 0.25f));
+            }
+
         }
 
         if (gotHitTimer >= 0)
@@ -147,5 +176,20 @@ public class Slug : MonoBehaviour
             }
             */
         }
+    }
+
+    public void Die()
+    {
+        dyingEffect.transform.SetParent(parent);
+        dyingEffect.transform.rotation = Quaternion.identity;
+        dyingEffect.transform.localScale = Vector3.one;
+        dyingEffect.Play();
+        Destroy(gameObject);
+        Destroy(dyingEffect.gameObject, 3);
+    }
+
+    public void BecomeRed()
+    {
+        slugMat.DOColor(new Color32(255, 0, 0, 255), 0.75f);
     }
 }
