@@ -10,7 +10,7 @@ public class SlugRoom : MonoBehaviour
     public List<float> eventDelays;
     public bool sequentialTrigger = true;
     public bool triggerOnce = true;
-    private bool triggered = false;
+    //private bool triggered = false;
     //[SerializeField] UnityEvent slugRoomEvent;
     public void PressureButton()
     {
@@ -49,7 +49,7 @@ public class SlugRoom : MonoBehaviour
 
         if (triggerOnce)
         {
-            triggered = true;
+            //triggered = true;
             Destroy(gameObject);
         }
     }
@@ -71,7 +71,7 @@ public class SlugRoom : MonoBehaviour
 
         if (triggerOnce)
         {
-            triggered = true;
+            //triggered = true;
             Destroy(gameObject);
         }
     }
