@@ -38,9 +38,9 @@ public class Mulldozer : MonoBehaviour
 
     public GameObject stunnedEffect;
 
-    //public ParticleSystem chargingEffect;
+    public ParticleSystem chargingEffect;
 
-    //public ParticleSystem attackingEffect;
+    public GameObject attackingEffect;
 
 
     void Start()
@@ -84,6 +84,7 @@ public class Mulldozer : MonoBehaviour
                 {
                     if (attackCooldown <= 0)
                     {
+                        chargingEffect.Play();
                         attacking = true;
                     }
                 }
@@ -103,6 +104,7 @@ public class Mulldozer : MonoBehaviour
                     chargeRotationTimer -= Time.deltaTime;
                     if (!charging)
                     {
+                        attackingEffect.SetActive(true);
                         charging = true;
                         transform.Rotate(0, rotationDirection / 2, 0);
                     }
@@ -164,6 +166,7 @@ public class Mulldozer : MonoBehaviour
     public void StopAttacking()
     {
         attacking = false;
+        attackingEffect.SetActive(false);
         charging = false;
         attackTimer = 0;
         chargeRotationTimer = 0.25f;
