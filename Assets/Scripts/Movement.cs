@@ -522,6 +522,12 @@ public class Movement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
+                    //making sure gust jar is not up
+                    gustJar.SetActive(false);
+                    crosshair.SetActive(false);
+                    gustJarUp = false;
+                    gustCamera = false;
+
                     midAction = true;
                     rolling = true;
                     SFXController.PlaySFX("LinkRoll", 0.5f);
