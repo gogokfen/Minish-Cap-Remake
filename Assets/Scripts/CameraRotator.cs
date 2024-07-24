@@ -20,6 +20,10 @@ public class CameraRotator : MonoBehaviour
 
     void Update()
     {
+        if (Movement.cutScene)
+        {
+            return;
+        }
         if (PauseMenu.paused)
         {
             return;

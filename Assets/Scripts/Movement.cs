@@ -81,6 +81,9 @@ public class Movement : MonoBehaviour
 
     public static bool midAction = false;
 
+    public static bool cutScene = false;
+    private static float sceneTimer;
+
     static bool stunned;
     static float stunTime;
     float stunCount;
@@ -134,6 +137,8 @@ public class Movement : MonoBehaviour
 
         midAction = false;
 
+        cutScene = false;
+
         busy = false;
 
         shieldUp = false;
@@ -145,6 +150,16 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (cutScene)
+        {
+            sceneTimer -= Time.deltaTime;
+            if (sceneTimer <= 0)
+                cutScene = false;
+            else
+                return;
+
+        }
+
         if (PauseMenu.paused)
         {
             return;
@@ -747,6 +762,10 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate() //for all movements related to collision with rigid body
     {
+        if (cutScene)
+        {
+            return;
+        }
         if (PauseMenu.paused)
         {
             return;
@@ -987,5 +1006,12 @@ public class Movement : MonoBehaviour
     {
         updateYRotation = true;
     }
+
+    public static void Scene(float timer)
+    {
+        cutScene = true;
+        sceneTimer = timer;
+    }
+
 }
 

@@ -26,17 +26,35 @@ public class Door : MonoBehaviour
             {
                 if (!lockedDoor)
                 {
+                    Movement.Scene(4); //write in the parenthesis how much time it's gonna take
+
+                    Tween Down = door.transform.DOMoveY(-5, 1.5f);
+                    Down.SetEase(Ease.InQuint);
+                    Tween Move = player.transform.DOMove(pos2way1.transform.position, 1);
+                    Tween Up = door.transform.DOMoveY(3, 2);
+
                     Movement.playerYRotation = playerYRotationWay1;
                     Movement.UpdateYRotation();
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.position = pos1way1.position;
-                    //doorSequence.Append(door.transform.DOMoveY(-5, 2)).SetEase(Ease.InCubic);
+                    doorSequence.Append(Down);
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
-                    doorSequence.Append(player.transform.DOMove(pos2way1.transform.position, 1));
+                    doorSequence.Append(Move);
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    //doorSequence.Append(door.transform.DOMoveY(3f, 1)).SetEase(Ease.OutExpo);
+                    doorSequence.Append(Up);
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
+
+                    //doorSequence.AppendCallback(() => doorCamera.SetActive(true));
+                    //player.transform.position = pos1way1.position;
+                    //doorSequence.Append(door.transform.DOMoveY(-5, 2)).SetEase(Ease.InCubic);
+                    //doorSequence.Append(door.transform.DOMoveY(-5, 1.5f, false)).SetEase(Ease.Unset);
+                    //doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
+                    //doorSequence.Append(player.transform.DOMove(pos2way1.transform.position, 1));
+                    //doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
+                    //doorSequence.Append(door.transform.DOMoveY(3f, 1)).SetEase(Ease.OutExpo);
+                    //doorSequence.Append(door.transform.DOMoveY(3, 2,false).SetEase(Ease.Unset)); //.SetEase(Ease.OutCubic)
+                    //doorSequence.AppendCallback(() => doorCamera.SetActive(false));
                     ActionText.UpdateText("");
                 }
                 else if (lockedDoor && KeyInventory.Key >= 1)
@@ -58,11 +76,11 @@ public class Door : MonoBehaviour
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.position = pos1way2.position;
-                    doorSequence.Append(door.transform.DOMoveY(-5, 2));
+                    //doorSequence.Append(door.transform.DOMoveY(-5, 2));
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
                     doorSequence.Append(player.transform.DOMove(pos2way2.transform.position, 1));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.Append(door.transform.DOMoveY(3f, 1));
+                    //doorSequence.Append(door.transform.DOMoveY(3f, 1));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
                     ActionText.UpdateText("");
                 }
