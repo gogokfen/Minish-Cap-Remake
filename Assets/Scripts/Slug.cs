@@ -15,7 +15,8 @@ public class Slug : MonoBehaviour
     float originalSpeed;
     float rotationTimer;
     float animationTime;
-    int rotation;
+    [HideInInspector]
+    public int rotation;
     bool idle;
     Quaternion prevRot;
 

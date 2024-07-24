@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Mulldozer : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Mulldozer : MonoBehaviour
     float attackTimer;
     float rotationDirection = 90;
     float chargeRotationTimer = 0.25f;
+
+    Vector3 originalPos;
 
     [HideInInspector]
     public Vector2 direction;
@@ -42,10 +45,14 @@ public class Mulldozer : MonoBehaviour
 
     public GameObject attackingEffect;
 
+    [SerializeField] GameObject mulldozerBody;
+    [HideInInspector]
+    public Material mulldozerMat;
+
 
     void Start()
     {
-        
+        mulldozerMat = mulldozerBody.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -86,6 +93,7 @@ public class Mulldozer : MonoBehaviour
                     {
                         chargingEffect.Play();
                         attacking = true;
+                        originalPos = transform.position;
                     }
                 }
             }
@@ -93,6 +101,10 @@ public class Mulldozer : MonoBehaviour
             if (attacking)
             {
                 attackTimer += Time.deltaTime;
+                if (attackTimer<1)
+                {
+                    transform.position = new Vector3(transform.position.x + Random.Range(-0.025f, 0.025f), transform.position.y, transform.position.z + Random.Range(-0.025f, 0.025f));
+                }
 
                 if (attackTimer >= 1)
                 {
@@ -107,6 +119,7 @@ public class Mulldozer : MonoBehaviour
                         attackingEffect.SetActive(true);
                         charging = true;
                         transform.Rotate(0, rotationDirection / 2, 0);
+                        transform.position = originalPos;
                     }
                     if (chargeRotationTimer <= 0)
                     {
@@ -140,6 +153,10 @@ public class Mulldozer : MonoBehaviour
             gotHitTimer = 0.15f;
             Movement.swordHit = true;
             //hitEffect.Play();
+
+            Sequence mulldozerHit = DOTween.Sequence();
+            mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 125, 255, 255), 0.25f));
+            mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 255, 255, 255), 0.25f));
         }
 
         if (gotHitTimer >= 0)

@@ -90,6 +90,7 @@ public class Movement : MonoBehaviour
 
     Rigidbody rigid;
     Vector3 velocityRestter;
+    Vector3 knockbackPosition;
     public static bool disableGravity = false;
 
     [SerializeField] GameObject gameOverScreen;
@@ -215,6 +216,7 @@ public class Movement : MonoBehaviour
         if (gotHit)
         {
             gotHit = false;
+            rigid.AddForce(new Vector3(enemyDirection.x * 20, 0, enemyDirection.y * 20), ForceMode.Impulse);
             if (enemyShielded)
             {
                 gotHitTimer = 0.15f;
@@ -226,6 +228,11 @@ public class Movement : MonoBehaviour
                 linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
 
                 gotHitTimer = 0.15f;
+
+                //enemyDirection.Normalize();
+                //knockbackPosition = new Vector3(transform.position.x + (enemyDirection.x*5), transform.position.y,transform.position.z + (enemyDirection.y*5));
+                //rigid.AddForce(new Vector3(enemyDirection.x*20,0,enemyDirection.y*20),ForceMode.Impulse);
+
                 invulTimer = 0.5f;
                 invul = true;
                 HealthSystem.TakeDamage(enemyHitAmount);
@@ -945,8 +952,23 @@ public class Movement : MonoBehaviour
         if (gotHitTimer >= 0) //currently strictly changes position, might need to change later with collision problems
         {
             gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
+            if (gotHitTimer<0)
+            {
+                rigid.velocity = Vector3.zero;
+            }
+            //transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
+
+            //rigid.MovePosition(knockbackPosition);
+            //rigid.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
+            //rigid.AddForce(knockbackPosition);
         }
+        /*
+        else
+        {
+            //rigid.ResetInertiaTensor();
+            //rigid.velocity = Vector3.zero;
+        }
+        */
     }
 
     public static void Stun(float newStunTime)

@@ -8,6 +8,12 @@ public class SlugCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag.Equals("Moveable"))
+        {
+            // slug.transform.Rotate(0, 180, 0);
+            slug.rotation = (int)(transform.eulerAngles.y + 180);
+        }
+
         if (other.tag.Equals("Weapon") && !slug.dying)
         {
             Movement.swordHit = true;
