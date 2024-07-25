@@ -232,9 +232,10 @@ public class Movement : MonoBehaviour
         {
             gotHit = false;
             rigid.AddForce(new Vector3(enemyDirection.x * 20, 0, enemyDirection.y * 20), ForceMode.Impulse);
+            gotHitTimer = 0.15f;
             if (enemyShielded)
             {
-                gotHitTimer = 0.15f;
+                //gotHitTimer = 0.15f;
             }
             if (!invul && !enemyShielded) //checking if the enemy actually got shielded or the shield was just up
             {
@@ -242,7 +243,7 @@ public class Movement : MonoBehaviour
                 linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
                 linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
 
-                gotHitTimer = 0.15f;
+                //gotHitTimer = 0.15f;
 
                 //enemyDirection.Normalize();
                 //knockbackPosition = new Vector3(transform.position.x + (enemyDirection.x*5), transform.position.y,transform.position.z + (enemyDirection.y*5));

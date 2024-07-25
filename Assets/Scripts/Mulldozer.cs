@@ -11,10 +11,14 @@ public class Mulldozer : MonoBehaviour
 
     bool attacking;
     bool charging;
-    float attackCooldown;
+    [SerializeField] float attackCooldown;
     float attackTimer;
     float rotationDirection = 90;
     float chargeRotationTimer = 0.25f;
+
+    [SerializeField] Vector3 detectionBox; // 0.5 ,0.5 0.5
+    [SerializeField] float DetectionRange; //10
+    public int damage;
 
     Vector3 originalPos;
 
@@ -87,7 +91,18 @@ public class Mulldozer : MonoBehaviour
                     }
                 }
                 */
+                /**
                 if (Physics.BoxCast(transform.position, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out player, Quaternion.identity, 10, mask)) //raycast in the direction he is looking
+                {
+                    if (attackCooldown <= 0)
+                    {
+                        chargingEffect.Play();
+                        attacking = true;
+                        originalPos = transform.position;
+                    }
+                }
+                */
+                if (Physics.BoxCast(transform.position, detectionBox, transform.forward, out player, Quaternion.identity, DetectionRange, mask)) //raycast in the direction he is looking
                 {
                     if (attackCooldown <= 0)
                     {

@@ -49,7 +49,7 @@ public class MulldozerCollider : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
-            Movement.enemyHitAmount = 1;
+            Movement.enemyHitAmount = mulldozer.damage;
             tempDirection /= 1.25f; //reducing knockback amount
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
         }

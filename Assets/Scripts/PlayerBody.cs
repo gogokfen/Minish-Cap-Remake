@@ -28,6 +28,7 @@ public class PlayerBody : MonoBehaviour
         {
             //transform.rotation = Camera.main.transform.rotation;
             //transform.rotation = new Quaternion(transform.rotation.x, Camera.main.transform.rotation.y, transform.rotation.z, transform.rotation.w);
+
             transform.rotation = Quaternion.Euler(transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, transform.eulerAngles.z);
         }
         
