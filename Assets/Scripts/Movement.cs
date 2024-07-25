@@ -527,6 +527,7 @@ public class Movement : MonoBehaviour
             shieldUp = true;
             anim.Play("Block Start Anim");
             anim.SetBool("ShieldUp", true);
+            SFXController.PlaySFX("ShieldOut");
         }
         if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
         {
@@ -535,6 +536,7 @@ public class Movement : MonoBehaviour
             shieldCol.enabled = false;
             shieldUp = false;
             anim.SetBool("ShieldUp", false);
+            SFXController.PlaySFX("ShieldIn");
 
         }
 

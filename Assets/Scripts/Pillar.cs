@@ -47,7 +47,8 @@ public class Pillar : MonoBehaviour
 
         if ((Movement.push == 1 || Movement.push == -1) && !holdingPillarSound)
         {
-            SFXController.PlaySFX("LinkPush", 0.40f, true);
+            SFXController.PlaySFX("LinkPush", 0.1f, false);
+            SFXController.PlaySFX("PillarDrag", 0.4f, true);
             holdingPillarSound = true;
         }
 

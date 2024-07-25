@@ -46,6 +46,18 @@ public class Pot : MonoBehaviour
             originalPos = transform.position;
             Movement.Stun(0.4f);
             Movement.potUp = true;
+            int randomSFX = Random.Range(1, 3);
+            switch (randomSFX)
+            {
+                case 1:
+                    SFXController.PlaySFX("LinkLift1", 0.35f);
+                    Debug.Log("Lifting1");
+                    break;
+                case 2:
+                    SFXController.PlaySFX("LinkLift2", 0.35f);
+                    Debug.Log("Lifting2");
+                    break;
+            }
         }
         if (lifting)
         {
@@ -114,6 +126,16 @@ public class Pot : MonoBehaviour
         //Movement.potUp = false;
         Movement.throwing = true;
         potUp = false;
+        int randomSFX = Random.Range(1, 3);
+            switch (randomSFX)
+            {
+                case 1:
+                    SFXController.PlaySFX("LinkThrow1", 0.55f);
+                    break;
+                case 2:
+                    SFXController.PlaySFX("LinkThrow2", 0.55f);
+                    break;
+            }
     }
     //overload
     public void Throw(float angleX,float angleY)

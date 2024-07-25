@@ -22,20 +22,20 @@ public class Door : MonoBehaviour
     {
         if (way1.inside)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !Movement.potUp && !Movement.midAction)
             {
                 if (!lockedDoor)
                 {
-                    Movement.Scene(4); //write in the parenthesis how much time it's gonna take
-
+                    //walkAnim.Play("Idle");
+                    Movement.playerYRotation = playerYRotationWay1;
+                    Movement.UpdateYRotation();
                     Tween Down = door.transform.DOMoveY(-5, 1.5f);
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way1.transform.position, 1);
                     Tween Up = door.transform.DOMoveY(3, 2);
-
-                    Movement.playerYRotation = playerYRotationWay1;
-                    Movement.UpdateYRotation();
                     Sequence doorSequence = DOTween.Sequence();
+                    doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
+                    doorSequence.AppendCallback(() => Movement.Scene(6));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.position = pos1way1.position;
                     doorSequence.Append(Down);
