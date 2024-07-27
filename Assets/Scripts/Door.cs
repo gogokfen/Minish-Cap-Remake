@@ -15,6 +15,7 @@ public class Door : MonoBehaviour
     [SerializeField] Animator walkAnim;
     [SerializeField] DoorZone way1;
     [SerializeField] DoorZone way2;
+    [SerializeField] GameObject Lock;
     public int playerYRotationWay1 = 0;
     public int playerYRotationWay2 = 0;
     public bool lockedDoor;
@@ -27,16 +28,20 @@ public class Door : MonoBehaviour
                 if (!lockedDoor)
                 {
                     //walkAnim.Play("Idle");
-                    Movement.playerYRotation = playerYRotationWay1;
-                    Movement.UpdateYRotation();
+                    //Movement.playerYRotation = playerYRotationWay1;
+                    //Movement.UpdateYRotation();
                     Tween Down = door.transform.DOMoveY(-5, 1.5f);
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way1.transform.position, 1);
                     Tween Up = door.transform.DOMoveY(3, 2);
                     Sequence doorSequence = DOTween.Sequence();
+                    //doorSequence.OnStart(() => Movement.playerYRotation = playerYRotationWay1);
+                    //doorSequence.OnStart(() => Movement.UpdateYRotation());
+                    doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.AppendCallback(() => Movement.Scene(6));
+                    doorSequence.OnStart(() => Movement.Scene(6));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
+                    player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay1, player.transform.eulerAngles.z));
                     player.transform.position = pos1way1.position;
                     doorSequence.Append(Down);
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
@@ -61,33 +66,54 @@ public class Door : MonoBehaviour
                 {
                     lockedDoor = false;
                     KeyInventory.RemoveKey();
+                    Lock.SetActive(false);
                 }
             }
         }
 
         if (way2.inside)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !lockedDoor)
+            if (Input.GetKeyDown(KeyCode.Space) && !lockedDoor && !Movement.midAction)
             {
                 if (!lockedDoor)
                 {
-                    Movement.playerYRotation = playerYRotationWay2;
-                    Movement.UpdateYRotation();
+                    //Movement.playerYRotation = playerYRotationWay2;
+                    //Movement.UpdateYRotation();
+                    Tween Down = door.transform.DOMoveY(-5, 1.5f);
+                    Down.SetEase(Ease.InQuint);
+                    Tween Move = player.transform.DOMove(pos2way2.transform.position, 1);
+                    Tween Up = door.transform.DOMoveY(3, 2);
                     Sequence doorSequence = DOTween.Sequence();
-                    doorSequence.AppendCallback(() => doorCamera.SetActive(true));
-                    player.transform.position = pos1way2.position;
-                    //doorSequence.Append(door.transform.DOMoveY(-5, 2));
-                    doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
-                    doorSequence.Append(player.transform.DOMove(pos2way2.transform.position, 1));
+                    doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    //doorSequence.Append(door.transform.DOMoveY(3f, 1));
+                    doorSequence.AppendCallback(() => Movement.Scene(6));
+                    doorSequence.AppendCallback(() => doorCamera.SetActive(true));
+                    player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay2, player.transform.eulerAngles.z));
+                    player.transform.position = pos1way2.position;
+                    doorSequence.Append(Down);
+                    doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
+                    doorSequence.Append(Move);
+                    doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
+                    doorSequence.Append(Up);
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
-                    ActionText.UpdateText("");
+                    // Movement.playerYRotation = playerYRotationWay2;
+                    // Movement.UpdateYRotation();
+                    // Sequence doorSequence = DOTween.Sequence();
+                    // doorSequence.AppendCallback(() => doorCamera.SetActive(true));
+                    // player.transform.position = pos1way2.position;
+                    // //doorSequence.Append(door.transform.DOMoveY(-5, 2));
+                    // doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
+                    // doorSequence.Append(player.transform.DOMove(pos2way2.transform.position, 1));
+                    // doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
+                    // //doorSequence.Append(door.transform.DOMoveY(3f, 1));
+                    // doorSequence.AppendCallback(() => doorCamera.SetActive(false));
+                    // ActionText.UpdateText("");
                 }
                 else if (lockedDoor && KeyInventory.Key >= 1)
                 {
                     lockedDoor = false;
                     KeyInventory.RemoveKey();
+                    Lock.SetActive(false);
                 }
             }
         }

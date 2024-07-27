@@ -17,14 +17,16 @@ public class MulldozerRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mulldozerDeathCount == mulldozers.Length)
-        {
-            deathToAllMulldozers.Invoke();
-        }
+
     }
 
     public void DestroyedCheck()
     {
         mulldozerDeathCount++;
+        if (mulldozerDeathCount == mulldozers.Length)
+        {
+            SFXController.PlaySFX("Secret", 0.5f);
+            deathToAllMulldozers.Invoke();
+        }
     }
 }

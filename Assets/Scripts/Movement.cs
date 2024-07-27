@@ -424,7 +424,7 @@ public class Movement : MonoBehaviour
             moveSpeed = originalSpeed;
         }
 
-        if (gustJar.activeSelf && !rolling && !midAction && !stunned && !potUp)
+        if (gustJar.activeSelf && !rolling && !midAction && !stunned && !potUp && Chest.gotGotJar)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -470,7 +470,7 @@ public class Movement : MonoBehaviour
             gustJarPos = gustJarHoleTrans.position;
         }
 
-        else if (Input.GetKeyDown(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp)
+        else if (Input.GetKeyDown(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp && Chest.gotGotJar)
         {
             gustJar.SetActive(true);
             crosshair.SetActive(true);

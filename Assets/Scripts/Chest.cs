@@ -21,6 +21,7 @@ public class Chest : MonoBehaviour
     public bool heartPieceChest;
     [HideInInspector]
     public bool rupeeChest;
+    public static bool gotGotJar = false;
 
     private bool playerInBox = false;
     private bool chestOpened = false;
@@ -85,6 +86,14 @@ public class Chest : MonoBehaviour
             chestOpened = true;
             ActionText.UpdateText("");
             Debug.Log("you got " + KeyInventory.bossKey);
+        }
+
+        if (gustJarChest)
+        {
+            chestOpened = true;
+            gotGotJar = true;
+            ActionText.UpdateText("");
+            Debug.Log("you got the Gust Jar");
         }
     }
 }
