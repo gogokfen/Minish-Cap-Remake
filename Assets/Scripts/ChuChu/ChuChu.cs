@@ -371,10 +371,16 @@ public class ChuChu : MonoBehaviour
         //V1
 
         halfWayPoint = new Vector3((Movement.playerPosition.x + transform.position.x) / 2, 6, (Movement.playerPosition.z + transform.position.z) / 2);
+        //Tween up = transform.DOMove(halfWayPoint, 0.5f).SetEase(Ease.OutQuad);
+        //Tween down = transform.DOMove(Movement.playerPosition, 0.5f).SetEase(Ease.InQuad);
+
         Tween up = transform.DOMove(halfWayPoint, 0.5f).SetEase(Ease.OutQuad);
         Tween down = transform.DOMove(Movement.playerPosition, 0.5f).SetEase(Ease.InQuad);
 
         Sequence jump = DOTween.Sequence();
+
+        jump.SetEase(Ease.InQuad);
+
         //jump.PrependInterval(0.5f); //1
         jump.Append(up);
         jump.Append(down);

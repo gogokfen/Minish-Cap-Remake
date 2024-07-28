@@ -79,7 +79,7 @@ public class Mulldozer : MonoBehaviour
                 else
                 {
                     moveTimer = Random.Range(0.5f, 2f);
-                    transform.rotation = Quaternion.Euler(0, Random.Range(0, 4) * 90, 0);
+                    transform.rotation = Quaternion.Euler(0, Random.Range(0, 8) * 45, 0); // Random.Range(0, 4) * 90 originally
                 }
 
                 /*
@@ -164,14 +164,22 @@ public class Mulldozer : MonoBehaviour
 
         if (gotHit)
         {
+
             gotHit = false;
             gotHitTimer = 0.15f;
             Movement.swordHit = true;
             //hitEffect.Play();
 
-            Sequence mulldozerHit = DOTween.Sequence();
-            mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 125, 255, 255), 0.25f));
-            mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 255, 255, 255), 0.25f));
+            if (dying)
+            {
+                mulldozerMat.DOColor(new Color32(255, 0, 255, 255), 0.70f);
+            }
+            else
+            {
+                Sequence mulldozerHit = DOTween.Sequence();
+                mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 125, 255, 255), 0.25f));
+                mulldozerHit.Append(mulldozerMat.DOColor(new Color32(255, 255, 255, 255), 0.25f));
+            }
         }
 
         if (gotHitTimer >= 0)

@@ -43,6 +43,11 @@ public class DebugMode : MonoBehaviour
                 KeyInventory.RemoveKey();
             }
 
+            if (Input.GetKeyDown(KeyCode.Keypad5))
+            {
+                Chest.gotGotJar = true;
+            }
+
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 if (transportLocations.Length>0)

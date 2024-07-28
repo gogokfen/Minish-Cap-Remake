@@ -45,6 +45,14 @@ public class ChuChuCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.tag == "Moveable") //helps chuchu avoid getting out of the map
+        {
+            //Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            Vector3 knockBack = chuchu.transform.position - other.transform.position;
+            knockBack.Normalize();
+            chuchu.transform.position = new Vector3(chuchu.transform.position.x+ knockBack.x, chuchu.transform.position.y, chuchu.transform.position.z+knockBack.z);
+        }
+
         if (other.tag == "Weapon")
         {
             if (chuchu.fallen)
