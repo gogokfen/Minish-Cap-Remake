@@ -26,6 +26,7 @@ public class Chest : MonoBehaviour
     private bool playerInBox = false;
     private bool chestOpened = false;
     private bool textUpdated = false;
+    public PauseMenu pauseMenu;
 
     void Update()
     {
@@ -94,6 +95,13 @@ public class Chest : MonoBehaviour
             gotGotJar = true;
             ActionText.UpdateText("");
             Debug.Log("you got the Gust Jar");
+        }
+
+        if (mapChest)
+        {
+            chestOpened = true;
+            pauseMenu.gotMap();
+            ActionText.UpdateText("");
         }
     }
 }

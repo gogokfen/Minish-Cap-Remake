@@ -8,8 +8,10 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
     public static bool paused;
+    public static bool mapPaused;
     [SerializeField] UnityEvent disableAll;
     [SerializeField] Animator pauseMenuAnimator;
+    [SerializeField] GameObject[] mapElements;
     //[SerializeField] goToMapButton 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,12 @@ public class PauseMenu : MonoBehaviour
         {
             TogglePause();
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            mapPaused = true;
+            TogglePause();
+        }
     }
     public void TogglePause()
     {
@@ -35,17 +43,34 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             pauseMenu.SetActive(true);
-            pauseMenuAnimator.Play("LeftMenu", 0, 1f);
+            if (mapPaused)
+            {
+                pauseMenuAnimator.Play("MapMenu", 0, 1f);
+                mapPaused = false;
+            }
+            else
+            {
+                pauseMenuAnimator.Play("LeftMenu", 0, 1f);
+            }
         }
 
         if (!paused)
         {
+            mapPaused = false;
             SFXController.PlaySFX("PauseMenuClose");
             Time.timeScale = 1f;
             disableAll.Invoke();
             pauseMenuAnimator.Play("LeftMenu", 0, 1f);
             Cursor.lockState = CursorLockMode.Locked;
             pauseMenu.SetActive(false);
+        }
+    }
+
+    public void gotMap()
+    {
+        foreach (GameObject mapElement in mapElements)
+        {
+            mapElement.SetActive(true);
         }
     }
 }
