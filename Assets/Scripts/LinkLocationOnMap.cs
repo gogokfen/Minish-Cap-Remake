@@ -8,6 +8,9 @@ public class LinkLocationOnMap : MonoBehaviour
     [SerializeField] UnityEvent changeRoom;
     private void OnTriggerEnter(Collider other) 
     {
+        if (other.tag == "Player")
+        {
         changeRoom.Invoke();
+        }
     }
 }

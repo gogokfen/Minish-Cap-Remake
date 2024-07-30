@@ -10,6 +10,7 @@ public class DebugMode : MonoBehaviour
 
     [SerializeField]Transform[] transportLocations;
     [SerializeField] GameObject[] enemiesPrefabs;
+    [SerializeField] GameObject debugMenuUI;
     //List<GameObject> yoyos;
     void Start()
     {
@@ -21,6 +22,7 @@ public class DebugMode : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F12))
         {
             debugModeOn = true;
+            debugMenuUI.SetActive(true);
         }
 
         if (debugModeOn)
@@ -34,16 +36,16 @@ public class DebugMode : MonoBehaviour
                 HealthSystem.TakeDamage(1);
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad3))
+            if (Input.GetKeyDown(KeyCode.Keypad4))
             {
                 KeyInventory.AddKey();
             }
-            if (Input.GetKeyDown(KeyCode.Keypad4))
+            if (Input.GetKeyDown(KeyCode.Keypad5))
             {
                 KeyInventory.RemoveKey();
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad5))
+            if (Input.GetKeyDown(KeyCode.Keypad3))
             {
                 Chest.gotGotJar = true;
             }
