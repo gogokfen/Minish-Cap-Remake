@@ -48,6 +48,8 @@ public class Movement : MonoBehaviour
 
     [SerializeField] GameObject gustJar;
     CapsuleCollider gustJarCol;
+    float gustJarRotationSpeed = 0;
+    [SerializeField] Transform gustJarSpinningComponent;
     public static bool gustJarUp = false;
     public static bool gustCamera = false;
     public static bool succed = false;
@@ -146,6 +148,8 @@ public class Movement : MonoBehaviour
         enemyShielded = false;
 
         gotHit = false;
+
+        Chest.gotGotJar = false;
     }
 
     void Update()
@@ -436,6 +440,12 @@ public class Movement : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
+                if (gustJarRotationSpeed<=1440)
+                {
+                    gustJarRotationSpeed += (360 * Time.deltaTime);
+                }
+                gustJarSpinningComponent.Rotate(0, 0, -gustJarRotationSpeed * Time.deltaTime);
+
                 gustJarUp = true;
                 gustJarCol.enabled = true;
                 if (!gustJarSuction.isPlaying && !succed)
@@ -449,6 +459,12 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                if (gustJarRotationSpeed>=0)
+                {
+                    gustJarRotationSpeed -= (720 * Time.deltaTime);
+                }
+                gustJarSpinningComponent.Rotate(0, 0, -gustJarRotationSpeed * Time.deltaTime);
+
                 gustJarUp = false;
                 gustJarCol.enabled = false;
                 gustJarSuction.Stop();
@@ -942,22 +958,22 @@ public class Movement : MonoBehaviour
 
         if (rolling)
         {
-            //velocityRestter = new Vector3(0, rigid.velocity.y, 0); //1
+            velocityRestter = new Vector3(0, rigid.velocity.y, 0); //1
 
             rollingTimer -= Time.deltaTime; //0.75 seconds
             //6 *3 = 18 (0.75)
             //Debug.Log(rollingSpeed);
             rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
-            transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed); //remember
+            //transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed); //remember
 
-            //rigid.velocity = rollingSpeed * transform.forward + velocityRestter; //2
+            rigid.velocity = rollingSpeed * transform.forward + velocityRestter; //2
 
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
 
             if (rollingTimer <= 0)
             {
-                //rigid.velocity = Vector3.zero + velocityRestter; //3
+                rigid.velocity = Vector3.zero + velocityRestter; //3
                 midAction = false;
                 rolling = false;
                 anim.SetBool("Rolling", false);

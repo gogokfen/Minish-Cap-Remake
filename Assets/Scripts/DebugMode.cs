@@ -36,6 +36,11 @@ public class DebugMode : MonoBehaviour
                 HealthSystem.TakeDamage(1);
             }
 
+            if (Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                Chest.gotGotJar = true;
+            }
+
             if (Input.GetKeyDown(KeyCode.Keypad4))
             {
                 KeyInventory.AddKey();
@@ -45,10 +50,6 @@ public class DebugMode : MonoBehaviour
                 KeyInventory.RemoveKey();
             }
 
-            if (Input.GetKeyDown(KeyCode.Keypad3))
-            {
-                Chest.gotGotJar = true;
-            }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {

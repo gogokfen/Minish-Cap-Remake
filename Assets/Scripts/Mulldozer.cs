@@ -11,7 +11,8 @@ public class Mulldozer : MonoBehaviour
 
     bool attacking;
     bool charging;
-    [SerializeField] float attackCooldown;
+    float attackCooldown;
+    [SerializeField] float updatedAttackCooldown = 3;
     float attackTimer;
     float rotationDirection = 90;
     float chargeRotationTimer = 0.25f;
@@ -210,7 +211,7 @@ public class Mulldozer : MonoBehaviour
         charging = false;
         attackTimer = 0;
         chargeRotationTimer = 0.25f;
-        attackCooldown = 3;
+        attackCooldown = updatedAttackCooldown;
     }
 
     public void Die()

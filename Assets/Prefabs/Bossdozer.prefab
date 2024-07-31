@@ -15246,7 +15246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   hp: 7
-  attackCooldown: 0
+  updatedAttackCooldown: 0
   detectionBox: {x: 1, y: 1, z: 1}
   DetectionRange: 15
   damage: 2
