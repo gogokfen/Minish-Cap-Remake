@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chuchu: {fileID: 3609152118357834348}
+  chuchuBody: {fileID: 3609152118598002143}
+  chuchuMat: {fileID: 0}
 --- !u!1 &3609152117770625986
 GameObject:
   m_ObjectHideFlags: 0

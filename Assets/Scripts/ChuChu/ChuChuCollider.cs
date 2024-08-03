@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ChuChuCollider : MonoBehaviour
 {
@@ -30,8 +31,9 @@ public class ChuChuCollider : MonoBehaviour
         if (gotHitTimer>=0)
         {
             gotHitTimer -= Time.deltaTime;
-            chuchuMat.SetColor("_BaseColor", chuchuColor);
+            //chuchuMat.SetColor("_BaseColor", chuchuColor);
 
+            /*
             if (gotHitTimer>0.125)
             {
                 chuchuColor = new Color32(0, (byte)(0 + (gotHitTimer * 1000)), 0, 255);
@@ -40,6 +42,7 @@ public class ChuChuCollider : MonoBehaviour
             {
                 chuchuColor = new Color32(0, (byte)(125 + ((0.125 - gotHitTimer) * 1000)), 0, 255);
             }
+            */
         }
     }
 
@@ -63,6 +66,11 @@ public class ChuChuCollider : MonoBehaviour
 
                 chuchu.hp--;
                 gotHitTimer = 0.25f;
+
+                Sequence chuchuHit = DOTween.Sequence();
+                chuchuHit.Append(chuchuMat.DOColor(new Color32(175, 0, 0, 255), 0.125f));
+                chuchuHit.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.125f));
+
                 if (chuchu.hp <= 0)
                 {
                     Destroy(chuchu.gameObject,1f);

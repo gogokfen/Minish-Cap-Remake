@@ -12,11 +12,14 @@ public class Movement : MonoBehaviour
     float rollingSpeed;
     float rollingTimer;
     float rollingCooldown;
+    float rollYPos;
 
     [SerializeField] PlayerZone backwardCheck;
     public static bool cantPull;
 
     //[SerializeField] Camera mainCamera;
+
+    [Header("Link Model & Equipment")]
 
     [SerializeField] Animator anim;
 
@@ -46,6 +49,8 @@ public class Movement : MonoBehaviour
     public static bool enemyShielded = false;
     BoxCollider shieldCol;
 
+
+    [Header("Gust Jar")]
     [SerializeField] GameObject gustJar;
     CapsuleCollider gustJarCol;
     float gustJarRotationSpeed = 0;
@@ -59,6 +64,9 @@ public class Movement : MonoBehaviour
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
     [SerializeField] ParticleSystem gustJarSuction;
+
+    [Header("Other Stuff")]
+
     [SerializeField] GameObject crosshair;
     [SerializeField] TrailRenderer swordSlash;
 
@@ -337,7 +345,12 @@ public class Movement : MonoBehaviour
             {
                 stunned = false;
                 stunCount = 0;
+
+                anim.SetBool("Rolling", false); //making sure he stops rolling when falling
             }
+
+
+
             //return; //no bothering do other movement when stunned
         }
         else
@@ -469,8 +482,8 @@ public class Movement : MonoBehaviour
                 gustJarCol.enabled = false;
                 gustJarSuction.Stop();
             }
-                
 
+            /** V1 - right mouse click shoots air
             if (Input.GetMouseButtonDown(1))
             {
                 gustJarUp = false;
@@ -480,7 +493,41 @@ public class Movement : MonoBehaviour
                     Instantiate(gustJarShot, gustJar.transform.position, gustJar.transform.rotation);
                 }
             }
+            */
 
+            if (Input.GetMouseButtonDown(1)) //V2 right mouse click attacks instead and puts off the gust jar
+            {
+                gustJar.SetActive(false);
+                crosshair.SetActive(false);
+                gustJarUp = false;
+                gustCamera = false;
+
+
+                midAction = true;
+                int randomSFX = Random.Range(1, 5);
+                switch (randomSFX)
+                {
+                    case 1:
+                        SFXController.PlaySFX("LinkAttack1", 0.55f);
+                        break;
+                    case 2:
+                        SFXController.PlaySFX("LinkAttack2", 0.55f);
+                        break;
+                    case 3:
+                        SFXController.PlaySFX("LinkAttack3", 0.55f);
+                        break;
+                    case 4:
+                        SFXController.PlaySFX("LinkAttack4", 0.55f);
+                        break;
+                }
+                swordCol.enabled = true;
+                swordSwing = true;
+                swordTimer = 0;
+                Stun(0.7f);
+                sword.SetActive(true);
+                shield.SetActive(true);
+                anim.Play("Attack", -1, 0.15f);
+            }
 
             gustJar.transform.LookAt(gustJarTarget);
             gustJarPos = gustJarHoleTrans.position;
@@ -532,7 +579,7 @@ public class Movement : MonoBehaviour
         }
         */
 
-        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !rolling && !busy && !potUp) //shield
+        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !rolling && !busy && !potUp && !swordSwing) //shield
         {
             midAction = true;
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
@@ -563,11 +610,16 @@ public class Movement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
                 {
+                    invulTimer = 0.25f;
+                    invul = true;
+
                     //making sure gust jar is not up
                     gustJar.SetActive(false);
                     crosshair.SetActive(false);
                     gustJarUp = false;
                     gustCamera = false;
+
+                    rollYPos = transform.position.y; //checking if link falls or goes up when rolling
 
                     midAction = true;
                     rolling = true;
@@ -971,7 +1023,19 @@ public class Movement : MonoBehaviour
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
 
-            if (rollingTimer <= 0)
+            if (Mathf.Abs(transform.position.y - rollYPos)>0.35f) //checking if link goes up or down while rolling
+            {
+                //rollingTimer = 0;
+                rigid.velocity = Vector3.zero + velocityRestter; //3
+                midAction = false;
+                rolling = false;
+                //anim.SetBool("Rolling", false);
+                rollingCooldown = 0.10f;
+
+                Stun(rollingTimer);
+                rollingTimer = 0;
+            }
+            else if (rollingTimer <= 0)
             {
                 rigid.velocity = Vector3.zero + velocityRestter; //3
                 midAction = false;
