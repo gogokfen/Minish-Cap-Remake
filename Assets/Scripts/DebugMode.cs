@@ -12,9 +12,11 @@ public class DebugMode : MonoBehaviour
     [SerializeField] GameObject[] enemiesPrefabs;
     [SerializeField] GameObject debugMenuUI;
     //List<GameObject> yoyos;
+
+    public static bool mobileShield = false;
     void Start()
     {
-        
+        mobileShield = false;
     }
 
     void Update()
@@ -48,6 +50,11 @@ public class DebugMode : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Keypad5))
             {
                 KeyInventory.RemoveKey();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Keypad7))
+            {
+                mobileShield = !mobileShield;
             }
 
 

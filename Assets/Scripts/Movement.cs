@@ -58,12 +58,15 @@ public class Movement : MonoBehaviour
     public static bool gustJarUp = false;
     public static bool gustCamera = false;
     public static bool succed = false;
+    public static bool dustSucced = false;
     [SerializeField] Transform gustJarHoleTrans;
     public static Vector3 gustJarPos;
     //float gustJarWindup;
     [SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
     [SerializeField] ParticleSystem gustJarSuction;
+    [SerializeField] ParticleSystem gustJarChuchuParticles;
+    [SerializeField] ParticleSystem gustJarDustParticles;
 
     [Header("Other Stuff")]
 
@@ -136,6 +139,8 @@ public class Movement : MonoBehaviour
         cantPull = false;
 
         succed = false;
+
+        dustSucced = false;
 
         gustJarUp = false;
 
@@ -469,6 +474,12 @@ public class Movement : MonoBehaviour
                 {
                     gustJarSuction.Stop();
                 }
+
+                if (!gustJarDustParticles.isPlaying && dustSucced)
+                {
+                    gustJarDustParticles.Play();
+                    dustSucced = false;
+                }
             }
             else
             {
@@ -481,6 +492,7 @@ public class Movement : MonoBehaviour
                 gustJarUp = false;
                 gustJarCol.enabled = false;
                 gustJarSuction.Stop();
+                gustJarChuchuParticles.Stop();
             }
 
             /** V1 - right mouse click shoots air

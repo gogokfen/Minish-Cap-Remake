@@ -7,6 +7,8 @@ public class ChuChuLegs : MonoBehaviour
 {
     [SerializeField] ChuChu chuchu;
 
+    [SerializeField] ParticleSystem gustJarChuChuParticles;
+
     float succAnimTimer;
     [SerializeField] GameObject chuchuBody;
     [HideInInspector]
@@ -46,6 +48,13 @@ public class ChuChuLegs : MonoBehaviour
                 //transform.localScale /= 1.004f;
                 transform.localScale /= 1 + (Time.deltaTime/6f);
 
+                if (!gustJarChuChuParticles.isPlaying)
+                {
+                    gustJarChuChuParticles.Play();
+                }
+
+
+
 
                 if (succAnimTimer<=0)
                 {
@@ -63,8 +72,19 @@ public class ChuChuLegs : MonoBehaviour
                 chuchu.vulnerable = true;
                 chuchu.Waddle();
             }
-            
-            
+
+
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "GustJar" && !chuchu.vulnerable)
+        {
+
+            gustJarChuChuParticles.Stop();
+
         }
     }
 }

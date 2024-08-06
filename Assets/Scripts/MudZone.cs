@@ -20,6 +20,7 @@ public class MudZone : MonoBehaviour
             suctionWindup += Time.deltaTime;
             if (suctionWindup>0.5f)
             {
+                Movement.dustSucced = true;
                 Destroy(gameObject);
             }
         }

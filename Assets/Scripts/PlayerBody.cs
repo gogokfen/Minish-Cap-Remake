@@ -20,7 +20,7 @@ public class PlayerBody : MonoBehaviour
 
         animTime += Time.deltaTime;
 
-        if (!Movement.shieldUp)
+        if (!Movement.shieldUp || DebugMode.mobileShield)
             transform.rotation = Quaternion.Lerp(transform.rotation, Link.rotation, animTime); // divided by 2. build speed is different for some reason
 
         
