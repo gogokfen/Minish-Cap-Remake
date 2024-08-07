@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour
     [SerializeField] Transform gustJarHoleTrans;
     public static Vector3 gustJarPos;
     //float gustJarWindup;
-    [SerializeField] GameObject gustJarShot;
+    //[SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
     [SerializeField] ParticleSystem gustJarSuction;
     [SerializeField] ParticleSystem gustJarChuchuParticles;
@@ -76,6 +76,7 @@ public class Movement : MonoBehaviour
 
     public static bool potUp = false;
     public static bool throwing = false;
+
 
     public static int push = -2; //idle
 
@@ -96,6 +97,7 @@ public class Movement : MonoBehaviour
 
     public static bool cutScene = false;
     private static float sceneTimer;
+    static bool linkRiding = false;
 
     static bool stunned;
     static float stunTime;
@@ -169,6 +171,12 @@ public class Movement : MonoBehaviour
     {
         if (cutScene)
         {
+            if (linkRiding)
+            {
+                sword.SetActive(false);
+                shield.SetActive(false);
+                return;
+            }
             sceneTimer -= Time.deltaTime;
             if (sceneTimer <= 0)
                 cutScene = false;
@@ -456,7 +464,7 @@ public class Movement : MonoBehaviour
                 gustCamera = false;
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(1))
             {
                 if (gustJarRotationSpeed<=1440)
                 {
@@ -507,7 +515,7 @@ public class Movement : MonoBehaviour
             }
             */
 
-            if (Input.GetMouseButtonDown(1)) //V2 right mouse click attacks instead and puts off the gust jar
+            if (Input.GetMouseButtonDown(0)) //V2 right mouse click attacks instead and puts off the gust jar
             {
                 gustJar.SetActive(false);
                 crosshair.SetActive(false);
@@ -1106,6 +1114,21 @@ public class Movement : MonoBehaviour
     {
         cutScene = true;
         sceneTimer = timer;
+    }
+
+    public static void BarrelRiding(bool riding)
+    {
+        if (riding)
+        {
+            linkRiding = true;
+            cutScene = true;
+        }
+        else
+        {
+            cutScene = false;
+            linkRiding = false;
+        }
+        
     }
 
 }

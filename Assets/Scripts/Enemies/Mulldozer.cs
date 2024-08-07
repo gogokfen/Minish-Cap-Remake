@@ -15,7 +15,7 @@ public class Mulldozer : MonoBehaviour
     [SerializeField] float updatedAttackCooldown = 3;
     float attackTimer;
     float rotationDirection = 90;
-    float chargeRotationTimer = 0.25f;
+    float chargeRotationTimer = 0.15f; //0.25f
 
     [SerializeField] Vector3 detectionBox; // 0.5 ,0.5 0.5
     [SerializeField] float DetectionRange; //10
@@ -54,10 +54,14 @@ public class Mulldozer : MonoBehaviour
     [HideInInspector]
     public Material mulldozerMat;
 
+    [HideInInspector]
+    public Rigidbody rigid;
+
 
     void Start()
     {
         mulldozerMat = mulldozerBody.GetComponent<Renderer>().material;
+        rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -125,21 +129,28 @@ public class Mulldozer : MonoBehaviour
                 if (attackTimer >= 1)
                 {
                     if (attackTimer >= 2)
-                        transform.Translate(Vector3.forward * moveSpeed * (5 - ((attackTimer - 2) * 10)) * Time.deltaTime);
+                        transform.Translate(Vector3.forward * moveSpeed * (5 - ((attackTimer - 2) * 10)) * Time.deltaTime); //(5 - ((attackTimer - 2) * 10))
                     else
-                        transform.Translate(Vector3.forward * moveSpeed * 5 * Time.deltaTime);
+                        transform.Translate(Vector3.forward * moveSpeed * 5 * Time.deltaTime); //5
 
                     chargeRotationTimer -= Time.deltaTime;
                     if (!charging)
                     {
                         attackingEffect.SetActive(true);
                         charging = true;
+
+                        GameObject tempLookat = new GameObject(); //make the mulldozer charge at your direction after the windup, a bit finiky code bit
+                        tempLookat.transform.position = Movement.playerPosition;
+                        transform.LookAt(tempLookat.transform);
+
                         transform.Rotate(0, rotationDirection / 2, 0);
                         transform.position = originalPos;
+
+                        Destroy(tempLookat);
                     }
                     if (chargeRotationTimer <= 0)
                     {
-                        chargeRotationTimer = 0.25f;
+                        chargeRotationTimer = 0.15f; //0.25f
                         rotationDirection *= -1;
                         transform.Rotate(0, rotationDirection, 0);
                     }
@@ -186,7 +197,12 @@ public class Mulldozer : MonoBehaviour
         if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 5), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 5)); //originally *2 and not timedeltatime
+
+            if (gotHitTimer <0)
+            {
+                rigid.velocity = Vector3.zero;
+            }
+            //transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 5), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 5)); //originally *2 and not timedeltatime
         }
 
         if (stunned)

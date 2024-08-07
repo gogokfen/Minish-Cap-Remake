@@ -15247,7 +15247,7 @@ MonoBehaviour:
   moveSpeed: 6
   hp: 7
   updatedAttackCooldown: 0
-  detectionBox: {x: 1, y: 1, z: 1}
+  detectionBox: {x: 1.5, y: 1.5, z: 1.5}
   DetectionRange: 15
   damage: 2
   direction: {x: 0, y: 0}
