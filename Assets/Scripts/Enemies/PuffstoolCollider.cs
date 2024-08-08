@@ -31,6 +31,8 @@ public class PuffstoolCollider : MonoBehaviour
         if (other.tag == "Weapon" && !puffstool.dying)
         {
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             puffstool.direction.x = tempDirection.x;
             puffstool.direction.y = tempDirection.z;
             if (puffstool.vulnerable)
@@ -48,6 +50,8 @@ public class PuffstoolCollider : MonoBehaviour
         if (other.tag == "Player" && !puffstool.vulnerable)
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             puffstool.direction.x = tempDirection.x;
             puffstool.direction.y = tempDirection.z;
             Movement.enemyHitAmount = 1;
@@ -59,12 +63,16 @@ public class PuffstoolCollider : MonoBehaviour
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             puffstool.direction.x = tempDirection.x;
             puffstool.direction.y = tempDirection.z;
             Movement.SmallHit(puffstool.direction);
 
             puffstool.gotHit = true;
             tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             puffstool.direction.x = tempDirection.x;
             puffstool.direction.y = tempDirection.z;
 

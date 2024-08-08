@@ -27,6 +27,8 @@ public class MulldozerCollider : MonoBehaviour
             mulldozer.StopAttacking(); //attacking mulldozer stops him from attacking
 
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection.Normalize();
+            tempDirection *= 2f;
             //mulldozer.direction.x = tempDirection.x; //1
             //mulldozer.direction.y = tempDirection.z; //2
 
@@ -48,21 +50,16 @@ public class MulldozerCollider : MonoBehaviour
             mulldozer.stunnedEffect.SetActive(false);
         }
 
-        if (other.tag.Equals("Player"))
-        {
-            Vector3 tempDirection = (Movement.playerPosition - transform.position);
-            Movement.enemyHitAmount = mulldozer.damage;
-            tempDirection /= 1.25f; //reducing knockback amount
-            Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
-        }
-
-        if (other.tag == "Shield")
+        else if (other.tag == "Shield")
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
 
             tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection.Normalize();
             tempDirection *= 3;
             mulldozer.direction.x = tempDirection.x;
             mulldozer.direction.y = tempDirection.z;
@@ -74,6 +71,16 @@ public class MulldozerCollider : MonoBehaviour
             mulldozer.StopAttacking();
             mulldozer.stunned = true;
             mulldozer.stunTimer = 3f;
+        }
+
+        else if (other.tag.Equals("Player") && !Movement.enemyShielded) //making sure he wasn't blocked by a shield simutaionsly
+        {
+            Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            Movement.enemyHitAmount = mulldozer.damage;
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
+            //tempDirection /= 1.25f; //reducing knockback amount
+            Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
         }
     }
 }

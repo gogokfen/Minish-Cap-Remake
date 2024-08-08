@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class BarrelManager : MonoBehaviour
 {
-    public float rotationSpeed = 10f;
+    public float rotationSpeed = 10;
     public Vector3 rotationAxis = Vector3.forward;
     private bool linkInZone;
     private bool linkRiding;
     private float stationTimer;
     public float station;
+
+    float rotationAmount;
+
     [SerializeField] GameObject barrel;
     [SerializeField] GameObject wheel;
     [SerializeField] GameObject player;
@@ -26,8 +29,9 @@ public class BarrelManager : MonoBehaviour
             playerAnimator.Play("Idle");
             playerAnimator.SetBool("LinkRiding", true);
             player.transform.position = seatPosition.transform.position;
+            player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel
             linkRiding = true;
-            Movement.Scene(99999999);
+            Movement.BarrelRiding(true);
             barrelCamera.SetActive(true);
         }
         else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space))
@@ -35,43 +39,56 @@ public class BarrelManager : MonoBehaviour
             ActionText.UpdateText("Ride");
             linkRiding = false;
             playerAnimator.SetBool("LinkRiding", false);
-            Movement.Scene(0);
+            Movement.BarrelRiding(false);
             barrelCamera.SetActive(false);
         }
-        if (Input.GetKey(KeyCode.A) && linkRiding && stationTimer <= 0)
+
+        if (stationTimer<=0)
         {
-            barrel.transform.Rotate(-rotationAxis * rotationSpeed * Time.deltaTime);
-            wheel.transform.Rotate(Vector3.left * 10 * Time.deltaTime, Space.World);
-            rotationSpeed += 10 * Time.deltaTime;
-            Debug.Log(barrel.transform.eulerAngles.x);
-            playerAnimator.SetInteger("BarrelTurn", 1);
-            if (rotationSpeed >= 40f)
+            if (Input.GetKey(KeyCode.A) && linkRiding)
             {
-                rotationSpeed = 40f;
+                barrel.transform.Rotate(-rotationAxis * rotationSpeed * Time.deltaTime);
+
+                rotationAmount += (-1 * rotationSpeed * Time.deltaTime);
+
+                wheel.transform.Rotate(Vector3.left * rotationSpeed * 7 * Time.deltaTime, Space.World);
+                rotationSpeed *= (1 + (Time.deltaTime / 2f));
+                //Debug.Log(barrel.transform.eulerAngles.x);
+                playerAnimator.SetInteger("BarrelTurn", 1);
+                if (rotationSpeed >= 60f)
+                {
+                    rotationSpeed = 60f;
+                }
             }
-        }
-        else if (Input.GetKey(KeyCode.D) && linkRiding && stationTimer <= 0)
-        {
-            barrel.transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime);
-            wheel.transform.Rotate(Vector3.right * 10 * Time.deltaTime, Space.World);
-            rotationSpeed += 10 * Time.deltaTime;
-            Debug.Log(barrel.transform.eulerAngles.x);
-            playerAnimator.SetInteger("BarrelTurn", -1);
-            if (rotationSpeed >= 40f)
+            else if (Input.GetKey(KeyCode.D) && linkRiding)
             {
-                rotationSpeed = 40f;
+                barrel.transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime);
+
+                rotationAmount += (1 * rotationSpeed * Time.deltaTime);
+
+                wheel.transform.Rotate(Vector3.right * rotationSpeed * 7 * Time.deltaTime, Space.World);
+                rotationSpeed *= (1 + (Time.deltaTime / 2f));
+                //Debug.Log(barrel.transform.eulerAngles.x);
+                playerAnimator.SetInteger("BarrelTurn", -1);
+                if (rotationSpeed >= 60f)
+                {
+                    rotationSpeed = 60f;
+                }
             }
-        }
-        else
-        {
-            rotationSpeed = 10f;
-            playerAnimator.SetInteger("BarrelTurn", 0);
+            else
+            {
+                rotationSpeed = 10f;
+                playerAnimator.SetInteger("BarrelTurn", 0);
+            }
+
+            if ((int)rotationAmount % station >= 0 && (int)rotationAmount % station <=3 && stationTimer <-3) //(int)barrel.transform.eulerAngles.x == (station)
+            {
+                rotationSpeed = 10;
+                stationTimer = 2f;
+            }
         }
 
-        if ((int)barrel.transform.eulerAngles.x == (station))
-        {
-            stationTimer = 2f;
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)

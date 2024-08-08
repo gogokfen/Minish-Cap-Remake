@@ -84,6 +84,8 @@ public class ChuChuCollider : MonoBehaviour
             if (!chuchu.fallen) //can't hit you when he is down
             {
                 Vector3 tempDirection = (Movement.playerPosition - transform.position);
+                tempDirection.Normalize();
+                tempDirection *= 1.5f;
                 Movement.enemyHitAmount = 1;
                 Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
             }
@@ -95,6 +97,8 @@ public class ChuChuCollider : MonoBehaviour
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
         }
     }

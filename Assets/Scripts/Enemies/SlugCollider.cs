@@ -19,6 +19,8 @@ public class SlugCollider : MonoBehaviour
             Movement.swordHit = true;
             //slug.hitEffect.Play();
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
+            tempDirection.Normalize();
+            tempDirection *= 2.5f;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
             if (!slug.gotHit)
@@ -49,6 +51,8 @@ public class SlugCollider : MonoBehaviour
         if (other.tag.Equals("Player") && !slug.dying)
         {
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
             Movement.enemyHitAmount = 1;
@@ -60,13 +64,16 @@ public class SlugCollider : MonoBehaviour
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection *= 1.5f;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
             Movement.SmallHit(slug.direction);
 
             slug.gotHit = true;
             tempDirection = (transform.position - Movement.playerPosition);
-            tempDirection *= 2;
+            tempDirection.Normalize();
+            tempDirection *= 5f;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
 
