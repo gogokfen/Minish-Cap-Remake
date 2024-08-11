@@ -8,6 +8,7 @@ public class BarrelManager : MonoBehaviour
     public Vector3 rotationAxis = Vector3.forward;
     private bool linkInZone;
     private bool linkRiding;
+    private bool canGetOff = true;
     private float stationTimer;
     public float station;
 
@@ -21,10 +22,13 @@ public class BarrelManager : MonoBehaviour
     [SerializeField] GameObject barrelCamera;
     private void Update()
     {
-        stationTimer -= Time.deltaTime;
-        if (linkInZone && Input.GetKeyDown(KeyCode.Space) && linkRiding == false && !Movement.midAction)
+        if (linkRiding)
+            stationTimer -= Time.deltaTime;
+
+        if (linkInZone && Input.GetKeyDown(KeyCode.Space) && linkRiding == false)
         {
-            ActionText.UpdateText("Exit");
+            ActionText.UpdateText("");
+            //ActionText.UpdateText("Exit");
             playerAnimator.SetBool("Moving", false);
             playerAnimator.Play("Idle");
             playerAnimator.SetBool("LinkRiding", true);
@@ -34,7 +38,7 @@ public class BarrelManager : MonoBehaviour
             Movement.BarrelRiding(true);
             barrelCamera.SetActive(true);
         }
-        else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space))
+        else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space) && canGetOff)
         {
             ActionText.UpdateText("Ride");
             linkRiding = false;
@@ -47,6 +51,9 @@ public class BarrelManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) && linkRiding)
             {
+                ActionText.UpdateText("");
+                canGetOff = false;
+
                 barrel.transform.Rotate(-rotationAxis * rotationSpeed * Time.deltaTime);
 
                 rotationAmount += (-1 * rotationSpeed * Time.deltaTime);
@@ -62,6 +69,9 @@ public class BarrelManager : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.D) && linkRiding)
             {
+                ActionText.UpdateText("");
+                canGetOff = false;
+
                 barrel.transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime);
 
                 rotationAmount += (1 * rotationSpeed * Time.deltaTime);
@@ -83,6 +93,8 @@ public class BarrelManager : MonoBehaviour
 
             if ((int)rotationAmount % station >= 0 && (int)rotationAmount % station <=3 && stationTimer <-3) //(int)barrel.transform.eulerAngles.x == (station)
             {
+                ActionText.UpdateText("Exit");
+                canGetOff = true;
                 rotationSpeed = 10;
                 stationTimer = 2f;
             }

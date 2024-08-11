@@ -30,16 +30,16 @@ public class Door : MonoBehaviour
                     //walkAnim.Play("Idle");
                     //Movement.playerYRotation = playerYRotationWay1;
                     //Movement.UpdateYRotation();
-                    Tween Down = door.transform.DOMoveY(-5, 1.5f);
+                    Tween Down = door.transform.DOMoveY(-5, 1f); //1.5
                     Down.SetEase(Ease.InQuint);
-                    Tween Move = player.transform.DOMove(pos2way1.transform.position, 1);
-                    Tween Up = door.transform.DOMoveY(3, 2);
+                    Tween Move = player.transform.DOMove(pos2way1.transform.position, 0.75f); //1
+                    ////// //Tween Up = door.transform.DOMoveY(3, 2);
                     Sequence doorSequence = DOTween.Sequence();
                     //doorSequence.OnStart(() => Movement.playerYRotation = playerYRotationWay1);
                     //doorSequence.OnStart(() => Movement.UpdateYRotation());
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.OnStart(() => Movement.Scene(6));
+                    doorSequence.OnStart(() => Movement.Scene(3));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay1, player.transform.eulerAngles.z));
                     player.transform.position = pos1way1.position;
@@ -47,7 +47,7 @@ public class Door : MonoBehaviour
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
                     doorSequence.Append(Move);
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.Append(Up);
+                    ////// //doorSequence.Append(Up);
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
 
                     //doorSequence.AppendCallback(() => doorCamera.SetActive(true));
@@ -79,14 +79,14 @@ public class Door : MonoBehaviour
                 {
                     //Movement.playerYRotation = playerYRotationWay2;
                     //Movement.UpdateYRotation();
-                    Tween Down = door.transform.DOMoveY(-5, 1.5f);
+                    Tween Down = door.transform.DOMoveY(-5, 1f); //1.5f
                     Down.SetEase(Ease.InQuint);
-                    Tween Move = player.transform.DOMove(pos2way2.transform.position, 1);
-                    Tween Up = door.transform.DOMoveY(3, 2);
+                    Tween Move = player.transform.DOMove(pos2way2.transform.position, 0.75f); //1
+                    ////// //Tween Up = door.transform.DOMoveY(3, 2);
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.AppendCallback(() => Movement.Scene(6));
+                    doorSequence.AppendCallback(() => Movement.Scene(3));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay2, player.transform.eulerAngles.z));
                     player.transform.position = pos1way2.position;
@@ -94,7 +94,7 @@ public class Door : MonoBehaviour
                     doorSequence.AppendCallback(() => walkAnim.Play("WalkDoor"));
                     doorSequence.Append(Move);
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.Append(Up);
+                    ////// //doorSequence.Append(Up);
                     doorSequence.AppendCallback(() => doorCamera.SetActive(false));
                     // Movement.playerYRotation = playerYRotationWay2;
                     // Movement.UpdateYRotation();

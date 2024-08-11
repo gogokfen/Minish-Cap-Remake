@@ -32,6 +32,7 @@ public class SlugRoom : MonoBehaviour
 
     private IEnumerator TriggerSequentially()
     {
+        Movement.Scene(2); //I added so link can't move, original delays were 1.5 and 1.5
         for (int i = 0; i < events.Count; i++)
         {
             events[i].Invoke();

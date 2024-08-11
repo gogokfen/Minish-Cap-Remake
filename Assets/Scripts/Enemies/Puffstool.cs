@@ -74,7 +74,7 @@ public class Puffstool : MonoBehaviour
                     transform.rotation = Quaternion.Euler(transform.eulerAngles.x, rotation, transform.eulerAngles.z);
                 }
 
-                if (Random.Range(0, 8) == 0)
+                if (Random.Range(0, 12) == 0) //(0, 8)
                 {
                     doSpores = true;
                 }
