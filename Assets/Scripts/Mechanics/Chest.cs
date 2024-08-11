@@ -27,6 +27,12 @@ public class Chest : MonoBehaviour
     private bool chestOpened = false;
     private bool textUpdated = false;
     public PauseMenu pauseMenu;
+    Animator chestAnim;
+
+    private void Start() 
+    {
+        chestAnim = GetComponent<Animator>();    
+    }
 
     void Update()
     {
@@ -79,6 +85,8 @@ public class Chest : MonoBehaviour
             chestOpened = true;
             ActionText.UpdateText("");
             Debug.Log("you got " + KeyInventory.Key);
+            Dialogue.StartDialogue(0);
+            chestAnim.SetTrigger("Open");
         }
 
         if (bossKeyChest)
@@ -87,6 +95,7 @@ public class Chest : MonoBehaviour
             chestOpened = true;
             ActionText.UpdateText("");
             Debug.Log("you got " + KeyInventory.bossKey);
+            chestAnim.SetTrigger("Open");
         }
 
         if (gustJarChest)
@@ -95,6 +104,8 @@ public class Chest : MonoBehaviour
             gotGotJar = true;
             ActionText.UpdateText("");
             Debug.Log("you got the Gust Jar");
+            Dialogue.StartDialogue(1);
+            chestAnim.SetTrigger("Open");
         }
 
         if (mapChest)
@@ -102,6 +113,7 @@ public class Chest : MonoBehaviour
             chestOpened = true;
             pauseMenu.gotMap();
             ActionText.UpdateText("");
+            chestAnim.SetTrigger("Open");
         }
     }
 }

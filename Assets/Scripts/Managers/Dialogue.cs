@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class Dialogue : MonoBehaviour
     public float textSpeed;
     private int index;
     private bool dialogueOpen;
-
+    float timer;
     private static Dialogue instance;
     void Start()
     {
@@ -20,11 +21,16 @@ public class Dialogue : MonoBehaviour
 
     void Update()
     {
-        if (dialogueOpen && Input.GetKeyDown(KeyCode.Space))
+        if (dialogueOpen)
+        {
+        timer = timer + Time.deltaTime;
+        }
+        if (dialogueOpen && Input.GetKeyDown(KeyCode.Space) && timer >= 1)
         {
             CloseDialogue();
             dialogueOpen = false;
             Movement.BarrelRiding(false);
+            timer = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -78,7 +84,7 @@ public class Dialogue : MonoBehaviour
         instance.dialogueBox.SetActive(true);
         instance.dialogueOpen = true;
         instance.text.text = string.Empty;
-        instance.StartCoroutine(instance.TypeLine());
+        instance.StartCoroutine(instance.TypeLine());  
     }
 
     void CloseDialogue()
