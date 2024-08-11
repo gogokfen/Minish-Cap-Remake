@@ -24,6 +24,7 @@ public class Dialogue : MonoBehaviour
         {
             CloseDialogue();
             dialogueOpen = false;
+            Movement.BarrelRiding(false);
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -36,6 +37,10 @@ public class Dialogue : MonoBehaviour
     {
         foreach (char c in lines[index].ToCharArray())
         {
+            if (!dialogueOpen)
+            {
+                break;
+            }
             text.text += c;
             int randomSFX = Random.Range(1, 8);
             switch (randomSFX)
@@ -68,6 +73,7 @@ public class Dialogue : MonoBehaviour
 
     public static void StartDialogue(int lineIndex)
     {
+        Movement.BarrelRiding(true, true);
         instance.index = lineIndex;
         instance.dialogueBox.SetActive(true);
         instance.dialogueOpen = true;

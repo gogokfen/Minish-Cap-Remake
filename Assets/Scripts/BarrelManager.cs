@@ -97,6 +97,7 @@ public class BarrelManager : MonoBehaviour
                 canGetOff = true;
                 rotationSpeed = 10;
                 stationTimer = 2f;
+                playerAnimator.SetInteger("BarrelTurn", 0);
             }
         }
 

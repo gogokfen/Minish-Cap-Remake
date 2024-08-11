@@ -98,6 +98,7 @@ public class Movement : MonoBehaviour
     public static bool cutScene = false;
     private static float sceneTimer;
     static bool linkRiding = false;
+    static bool goToIdle = false;
 
     static bool stunned;
     static float stunTime;
@@ -118,6 +119,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        goToIdle = false;
         linkMat = linkModel.GetComponent<Renderer>().material;
 
         gustJarCol = gustJar.GetComponent<CapsuleCollider>();
@@ -175,6 +177,12 @@ public class Movement : MonoBehaviour
             {
                 sword.SetActive(false);
                 shield.SetActive(false);
+                if (goToIdle)
+                {
+                    anim.SetBool("Moving", false);
+                    anim.Play("Idle");
+                    goToIdle = false;
+                }
                 return;
             }
             sceneTimer -= Time.deltaTime;
@@ -1116,7 +1124,25 @@ public class Movement : MonoBehaviour
         sceneTimer = timer;
     }
 
-    public static void BarrelRiding(bool riding)
+    public static void BarrelRiding(bool riding, bool GoToIdle)
+    {
+        if (riding)
+        {
+            linkRiding = true;
+            cutScene = true;
+            if (GoToIdle)
+            {
+               goToIdle = true; 
+            }
+        }
+        else
+        {
+            cutScene = false;
+            linkRiding = false;
+        }
+        
+    }
+        public static void BarrelRiding(bool riding)
     {
         if (riding)
         {
