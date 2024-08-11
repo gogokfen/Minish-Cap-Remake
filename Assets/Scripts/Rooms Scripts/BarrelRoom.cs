@@ -8,7 +8,7 @@ public class BarrelRoom : MonoBehaviour
     //private bool barrelDropped = false;
     private int buttonsClicked = 0;
     //public GameObject barrel;
-    //[SerializeField] UnityEvent barrelDropEvent;
+    [SerializeField] UnityEvent barrelDropEvent;
     // Start is called before the first frame update
     [SerializeField] GameObject barrelTriggerOne;
     [SerializeField] GameObject barrelTriggerTwo;
@@ -31,9 +31,9 @@ public class BarrelRoom : MonoBehaviour
         if (buttonsClicked == 3)
         {
             //barrel.transform.position += new Vector3 (0, -3, 0);
-            //barrelDropEvent.Invoke();
-            barrelTriggerOne.SetActive(true);
-            barrelTriggerTwo.SetActive(true);
+            barrelDropEvent.Invoke();
+            // barrelTriggerOne.SetActive(true);
+            // barrelTriggerTwo.SetActive(true);
             Destroy(pressureButton1);
             Destroy(pressureButton2);
             SFXController.PlaySFX("Secret", 0.5f);
