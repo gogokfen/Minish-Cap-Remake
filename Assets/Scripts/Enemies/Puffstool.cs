@@ -87,7 +87,7 @@ public class Puffstool : MonoBehaviour
 
                 if (sporesTimer >= 2 && !pooped)
                 {
-                    Instantiate(sporePrefab, transform.position, Quaternion.identity);
+                    Instantiate(sporePrefab, new Vector3(transform.position.x, transform.position.y-0.24f, transform.position.z), Quaternion.identity);
                     pooped = true;
                 }
 
