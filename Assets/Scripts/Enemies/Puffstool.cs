@@ -29,7 +29,7 @@ public class Puffstool : MonoBehaviour
 
     [SerializeField] GameObject sporePrefab;
 
-    [SerializeField] GameObject puffstoolBody;
+    public GameObject puffstoolBody;
     [HideInInspector]
     public Material puffstoolMat;
     Color32 puffstoolColor;
@@ -40,17 +40,24 @@ public class Puffstool : MonoBehaviour
     [HideInInspector]
     public bool dying = false;
 
-    [SerializeField] ParticleSystem hitEffect;
+    //[SerializeField] ParticleSystem hitEffect;
 
     public ParticleSystem dyingEffect;
 
     public GameObject stunEffect;
 
+    public Animator anim;
+
+    public Material originalMaterial;
+    public Material whiteMaterial;
+
     //[SerializeField] Transform parent;
     void Start()
     {
         puffstoolMat = puffstoolBody.GetComponent<Renderer>().material;
-        puffstoolColor = new Color32(255, 250, 146, 255);
+        //puffstoolColor = new Color32(255, 250, 146, 255);
+
+        //anim.SetTrigger("Walk");
     }
 
     void Update()
@@ -61,6 +68,9 @@ public class Puffstool : MonoBehaviour
             {
                 transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
                 moveTimer += Time.deltaTime;
+
+                anim.SetBool("Walk", true);
+                //anim.SetTrigger("Walk");
             }
 
 
@@ -72,10 +82,15 @@ public class Puffstool : MonoBehaviour
                     rotation = Random.Range(0f, 360f);
 
                     transform.rotation = Quaternion.Euler(transform.eulerAngles.x, rotation, transform.eulerAngles.z);
+
+                    //anim.SetTrigger("Walk");
                 }
 
                 if (Random.Range(0, 12) == 0) //(0, 8)
                 {
+                    anim.SetBool("Walk", false);
+                    anim.SetBool("Jump", true);
+                    //anim.SetTrigger("Jump");
                     doSpores = true;
                 }
 
@@ -96,6 +111,10 @@ public class Puffstool : MonoBehaviour
                     sporesTimer = 0;
                     doSpores = false;
                     pooped = false;
+
+                    anim.SetBool("Walk", true);
+                    anim.SetBool("Jump", false);
+                    //anim.SetTrigger("Walk");
                 }
 
             }
@@ -109,7 +128,15 @@ public class Puffstool : MonoBehaviour
                 stunned = false;
                 vulnerable = false;
                 whitend = false;
-                puffstoolMat.DOColor(new Color32(255, 250, 146, 255), 3);
+
+                puffstoolBody.GetComponent<Renderer>().material = originalMaterial;
+                //puffstoolMat = originalMaterial;
+                //puffstoolMat.DOColor(new Color32(255, 250, 146, 255), 3);
+
+                anim.SetBool("Sucked", false);
+                anim.SetBool("Confused", false);
+                anim.SetBool("Walk", true);
+                //anim.SetTrigger("Walk");
             }
         }
 

@@ -30,20 +30,41 @@ public class PuffstoolCollider : MonoBehaviour
     {
         if (other.tag == "Weapon" && !puffstool.dying)
         {
-            Vector3 tempDirection = (transform.position - Movement.playerPosition);
-            tempDirection.Normalize();
-            tempDirection *= 1.5f;
-            puffstool.direction.x = tempDirection.x;
-            puffstool.direction.y = tempDirection.z;
+
+
+
             if (puffstool.vulnerable)
             {
+                Movement.swordHit = true;
+                Vector3 tempDirection = (transform.position - Movement.playerPosition);
+                tempDirection.Normalize();
+                tempDirection *= 1.5f;
+                puffstool.direction.x = tempDirection.x;
+                puffstool.direction.y = tempDirection.z;
+
+
                 puffstool.dying = true;
-                puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                //puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                puffstool.puffstoolBody.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
                 //puffstool.Die();
                 //Destroy(puffstool.gameObject,0.75f); 
+                puffstool.gotHit = true;
+            }
+            
+            else
+            {
+                //SFXController.PlaySFX("swordTINGGGGGG");
+
+                Movement.swordBlocked = true;
+                Movement.enemyShielded = true;
+                Vector3 tempDirection2 = (Movement.playerPosition - transform.position);
+                tempDirection2.Normalize();
+                tempDirection2 *= 0.5f;
+                Movement.SmallHit(new Vector2(tempDirection2.x,tempDirection2.z),true);
             }
 
-            puffstool.gotHit = true;
+
+
         }
 
 
@@ -69,6 +90,7 @@ public class PuffstoolCollider : MonoBehaviour
             puffstool.direction.y = tempDirection.z;
             Movement.SmallHit(puffstool.direction);
 
+
             puffstool.gotHit = true;
             tempDirection = (transform.position - Movement.playerPosition);
             tempDirection.Normalize();
@@ -90,6 +112,11 @@ public class PuffstoolCollider : MonoBehaviour
         if (other.tag == "GustJar")
         {
             Movement.dustSucced = true;
+
+
+            puffstool.anim.SetBool("Sucked", true);
+            puffstool.anim.SetBool("Walk", false);
+            //puffstool.anim.SetTrigger("Sucked");
 
             vulnerableWindup += Time.deltaTime;
             puffstool.stunned = true;
@@ -115,9 +142,17 @@ public class PuffstoolCollider : MonoBehaviour
             {
                 if (!puffstool.whitend)
                 {
+                    puffstool.anim.SetBool("Sucked", false);
+                    puffstool.anim.SetBool("Confused", true);
+                    //puffstool.anim.SetTrigger("Confused");
+
                     puffstool.stunEffect.SetActive(true);
                     puffstool.whitend = true;
-                    puffstool.puffstoolMat.DOColor(new Color32(255, 255, 255, 255), 1);
+
+
+                    puffstool.puffstoolBody.GetComponent<Renderer>().material = puffstool.whiteMaterial;
+                    //puffstool.puffstoolMat = puffstool.whiteMaterial;
+                    //puffstool.puffstoolMat.DOColor(new Color32(255, 255, 255, 255), 1);
                 }
                 puffstool.vulnerable = true;
                 puffstool.stunDuration = 10;

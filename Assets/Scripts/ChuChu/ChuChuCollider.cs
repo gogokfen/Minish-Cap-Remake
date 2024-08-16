@@ -77,6 +77,17 @@ public class ChuChuCollider : MonoBehaviour
                 }
                 //Debug.Log(chuchu.hp);
             }
+            else
+            {
+                //SFXController.PlaySFX("swordTINGGGGGG");
+
+                Movement.swordBlocked = true;
+                Movement.enemyShielded = true;
+                Vector3 tempDirection2 = (Movement.playerPosition - transform.position);
+                tempDirection2.Normalize();
+                tempDirection2 *= 0.5f;
+                Movement.SmallHit(new Vector2(tempDirection2.x, tempDirection2.z), true);
+            }
         }
 
         if (other.tag == "Player")

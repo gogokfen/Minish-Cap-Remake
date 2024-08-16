@@ -43,6 +43,8 @@ public class Movement : MonoBehaviour
     BoxCollider swordCol;
     public static bool swordHit = false;
     [SerializeField] ParticleSystem swordHitEffect;
+    public static bool swordBlocked = false;
+    [SerializeField] ParticleSystem swordBlockedEffect;
 
     [SerializeField] GameObject shield;
     public static bool shieldUp = false;
@@ -184,6 +186,8 @@ public class Movement : MonoBehaviour
                 if (goToIdle)
                 {
                     anim.SetBool("Moving", false);
+                    anim.SetBool("Rolling", false);
+                    anim.SetBool("ShieldUp", false);
                     anim.Play("Idle");
                     goToIdle = false;
                 }
@@ -222,6 +226,12 @@ public class Movement : MonoBehaviour
         {
             swordHitEffect.Play();
             swordHit = false;
+        }
+
+        if (swordBlocked)
+        {
+            swordBlockedEffect.Play();
+            swordBlocked = false;
         }
 
         if (potUp)
@@ -278,9 +288,20 @@ public class Movement : MonoBehaviour
             }
             if (!invul && !enemyShielded) //checking if the enemy actually got shielded or the shield was just up
             {
+                //SFXController.PlaySFX("linkOUCHHHHH");
+
                 Sequence linkHit = DOTween.Sequence();
-                linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
-                linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
+                //linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
+                //linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
+
+                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) *10, 0.25f)); //(1, 0.5f, 0, 0) *10
+                linkHit.Append(linkMat.DOColor(new Color(0.82f, 0.62f, 0.41f, 1) *1, 0.25f));
+
+
+
+                //linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
+
+
 
                 //gotHitTimer = 0.15f;
 
@@ -293,6 +314,15 @@ public class Movement : MonoBehaviour
                 HealthSystem.TakeDamage(enemyHitAmount);
             }
             enemyShielded = false;
+
+            if (goToIdle)
+            {
+                anim.SetBool("Moving", false);
+                anim.SetBool("Rolling", false);
+                anim.SetBool("ShieldUp", false);
+                anim.Play("Idle");
+            }
+
         }
 
         /*
@@ -366,14 +396,20 @@ public class Movement : MonoBehaviour
         */
         if (stunned)
         {
+
+
             stunCount += Time.deltaTime;
-            transform.position = playerPosition;
+            if (!goToIdle)
+                transform.position = playerPosition;
+
             if (stunCount > stunTime)
             {
                 stunned = false;
                 stunCount = 0;
 
                 anim.SetBool("Rolling", false); //making sure he stops rolling when falling
+
+                goToIdle = false;
             }
 
 
@@ -1173,6 +1209,13 @@ public class Movement : MonoBehaviour
     {
         enemyDirection = enemyDir;
         gotHit = true;
+    }
+
+    public static void SmallHit(Vector2 enemyDir, bool returnLinkToIdleAnimation)
+    {
+        enemyDirection = enemyDir;
+        gotHit = true;
+        goToIdle = returnLinkToIdleAnimation;
     }
 
     public static void UpdateYRotation()
