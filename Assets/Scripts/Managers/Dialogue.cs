@@ -32,11 +32,6 @@ public class Dialogue : MonoBehaviour
             Movement.BarrelRiding(false);
             timer = 0;
         }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Dialogue.StartDialogue(0);
-        }
     }
 
     IEnumerator TypeLine()

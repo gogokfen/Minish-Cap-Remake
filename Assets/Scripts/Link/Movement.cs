@@ -70,7 +70,8 @@ public class Movement : MonoBehaviour
 
     [Header("Other Stuff")]
 
-    [SerializeField] GameObject crosshair;
+    //[SerializeField] GameObject crosshair;
+    [SerializeField] GameObject swordAndShieldOnBack;
     [SerializeField] TrailRenderer swordSlash;
 
 
@@ -116,6 +117,8 @@ public class Movement : MonoBehaviour
     private bool deadLink;
     [SerializeField] AudioSource BGM;
     [SerializeField] GameObject deathCamera;
+
+    private AnimatorClipInfo[] ACI;
 
     void Start()
     {
@@ -177,6 +180,7 @@ public class Movement : MonoBehaviour
             {
                 sword.SetActive(false);
                 shield.SetActive(false);
+                swordAndShieldOnBack.SetActive(true);
                 if (goToIdle)
                 {
                     anim.SetBool("Moving", false);
@@ -224,6 +228,7 @@ public class Movement : MonoBehaviour
         {
             sword.SetActive(false);
             shield.SetActive(false);
+            swordAndShieldOnBack.SetActive(true);
             if (stunned)
             {
                 anim.Play("Pot Lift");
@@ -241,6 +246,7 @@ public class Movement : MonoBehaviour
         {
             sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            swordAndShieldOnBack.SetActive(true);
         }
 
 
@@ -335,7 +341,7 @@ public class Movement : MonoBehaviour
             //rigid.freezeRotation = true;
 
             gustJar.SetActive(false);
-            crosshair.SetActive(false);
+            //crosshair.SetActive(false);
             gustJarUp = false;
             gustCamera = false;
 
@@ -385,7 +391,7 @@ public class Movement : MonoBehaviour
 
         //Debug.Log(playerYRotation);
 
-        if (Input.GetMouseButtonDown(0) && !gustJar.activeSelf && !rolling && !busy && !potUp && gotHitTimer < 0 && !shieldUp && (swordTimer == 0 || swordTimer > 0.25f))
+        if (Input.GetMouseButtonDown(0) && !gustJar.activeSelf && !rolling && !busy && !potUp && gotHitTimer < 0  && (swordTimer == 0 || swordTimer > 0.25f)) //&& !shieldUp
         {
             midAction = true;
             int randomSFX = Random.Range(1, 5);
@@ -410,14 +416,23 @@ public class Movement : MonoBehaviour
             swordCol.enabled = true;
             swordSwing = true;
             swordTimer = 0;
-            Stun(0.7f);
+            Stun(0.7f); //0.7f
             sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shield.SetActive(true);
+            swordAndShieldOnBack.SetActive(false);
             //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
             //originalRot = transform.eulerAngles; //???
             anim.Play("Attack", -1, 0.15f);
             //swordSlash.emitting = true;
             //anim.Play("Attack");
+
+            if (shieldUp)
+            {
+                shieldCol.enabled = false;
+                shieldUp = false;
+                anim.SetBool("ShieldUp", false);
+                SFXController.PlaySFX("ShieldIn");
+            }
 
         }
 
@@ -437,13 +452,20 @@ public class Movement : MonoBehaviour
             if (swordTimer >= 0.35)
             {
                 swordCol.enabled = false;
+
+                midAction = false;
+                swordSwing = false;
             }
             if (swordTimer >= 0.7)
             {
+                /*
                 midAction = false;
-                //swordCol.enabled = false;
                 swordSwing = false;
                 swordTimer = 0;
+
+                */
+                //swordCol.enabled = false;
+
                 //sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             }
         }
@@ -467,7 +489,7 @@ public class Movement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 gustJar.SetActive(false);
-                crosshair.SetActive(false);
+                //crosshair.SetActive(false);
                 gustJarUp = false;
                 gustCamera = false;
             }
@@ -526,7 +548,7 @@ public class Movement : MonoBehaviour
             if (Input.GetMouseButtonDown(0)) //V2 right mouse click attacks instead and puts off the gust jar
             {
                 gustJar.SetActive(false);
-                crosshair.SetActive(false);
+                //crosshair.SetActive(false);
                 gustJarUp = false;
                 gustCamera = false;
 
@@ -551,9 +573,10 @@ public class Movement : MonoBehaviour
                 swordCol.enabled = true;
                 swordSwing = true;
                 swordTimer = 0;
-                Stun(0.7f);
+                Stun(0.7f); //0.7f
                 sword.SetActive(true);
                 shield.SetActive(true);
+                swordAndShieldOnBack.SetActive(false);
                 anim.Play("Attack", -1, 0.15f);
             }
 
@@ -564,7 +587,7 @@ public class Movement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp && Chest.gotGotJar)
         {
             gustJar.SetActive(true);
-            crosshair.SetActive(true);
+            //crosshair.SetActive(true);
             gustCamera = true;
         }
 
@@ -607,11 +630,12 @@ public class Movement : MonoBehaviour
         }
         */
 
-        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !rolling && !busy && !potUp && !swordSwing) //shield
+        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !busy && !potUp  && !swordSwing && rollingTimer <= 0.1f) //shield    && swordTimer>0.2f && !rolling
         {
             midAction = true;
             shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             sword.SetActive(true);
+            swordAndShieldOnBack.SetActive(false);
 
             //Debug.Log("Shield up!");
             shieldCol.enabled = true;
@@ -620,7 +644,37 @@ public class Movement : MonoBehaviour
             anim.SetBool("ShieldUp", true);
             SFXController.PlaySFX("ShieldOut");
         }
-        if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp)
+
+
+
+        if (Input.GetMouseButton(1) && !gustJar.activeSelf  && !busy && !potUp && !swordSwing && rollingTimer<=0.1f) //shield   && !rolling
+        {
+            midAction = true;
+            shield.SetActive(true);
+            sword.SetActive(true);
+            swordAndShieldOnBack.SetActive(false);
+
+            shieldCol.enabled = true;
+            shieldUp = true;
+
+            if (anim.GetCurrentAnimatorClipInfo(0).Length>0)
+            {
+                ACI = anim.GetCurrentAnimatorClipInfo(0);
+
+                //Debug.Log(ACI[0].clip.name);
+
+                if (ACI[0].clip.name == "Idle" || ACI[0].clip.name == "Attack Anim" || ACI[0].clip.name == "Rolling")
+                {
+                    anim.Play("Block Start Anim");
+                    anim.SetBool("ShieldUp", true);
+                    SFXController.PlaySFX("ShieldOut");
+                }
+            }
+
+
+        }
+        
+        if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp && !gustJar.activeSelf) //&& !swordSwing
         {
             midAction = false;
             //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
@@ -643,7 +697,7 @@ public class Movement : MonoBehaviour
 
                     //making sure gust jar is not up
                     gustJar.SetActive(false);
-                    crosshair.SetActive(false);
+                    //crosshair.SetActive(false);
                     gustJarUp = false;
                     gustCamera = false;
 
@@ -1062,6 +1116,14 @@ public class Movement : MonoBehaviour
 
                 Stun(rollingTimer);
                 rollingTimer = 0;
+            }
+            else if (rollingTimer <= 0.35f && rollingTimer>0)
+            {
+                //rigid.velocity = Vector3.zero + velocityRestter; //3
+                //midAction = false;
+                //rolling = false;
+                //anim.SetBool("Rolling", false);
+                //rollingCooldown = 0.10f;
             }
             else if (rollingTimer <= 0)
             {
