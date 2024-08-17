@@ -3,7 +3,127 @@ guid: 191370ccf20a7a246bc6c80e6d2295e0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barrel
+    second: {fileID: 2100000, guid: d3adba0f1b8487d48973f230ce22b046, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarrelRoom_LongWall_Var1
+    second: {fileID: 2100000, guid: 0b77b6a386b94684396b270b2e30dbb1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarrelRoom_LongWall_Var2
+    second: {fileID: 2100000, guid: e624efc93b055db4ebdb093b48c7cadc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarrelRoom_LongWall_Var3
+    second: {fileID: 2100000, guid: 761a34104073ed543860c9cbe91eb80a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BarrelRoom_LongWall_Var4
+    second: {fileID: 2100000, guid: f945268a837cd914c822cf3b8fa18c29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Border_Metal.001
+    second: {fileID: 2100000, guid: 6ccc56e3dec0abd479bc55672566ae2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brick
+    second: {fileID: 2100000, guid: 14e808806aaa29e4aa6f964863b0b1a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Chonky Pillar
+    second: {fileID: 2100000, guid: bb57705b9772f3c4ca47a8663c73a801, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Circles_Material.001
+    second: {fileID: 2100000, guid: 27bb718f506e25241ad245f18b98e571, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder Pressure Plate
+    second: {fileID: 2100000, guid: e857422c4f8027e4c983693fcb6043be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 163ab5b47d9525049a695b9bf3fdd937, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: f4a048470ae604c4db13dcec6fcf9329, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.006
+    second: {fileID: 2100000, guid: 77cc6beca11dd3348965f26fd92290f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.008
+    second: {fileID: 2100000, guid: 9bde34ac5b46c74479336b35c15552a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.010
+    second: {fileID: 2100000, guid: c1b6cd16a2235224db0dd68c4e86596d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.011
+    second: {fileID: 2100000, guid: 680907f81ca3fd741aa35cfacdeb9e4b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.013
+    second: {fileID: 2100000, guid: 68641d2eda4b2854e8f0cc136bdea938, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.014
+    second: {fileID: 2100000, guid: 487ed91772d04704ebba686be5d93b37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.019
+    second: {fileID: 2100000, guid: 00652732d5a3b32438eb7e2594d6436b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.020
+    second: {fileID: 2100000, guid: 1a1425871547dd947b9e69af43b7d6fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.022
+    second: {fileID: 2100000, guid: fa8dd2e1aefac4344a9fe35e484eeda4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood Log
+    second: {fileID: 2100000, guid: 03b70fc7cf109604fb21a7c3c54fbe84, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.001
+    second: {fileID: 2100000, guid: e8bfd9f0d75967f44a1e081238342afb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Rest
+    second: {fileID: 2100000, guid: f2d24f016264a5647851fbc2e1875365, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,117 @@ guid: 9913bdfbf3aef094a88699b077c3827a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brick
+    second: {fileID: 2100000, guid: 36d63f977e86f2c47a93616feb4801b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Brick Wall
+    second: {fileID: 2100000, guid: 666b38226f875614bbec0a711d5669db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FloorTerrain
+    second: {fileID: 2100000, guid: b3692493a3acc5c4d9948f56ec6115a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_Entrance_Archway
+    second: {fileID: 2100000, guid: 4922af29f45c0e549a9acbc3a5e69407, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 070e9a8cbbd9c6d4a9e819c3f90c2a8b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: adb0c494fafc64746b6d87ff2240423c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: d543d507349632c45899f79f7132a245, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: f60179bb408d1f748a2cdb2fe31779ad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.008
+    second: {fileID: 2100000, guid: cc743bfeecb043a4e92c81644705fae4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.009
+    second: {fileID: 2100000, guid: b48400762b648b84eaec9a6dc1db46f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.010
+    second: {fileID: 2100000, guid: 8634305c78b03134c82ec4aad18af679, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_)LongWall_Var4
+    second: {fileID: 2100000, guid: 639026710d98c1b4fbfdd148f2e8bbd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_LongWallVar1
+    second: {fileID: 2100000, guid: 48f02cd4cd2cc4b43ad7ea6841879eed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_LongWall_Var2
+    second: {fileID: 2100000, guid: 86e1c69b00e271745be682780f83883d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_LongWall_Var3
+    second: {fileID: 2100000, guid: 2aa52a9878013ae40a400609d3b9df0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_Main_Entrance_Var1
+    second: {fileID: 2100000, guid: e8aee832c4445854f9d1fb80e42a1f2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_Main_Entrance_Var2
+    second: {fileID: 2100000, guid: 2eca520e537fc4944976c5339382a2c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_Side_Entrance_Var1
+    second: {fileID: 2100000, guid: c029afc5424a94646a82748537c11eb6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_Side_Entrance_Var2
+    second: {fileID: 2100000, guid: 6d12eda913fe1e74eae4525b5dbc6078, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paneled_SmallWall_Var2
+    second: {fileID: 2100000, guid: 8f444b555b6d8e94b8ec42b2f8bbfcf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ProBuilder_Default_URP.001
+    second: {fileID: 2100000, guid: 8f5a1da1230529a4fba56abb8ab732ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ProBuilder_Default_URP.050
+    second: {fileID: 2100000, guid: f078d666426e22343ac9f22a99a29ef6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
