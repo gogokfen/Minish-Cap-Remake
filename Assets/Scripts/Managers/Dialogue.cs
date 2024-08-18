@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -7,12 +6,15 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public GameObject dialogueBox;
+    [TextArea(3, 10)]
     public string[] lines;
     public float textSpeed;
     private int index;
     private bool dialogueOpen;
-    float timer;
+    private float timer;
     private static Dialogue instance;
+    private bool typing;
+
     void Start()
     {
         instance = this;
@@ -23,53 +25,60 @@ public class Dialogue : MonoBehaviour
     {
         if (dialogueOpen)
         {
-        timer = timer + Time.deltaTime;
-        }
-        if (dialogueOpen && Input.GetKeyDown(KeyCode.Space) && timer >= 1)
-        {
-            CloseDialogue();
-            dialogueOpen = false;
-            Movement.BarrelRiding(false);
-            timer = 0;
+            timer += Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Space) && timer >= 1)
+            {
+                if (typing)
+                {
+                    StopAllCoroutines();
+                    text.text = lines[index];
+                    typing = false;
+                }
+                else
+                {
+                    CloseDialogue();
+                    dialogueOpen = false;
+                    Movement.BarrelRiding(false);
+                }
+
+                timer = 0;
+            }
         }
     }
 
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        typing = true;
+        text.text = string.Empty;
+        int charIndex = 0;
+
+        while (charIndex < lines[index].Length)
         {
             if (!dialogueOpen)
             {
                 break;
             }
-            text.text += c;
-            int randomSFX = Random.Range(1, 8);
-            switch (randomSFX)
+
+            if (lines[index].Substring(charIndex).StartsWith("<sprite"))
             {
-                case 1:
-                    SFXController.PlaySFX("EzioCaw1", 0.55f);
-                    break;
-                case 2:
-                    SFXController.PlaySFX("EzioCaw2", 0.55f);
-                    break;
-                case 3:
-                    SFXController.PlaySFX("EzioCaw3", 0.55f);
-                    break;
-                case 4:
-                    SFXController.PlaySFX("EzioCaw4", 0.55f);
-                    break;
-                case 5:
-                    SFXController.PlaySFX("EzioCaw5", 0.55f);
-                    break;
-                case 6:
-                    SFXController.PlaySFX("EzioCaw6", 0.55f);
-                    break;
-                case 7:
-                    SFXController.PlaySFX("EzioCaw7", 0.55f);
-                    break;
+                int endIndex = lines[index].IndexOf(">", charIndex) + 1;
+                string spriteTag = lines[index].Substring(charIndex, endIndex - charIndex);
+                text.text += spriteTag;
+                charIndex = endIndex;
+                SFXController.PlaySFX("DialogueBlip", 0.5f);
             }
+            else
+            {
+                text.text += lines[index][charIndex];
+                charIndex++;
+                SFXController.PlaySFX("DialogueBlip", 0.5f);
+            }
+
             yield return new WaitForSeconds(textSpeed);
         }
+
+        typing = false;
     }
 
     public static void StartDialogue(int lineIndex)
@@ -79,7 +88,7 @@ public class Dialogue : MonoBehaviour
         instance.dialogueBox.SetActive(true);
         instance.dialogueOpen = true;
         instance.text.text = string.Empty;
-        instance.StartCoroutine(instance.TypeLine());  
+        instance.StartCoroutine(instance.TypeLine());
     }
 
     void CloseDialogue()

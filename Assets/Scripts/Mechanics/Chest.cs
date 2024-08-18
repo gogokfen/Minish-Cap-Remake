@@ -27,6 +27,9 @@ public class Chest : MonoBehaviour
     private bool chestOpened = false;
     private bool textUpdated = false;
     public PauseMenu pauseMenu;
+    public Sprite sprite;
+    public SpriteRenderer spriteRenderer;
+    public GameObject dialogueBox;
     Animator chestAnim;
 
     private void Start() 
@@ -41,6 +44,12 @@ public class Chest : MonoBehaviour
         {
             chestOpened = true;
             OnChestOpened();
+            SFXController.PlaySFX("ChestOpen", 0.5f);
+        }
+
+        else if (playerInBox && chestOpened && dialogueBox.activeSelf == false)
+        {
+            Destroy(spriteRenderer);
         }
     }
 
@@ -81,6 +90,7 @@ public class Chest : MonoBehaviour
         if (keyChest)
         {
             //KeyInventory.Key++;
+            spriteRenderer.sprite = sprite;
             KeyInventory.AddKey();
             chestOpened = true;
             ActionText.UpdateText("");
@@ -96,10 +106,12 @@ public class Chest : MonoBehaviour
             ActionText.UpdateText("");
             Debug.Log("you got " + KeyInventory.bossKey);
             chestAnim.SetTrigger("Open");
+            Dialogue.StartDialogue(4);
         }
 
         if (gustJarChest)
         {
+            spriteRenderer.sprite = sprite;
             chestOpened = true;
             gotGotJar = true;
             ActionText.UpdateText("");
