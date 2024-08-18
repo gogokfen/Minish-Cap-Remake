@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spitSpeed: 10
   spitTarget: {fileID: 0}
+  GFX: {fileID: 7298492781446427770}
 --- !u!136 &6781545846969046006
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -69,7 +70,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6
-  m_Height: 5.5
+  m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4814416925787267946
@@ -160,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9b0b39e69a3be45418ff9c58c263bfdd, type: 2}
+  - {fileID: 2100000, guid: c3774cd84df410245a82e526afc954dd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +209,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7038836682429658381}

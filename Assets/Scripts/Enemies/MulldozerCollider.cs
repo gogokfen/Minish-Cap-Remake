@@ -5,15 +5,6 @@ using UnityEngine;
 public class MulldozerCollider : MonoBehaviour
 {
     [SerializeField] Mulldozer mulldozer;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

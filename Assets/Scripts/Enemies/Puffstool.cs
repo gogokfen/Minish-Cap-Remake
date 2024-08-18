@@ -30,6 +30,8 @@ public class Puffstool : MonoBehaviour
     [SerializeField] GameObject sporePrefab;
 
     public GameObject puffstoolBody;
+    public GameObject puffstoolLeg1;
+    public GameObject puffstoolLeg2;
     [HideInInspector]
     public Material puffstoolMat;
     Color32 puffstoolColor;
@@ -102,7 +104,7 @@ public class Puffstool : MonoBehaviour
 
                 if (sporesTimer >= 2 && !pooped)
                 {
-                    Instantiate(sporePrefab, new Vector3(transform.position.x, -0.24f , transform.position.z), Quaternion.identity); //transform.position.y-0.24f
+                    Instantiate(sporePrefab, new Vector3(transform.position.x, 0.22f , transform.position.z), Quaternion.identity); //transform.position.y-0.24f
                     pooped = true;
                 }
 

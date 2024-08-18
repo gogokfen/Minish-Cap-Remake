@@ -10,6 +10,9 @@ public class ActionText : MonoBehaviour
     public float fadeDuration = 2f;
 
     private static string tempText;
+    public static float textTimer = 0;
+
+
     private static ActionText instance;
     private bool fadedIn;
     //public bool needsFading;
@@ -44,7 +47,12 @@ public class ActionText : MonoBehaviour
         text.text = tempText;
         textObject.text = tempText;
 
-        if (text.text == "")
+        if (textTimer>0)
+        {
+            textTimer -= Time.deltaTime;
+        }
+
+        if (text.text == "" || textTimer<=0)
         {
             textOnObject.SetActive(false);
         }
@@ -56,6 +64,7 @@ public class ActionText : MonoBehaviour
     public static void UpdateText(string newText)
     {
         tempText = newText;
+        textTimer = 3;
         if ((tempText != ("") || tempText != ("Throw")) && instance.fadedIn == false)
         {
             instance.StartCoroutine(instance.FadeIn());

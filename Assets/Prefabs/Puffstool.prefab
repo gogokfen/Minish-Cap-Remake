@@ -14864,6 +14864,8 @@ MonoBehaviour:
   sporePrefab: {fileID: 6988897964429107077, guid: c04acc58210d7044a8f329618e94d3b2,
     type: 3}
   puffstoolBody: {fileID: 7492429369182992604}
+  puffstoolLeg1: {fileID: 5285315748817196878}
+  puffstoolLeg2: {fileID: 2139768813385735344}
   puffstoolMat: {fileID: 0}
   whitend: 0
   dying: 0
@@ -15747,9 +15749,21 @@ PrefabInstance:
       addedObject: {fileID: 5880915967007294433}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d8e003757b9bc54d973e48db411f91c, type: 3}
+--- !u!1 &2139768813385735344 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7858042820093392130, guid: 4d8e003757b9bc54d973e48db411f91c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8123539530967509426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3292952966159762517 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6705428214299028967, guid: 4d8e003757b9bc54d973e48db411f91c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8123539530967509426}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5285315748817196878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4171928105288449788, guid: 4d8e003757b9bc54d973e48db411f91c,
     type: 3}
   m_PrefabInstance: {fileID: 8123539530967509426}
   m_PrefabAsset: {fileID: 0}

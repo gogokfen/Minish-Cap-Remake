@@ -35625,6 +35625,9 @@ MonoBehaviour:
   gameOverScreen: {fileID: 0}
   BGM: {fileID: 0}
   deathCamera: {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!65 &1218859509817229229
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36223,8 +36226,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.3339043, z: 11.123363}
-  m_Center: {x: 0.0000009870279, y: 0.058008295, z: -5.0616813}
+  m_Size: {x: 1, y: 1.3339043, z: 15}
+  m_Center: {x: 0.0000009870279, y: 0.058008295, z: -7}
 --- !u!1 &9160320065166526115
 GameObject:
   m_ObjectHideFlags: 0

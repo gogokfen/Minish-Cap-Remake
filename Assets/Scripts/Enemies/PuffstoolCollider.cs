@@ -46,6 +46,8 @@ public class PuffstoolCollider : MonoBehaviour
                 puffstool.dying = true;
                 //puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
                 puffstool.puffstoolBody.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                puffstool.puffstoolLeg1.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                puffstool.puffstoolLeg2.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
                 //puffstool.Die();
                 //Destroy(puffstool.gameObject,0.75f); 
                 puffstool.gotHit = true;
@@ -159,7 +161,7 @@ public class PuffstoolCollider : MonoBehaviour
             }
             else
             {
-                puffstool.stunDuration = 2;
+                puffstool.stunDuration = 0.5f;
             }
         }
 

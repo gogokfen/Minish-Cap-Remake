@@ -32,14 +32,22 @@ public class BarrelManager : MonoBehaviour
             playerAnimator.SetBool("Moving", false);
             playerAnimator.Play("Idle");
             playerAnimator.SetBool("LinkRiding", true);
-            player.transform.position = seatPosition.transform.position;
+
+            player.transform.position = seatPosition.position;
+            Movement.playerPosition = seatPosition.position;
             player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel
+            Movement.Stun(0.1f);
+
             linkRiding = true;
-            Movement.BarrelRiding(true);
+            Movement.BarrelRiding(true,true);
             barrelCamera.SetActive(true);
         }
         else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space) && canGetOff)
         {
+            player.transform.position = seatPosition.position;
+            Movement.playerPosition = seatPosition.position;
+            player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel
+
             ActionText.UpdateText("Ride");
             linkRiding = false;
             playerAnimator.SetBool("LinkRiding", false);
@@ -51,6 +59,7 @@ public class BarrelManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) && linkRiding)
             {
+
                 ActionText.UpdateText("");
                 canGetOff = false;
 
@@ -69,6 +78,7 @@ public class BarrelManager : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.D) && linkRiding)
             {
+
                 ActionText.UpdateText("");
                 canGetOff = false;
 

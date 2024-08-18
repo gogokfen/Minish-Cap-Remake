@@ -8,16 +8,31 @@ public class ChuChuTargetedSpit : MonoBehaviour
     [HideInInspector]
     public Transform spitTarget;
 
+    [SerializeField] Transform GFX;
+
+    CapsuleCollider spitCollider;
+
     Quaternion lastRot;
     private void Start()
     {
         transform.LookAt(new Vector3(spitTarget.position.x, spitTarget.position.y + 1.5f, spitTarget.position.z));
+
+        spitCollider = GetComponent<CapsuleCollider>();
 
         Destroy(gameObject, 1);
     }
 
     void Update()
     {
+        if (GFX.transform.localScale.z<=1)
+        {
+            GFX.transform.localScale = new Vector3(GFX.transform.localScale.x, GFX.localScale.y, GFX.localScale.z * (1 + Time.deltaTime));
+        }
+        if (spitCollider.height<5.5)
+        {
+            spitCollider.height += (2.75f * Time.deltaTime); //5.5
+        }
+
         lastRot = transform.rotation;
         transform.LookAt(new Vector3(spitTarget.position.x,spitTarget.position.y+1.5f,spitTarget.position.z));
 

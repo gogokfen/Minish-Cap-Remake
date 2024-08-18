@@ -4915,7 +4915,7 @@ Transform:
   m_GameObject: {fileID: 2208844340464694585}
   serializedVersion: 2
   m_LocalRotation: {x: -0.92387956, y: 0.38268343, z: -0, w: 0}
-  m_LocalPosition: {x: 7.424621, y: 7.4246235, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9805,6 +9805,7 @@ MonoBehaviour:
   fallingFromSky: 1
   fallingTimer: 4
   moveSpeed: 2
+  rotation: 0
   hp: 2
   slugShadow: {fileID: 6993441716277102505}
   gotHit: 0

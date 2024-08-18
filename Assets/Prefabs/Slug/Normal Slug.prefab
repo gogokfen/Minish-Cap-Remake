@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 118993648399745520}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1401996025072893921}
+  m_Father: {fileID: 7261422344497762297}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &1481682329695033306
 ParticleSystem:
@@ -5038,7 +5038,6 @@ Transform:
   - {fileID: 4807117217286931290}
   - {fileID: 2953731734711784529}
   - {fileID: 4686053807192111497}
-  - {fileID: 163072373306569766}
   - {fileID: 865371513750223688}
   m_Father: {fileID: 5511887458481580482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5057,6 +5056,7 @@ MonoBehaviour:
   fallingFromSky: 0
   fallingTimer: 0
   moveSpeed: 2.25
+  rotation: 0
   hp: 2
   slugShadow: {fileID: 0}
   gotHit: 0
@@ -5217,6 +5217,7 @@ Transform:
   - {fileID: 1015392611804914795}
   - {fileID: 247485524171712097}
   - {fileID: 3653378234237889093}
+  - {fileID: 163072373306569766}
   m_Father: {fileID: 1401996025072893921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7882053201634287516

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class ChuChuCollider : MonoBehaviour
@@ -16,13 +17,18 @@ public class ChuChuCollider : MonoBehaviour
     [HideInInspector]
     public Color32 chuchuColor;
 
-    public ParticleSystem hitEffect;
+    [SerializeField] Slider hpBar;
+
+    //public ParticleSystem hitEffect;
 
 
     void Start()
     {
         chuchuMat = chuchuBody.GetComponent<Renderer>().material;
         chuchuColor = new Color32(0, 255, 0, 255);
+
+        hpBar.gameObject.SetActive(true);
+        hpBar.value = Mathf.InverseLerp(0, 20, chuchu.hp);
     }
 
     // Update is called once per frame
@@ -65,6 +71,9 @@ public class ChuChuCollider : MonoBehaviour
                 //SFXController.PlaySFX("ChuchuHurt", 1); //add getting hit sound
 
                 chuchu.hp--;
+
+                hpBar.value = Mathf.InverseLerp(0, 20, chuchu.hp);
+
                 gotHitTimer = 0.25f;
 
                 Sequence chuchuHit = DOTween.Sequence();
@@ -73,6 +82,7 @@ public class ChuChuCollider : MonoBehaviour
 
                 if (chuchu.hp <= 0)
                 {
+                    hpBar.gameObject.SetActive(false);
                     Destroy(chuchu.gameObject,1f);
                 }
                 //Debug.Log(chuchu.hp);

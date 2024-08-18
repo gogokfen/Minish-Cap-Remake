@@ -57,16 +57,26 @@ public class Mulldozer : MonoBehaviour
     [HideInInspector]
     public Rigidbody rigid;
 
+    private Vector3 spawnPosition;
 
     void Start()
     {
         mulldozerMat = mulldozerBody.GetComponent<Renderer>().material;
         rigid = GetComponent<Rigidbody>();
+
+        spawnPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y<-5)
+        {
+            transform.position = spawnPosition; //failsafe in case falls out of the map
+
+            Debug.Log("Yipee" + transform.name);
+        }
+
         if (!dying)
         {
             if (!attacking && !stunned)

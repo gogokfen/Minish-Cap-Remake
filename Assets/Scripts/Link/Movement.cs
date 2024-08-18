@@ -122,6 +122,10 @@ public class Movement : MonoBehaviour
 
     private AnimatorClipInfo[] ACI;
 
+    RaycastHit player;
+    [SerializeField] LayerMask mask;
+    bool grounded = false;
+
     void Start()
     {
         goToIdle = false;
@@ -219,6 +223,19 @@ public class Movement : MonoBehaviour
             deadLink = true;
             return;
         }
+
+        if (Physics.Raycast(transform.position, -Vector3.up, out player, 10, mask)) //ground check
+        {
+            if (player.distance > 0.25)
+            {
+                grounded = false;
+            }
+            else
+                grounded = true;
+            //Debug.Log(player.distance);
+        }
+
+
 
         anim.SetInteger("Push", push);
 
@@ -726,7 +743,7 @@ public class Movement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
+                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp && grounded)
                 {
                     invulTimer = 0.25f;
                     invul = true;
