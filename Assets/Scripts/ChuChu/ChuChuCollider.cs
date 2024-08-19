@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class ChuChuCollider : MonoBehaviour
 {
@@ -19,21 +20,51 @@ public class ChuChuCollider : MonoBehaviour
 
     [SerializeField] Slider hpBar;
 
-    //public ParticleSystem hitEffect;
+    bool startup = true;
+
+    [SerializeField] TextMeshProUGUI bossText;
 
 
     void Start()
     {
+        startup = true;
+
+        bossText.gameObject.SetActive(true);
+        bossText.alpha = 0;
+
         chuchuMat = chuchuBody.GetComponent<Renderer>().material;
         chuchuColor = new Color32(0, 255, 0, 255);
 
         hpBar.gameObject.SetActive(true);
-        hpBar.value = Mathf.InverseLerp(0, 20, chuchu.hp);
+        hpBar.value = Mathf.InverseLerp(0, 20, 0); //chuchu.hp
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (startup)
+        {
+            bossText.alpha += (Time.deltaTime / 2);
+            bossText.characterSpacing += Time.deltaTime * 10;
+
+            if (hpBar.value < 1)
+            {
+                hpBar.value += (Time.deltaTime / 3);
+            }
+            else
+                startup = false;
+        }
+        else
+        {
+
+            if (bossText.alpha > 0)
+            {
+                bossText.characterSpacing += Time.deltaTime * 10;
+                bossText.alpha -= (Time.deltaTime / 2);
+            }
+                
+        }
+
         if (gotHitTimer>=0)
         {
             gotHitTimer -= Time.deltaTime;
