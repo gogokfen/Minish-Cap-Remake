@@ -15471,7 +15471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   hp: 3
-  attackCooldown: 3
+  updatedAttackCooldown: 3
   detectionBox: {x: 0.5, y: 0.5, z: 0.5}
   DetectionRange: 10
   damage: 1
@@ -15489,6 +15489,9 @@ MonoBehaviour:
   attackingEffect: {fileID: 8263172657664147023}
   mulldozerBody: {fileID: 2318662743345341805}
   mulldozerMat: {fileID: 0}
+  rigid: {fileID: 0}
+  heartDropPrefab: {fileID: 4142204663741157817, guid: 23dc3ef597ca9e74e87f3096cecb7b25,
+    type: 3}
 --- !u!65 &7357660033260985108
 BoxCollider:
   m_ObjectHideFlags: 0

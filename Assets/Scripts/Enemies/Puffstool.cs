@@ -53,6 +53,8 @@ public class Puffstool : MonoBehaviour
     public Material originalMaterial;
     public Material whiteMaterial;
 
+    [SerializeField] GameObject heartDropPrefab;
+
     //[SerializeField] Transform parent;
     void Start()
     {
@@ -185,6 +187,11 @@ public class Puffstool : MonoBehaviour
 
     public void Die()
     {
+        if (Random.Range(1, HealthSystem.currentHealth) == 1)
+        {
+            Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        }
+
         dyingEffect.transform.SetParent(null);
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;

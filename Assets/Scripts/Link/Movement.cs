@@ -102,6 +102,7 @@ public class Movement : MonoBehaviour
     private static float sceneTimer;
     static bool linkRiding = false;
     static bool goToIdle = false;
+    static bool goToCombat = false;
 
     static bool stunned;
     static float stunTime;
@@ -129,6 +130,9 @@ public class Movement : MonoBehaviour
     void Start()
     {
         goToIdle = false;
+
+        goToCombat = false;
+
         linkMat = linkModel.GetComponent<Renderer>().material;
 
         gustJarCol = gustJar.GetComponent<CapsuleCollider>();
@@ -226,7 +230,7 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, -Vector3.up, out player, 10, mask)) //ground check
         {
-            if (player.distance > 0.25)
+            if (player.distance > 0.375)
             {
                 grounded = false;
             }
@@ -347,12 +351,12 @@ public class Movement : MonoBehaviour
             }
             enemyShielded = false;
 
-            if (goToIdle)
+            if (goToCombat)
             {
                 anim.SetBool("Moving", false);
                 anim.SetBool("Rolling", false);
                 anim.SetBool("ShieldUp", false);
-                anim.Play("Idle");
+                anim.Play("Attack Blocked",-1,0.7f);
             }
 
         }
@@ -431,8 +435,11 @@ public class Movement : MonoBehaviour
 
 
             stunCount += Time.deltaTime;
-            if (!goToIdle)
+            if (!(goToIdle || goToCombat))
+            {
                 transform.position = playerPosition;
+            }
+                
 
             if (stunCount > stunTime)
             {
@@ -442,6 +449,7 @@ public class Movement : MonoBehaviour
                 anim.SetBool("Rolling", false); //making sure he stops rolling when falling
 
                 goToIdle = false;
+                goToCombat = false;
             }
 
 
@@ -503,7 +511,7 @@ public class Movement : MonoBehaviour
                     anim.Play("Attack3", -1, 0.15f);
                     break;
             }
-            anim.Play("Attack", -1, 0.15f);
+            //anim.Play("Attack", -1, 0.15f);
             //swordSlash.emitting = true;
             //anim.Play("Attack");
 
@@ -652,14 +660,45 @@ public class Movement : MonoBehaviour
                         SFXController.PlaySFX("LinkAttack4", 0.55f);
                         break;
                 }
-                swordCol.enabled = true;
+
+                int randomAnim = Random.Range(1, 4);
+                switch (randomAnim)
+                {
+                    case 1:
+                        anim.Play("Attack1", -1, 0.15f);
+                        break;
+                    case 2:
+                        anim.Play("Attack2", -1, 0.15f);
+                        break;
+                    case 3:
+                        anim.Play("Attack3", -1, 0.15f);
+                        break;
+                }
+
+
+                if (goToCombat)
+                {
+                    swordCol.enabled = false;
+                }
+                else
+                    swordCol.enabled = true;
                 swordSwing = true;
                 swordTimer = 0;
                 Stun(0.7f); //0.7f
                 sword.SetActive(true);
                 shield.SetActive(true);
                 swordAndShieldOnBack.SetActive(false);
-                anim.Play("Attack", -1, 0.15f);
+                //anim.Play("Attack", -1, 0.15f);
+
+                /*
+                if (shieldUp)
+                {
+                    shieldCol.enabled = false;
+                    shieldUp = false;
+                    anim.SetBool("ShieldUp", false);
+                    SFXController.PlaySFX("ShieldIn");
+                }
+                */
             }
 
             gustJar.transform.LookAt(gustJarTarget);
@@ -749,7 +788,7 @@ public class Movement : MonoBehaviour
 
                 //Debug.Log(ACI[0].clip.name);
 
-                if (ACI[0].clip.name == "Idle" || ACI[0].clip.name == "Attack Anim" || ACI[0].clip.name == "Rolling")
+                if (ACI[0].clip.name == "Idle" || ACI[0].clip.name == "Attack Anim" || ACI[0].clip.name == "Rolling" || ACI[0].clip.name == "Attack2" || ACI[0].clip.name == "Attack3")
                 {
                     anim.Play("Block Start Anim");
                     anim.SetBool("ShieldUp", true);
@@ -792,6 +831,7 @@ public class Movement : MonoBehaviour
                     midAction = true;
                     rolling = true;
                     SFXController.PlaySFX("LinkRoll", 0.5f);
+                    anim.SetBool("HoldGustJar", false);
                     anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
                     rollingTimer = 0.75f; //0.3f //original was 0.25f
@@ -1261,11 +1301,11 @@ public class Movement : MonoBehaviour
         gotHit = true;
     }
 
-    public static void SmallHit(Vector2 enemyDir, bool returnLinkToIdleAnimation)
+    public static void SmallHit(Vector2 enemyDir, bool returnLinkToCombatAnimation)
     {
         enemyDirection = enemyDir;
         gotHit = true;
-        goToIdle = returnLinkToIdleAnimation;
+        goToCombat = returnLinkToCombatAnimation;
     }
 
     public static void UpdateYRotation()

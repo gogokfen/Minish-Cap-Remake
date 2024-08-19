@@ -4122,7 +4122,7 @@ Transform:
   m_GameObject: {fileID: 1638097843561608260}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0.60246086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35617,6 +35617,7 @@ MonoBehaviour:
   gustJarSpinningComponent: {fileID: 3692079907928307868}
   gustJarHoleTrans: {fileID: 7029380453684829989}
   gustJarTarget: {fileID: 4908887201652511688}
+  linkNeck: {fileID: 0}
   gustJarSuction: {fileID: 7017209794833494705}
   gustJarChuchuParticles: {fileID: 1360960585790913092}
   gustJarDustParticles: {fileID: 6477650674833334545}

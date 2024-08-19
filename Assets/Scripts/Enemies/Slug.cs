@@ -43,11 +43,15 @@ public class Slug : MonoBehaviour
 
     public Transform parent;
 
+    [HideInInspector]
     public float deathTimer = 1.5f;
 
+    [HideInInspector]
     public bool dying = false;
 
     Tween slugDrop;
+
+    [SerializeField] GameObject heartDropPrefab;
 
     private void Start()
     {
@@ -188,6 +192,11 @@ public class Slug : MonoBehaviour
 
     public void Die()
     {
+        if (Random.Range(1, HealthSystem.currentHealth) == 1)
+        {
+            Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        }
+
         dyingEffect.transform.SetParent(parent);
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;

@@ -5214,6 +5214,7 @@ MonoBehaviour:
   fallingFromSky: 0
   fallingTimer: 0
   moveSpeed: 2.25
+  rotation: 0
   hp: 2
   slugShadow: {fileID: 0}
   gotHit: 0
@@ -5225,6 +5226,8 @@ MonoBehaviour:
   parent: {fileID: 0}
   deathTimer: 1.5
   dying: 0
+  heartDropPrefab: {fileID: 4142204663741157817, guid: 23dc3ef597ca9e74e87f3096cecb7b25,
+    type: 3}
 --- !u!54 &7001174188590155259
 Rigidbody:
   m_ObjectHideFlags: 0

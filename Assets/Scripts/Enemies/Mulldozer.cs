@@ -57,6 +57,8 @@ public class Mulldozer : MonoBehaviour
     [HideInInspector]
     public Rigidbody rigid;
 
+    public GameObject heartDropPrefab;
+
     private Vector3 spawnPosition;
 
     void Start()
@@ -73,8 +75,6 @@ public class Mulldozer : MonoBehaviour
         if (transform.position.y<-5)
         {
             transform.position = spawnPosition; //failsafe in case falls out of the map
-
-            Debug.Log("Yipee" + transform.name);
         }
 
         if (!dying)
@@ -242,6 +242,11 @@ public class Mulldozer : MonoBehaviour
 
     public void Die()
     {
+        if (Random.Range(1, HealthSystem.currentHealth) == 1)
+        {
+            Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        }
+
         dyingEffect.transform.SetParent(null);
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;

@@ -5068,6 +5068,8 @@ MonoBehaviour:
   parent: {fileID: 5511887458481580482}
   deathTimer: 1.5
   dying: 0
+  heartDropPrefab: {fileID: 4142204663741157817, guid: 23dc3ef597ca9e74e87f3096cecb7b25,
+    type: 3}
 --- !u!54 &8024124470881015052
 Rigidbody:
   m_ObjectHideFlags: 0

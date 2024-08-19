@@ -15266,6 +15266,8 @@ MonoBehaviour:
   mulldozerBody: {fileID: 6163470188834180379}
   mulldozerMat: {fileID: 0}
   rigid: {fileID: 0}
+  heartDropPrefab: {fileID: 4142204663741157817, guid: 23dc3ef597ca9e74e87f3096cecb7b25,
+    type: 3}
 --- !u!65 &2253212031377629217
 BoxCollider:
   m_ObjectHideFlags: 0

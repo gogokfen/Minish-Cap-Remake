@@ -33,13 +33,13 @@ public class BarrelManager : MonoBehaviour
             playerAnimator.Play("Idle");
             playerAnimator.SetBool("LinkRiding", true);
 
-            player.transform.position = seatPosition.position;
             Movement.playerPosition = seatPosition.position;
-            player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel
             Movement.Stun(0.1f);
+            player.transform.position = seatPosition.position;
+            player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel
 
+            Movement.BarrelRiding(true, true);
             linkRiding = true;
-            Movement.BarrelRiding(true,true);
             barrelCamera.SetActive(true);
         }
         else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space) && canGetOff)
