@@ -78,6 +78,7 @@ public class Slug : MonoBehaviour
     {
         if (dying)
         {
+            
             deathTimer -= Time.deltaTime;
             if (deathTimer<=0)
             {
@@ -201,12 +202,14 @@ public class Slug : MonoBehaviour
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;
         dyingEffect.Play();
+        SFXController.PlaySFX("EnemyPoof", 0.4f);
         Destroy(gameObject);
         Destroy(dyingEffect.gameObject, 3);
     }
 
     public void BecomeRed()
     {
+        SFXController.PlaySFX("SluggulaDie", 0.3f, false);
         slugMat.DOColor(new Color32(255, 0, 0, 255), 0.75f);
     }
 }

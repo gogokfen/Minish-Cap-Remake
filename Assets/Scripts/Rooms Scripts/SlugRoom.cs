@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class SlugRoom : MonoBehaviour
 {
@@ -10,11 +12,17 @@ public class SlugRoom : MonoBehaviour
     public List<float> eventDelays;
     public bool sequentialTrigger = true;
     public bool triggerOnce = true;
-    //private bool triggered = false;
-    //[SerializeField] UnityEvent slugRoomEvent;
+    public VolumeProfile volumeProfile;
+    private void Start() 
+    {
+        volumeProfile.TryGet<ColorAdjustments>(out ColorAdjustments expo);
+        expo.postExposure.value = -1;
+    }
     public void PressureButton()
     {
         pressureButtonCounter++;
+        volumeProfile.TryGet<ColorAdjustments>(out ColorAdjustments expo);
+        expo.postExposure.value += 0.5f;
         if (pressureButtonCounter == 4)
         {
             if (sequentialTrigger)

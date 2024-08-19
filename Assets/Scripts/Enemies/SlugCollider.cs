@@ -23,6 +23,7 @@ public class SlugCollider : MonoBehaviour
             tempDirection *= 2.5f;
             slug.direction.x = tempDirection.x;
             slug.direction.y = tempDirection.z;
+            SFXController.PlaySFX("SluggulaHit", 0.4f);
             if (!slug.gotHit)
             {
                 slug.hp--;
@@ -32,7 +33,7 @@ public class SlugCollider : MonoBehaviour
                     slug.trail.transform.SetParent(slug.parent);   
                     var main = slug.trail.main;
                     main.simulationSpeed = 3;
-
+                    
                     slug.trail.Stop();
                     //slug.trail.main.loop
                     slug.dying = true;
@@ -57,6 +58,7 @@ public class SlugCollider : MonoBehaviour
             slug.direction.y = tempDirection.z;
             Movement.enemyHitAmount = 1;
             Movement.SmallHit(slug.direction);
+            
         }
 
 

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,14 +9,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] UnityEvent disableAll;
     [SerializeField] Animator pauseMenuAnimator;
     [SerializeField] GameObject[] mapElements;
-    //[SerializeField] goToMapButton 
-    // Start is called before the first frame update
     void Start()
     {
         paused = false;
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

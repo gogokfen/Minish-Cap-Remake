@@ -102,7 +102,7 @@ MonoBehaviour:
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 3
-    m_Scale: 1
+    m_Scale: 1.5
     m_Name: Key
     m_HashCode: 82935
   m_SpriteGlyphTable:
@@ -110,7 +110,7 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 1024
       m_Height: 1024
-      m_HorizontalBearingX: 871.2
+      m_HorizontalBearingX: 56.3
       m_HorizontalBearingY: 819.3
       m_HorizontalAdvance: 924
     m_GlyphRect:
@@ -158,9 +158,9 @@ MonoBehaviour:
     m_Metrics:
       m_Width: 1024
       m_Height: 1024
-      m_HorizontalBearingX: -512
-      m_HorizontalBearingY: 512
-      m_HorizontalAdvance: 1024
+      m_HorizontalBearingX: -146.5
+      m_HorizontalBearingY: 692.3
+      m_HorizontalAdvance: 511.5
     m_GlyphRect:
       m_X: 1024
       m_Y: 0
