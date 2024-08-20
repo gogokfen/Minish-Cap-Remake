@@ -71,6 +71,7 @@ public class ChuChuLegs : MonoBehaviour
             {
                 chuchu.vulnerable = true;
                 chuchu.Waddle();
+                chuchu.anim.SetBool("Waddling", true);
             }
 
 

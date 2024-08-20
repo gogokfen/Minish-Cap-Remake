@@ -22,6 +22,8 @@ public class ChuChuCollider : MonoBehaviour
 
     bool startup = true;
 
+    private bool fade = false;
+
     [SerializeField] TextMeshProUGUI bossText;
 
 
@@ -44,24 +46,40 @@ public class ChuChuCollider : MonoBehaviour
     {
         if (startup)
         {
-            bossText.alpha += (Time.deltaTime / 2);
-            bossText.characterSpacing += Time.deltaTime * 10;
+            if (hpBar.value>0.275f)
+            {
+                fade = true;
+            }
+
+            if (!fade)
+            {
+                bossText.alpha += (Time.deltaTime / 2);
+            }
+            else
+                bossText.alpha -= (Time.deltaTime / 2);
+
+            bossText.characterSpacing += Time.deltaTime * 15;
 
             if (hpBar.value < 1)
             {
-                hpBar.value += (Time.deltaTime / 3);
+                hpBar.value += (Time.deltaTime / 7);
             }
             else
+            {
                 startup = false;
+                chuchu.enabled = true;
+            }
+
         }
         else
         {
-
+            /*
             if (bossText.alpha > 0)
             {
                 bossText.characterSpacing += Time.deltaTime * 10;
                 bossText.alpha -= (Time.deltaTime / 2);
             }
+            */
                 
         }
 

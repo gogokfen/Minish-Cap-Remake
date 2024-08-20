@@ -180,6 +180,8 @@ public class Movement : MonoBehaviour
         gotHit = false;
 
         Chest.gotGotJar = false;
+
+        linkRiding = false;
     }
 
     void Update()

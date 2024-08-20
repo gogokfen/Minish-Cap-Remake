@@ -49,6 +49,8 @@ public class ChuChu : MonoBehaviour
     [SerializeField] Transform link;
     [SerializeField] GameObject GFX;
 
+    public Animator anim;
+
 
     void Start()
     {
@@ -82,6 +84,10 @@ public class ChuChu : MonoBehaviour
         {
             moveTimer = 0;
             direction = (Movement.playerPosition - transform.position);
+            direction.Normalize(); //forgot about this
+
+            direction *= 10;
+
             direction.y = 0;
 
             //tempBody.transform.position = Movement.playerPosition;
@@ -109,9 +115,15 @@ public class ChuChu : MonoBehaviour
             if (!attacking)
             {
                 attackRoll = Random.Range(0, 2);
-                if (attackRoll ==0)
+                if (attackRoll == 0)
                 {
                     lastGFXRot = GFX.transform.rotation;
+                    anim.SetBool("Shaking", true);
+                }
+
+                if (attackRoll == 1)
+                {
+                    anim.SetBool("Spitting", true);
                 }
             }
             attacking = true;
@@ -123,6 +135,7 @@ public class ChuChu : MonoBehaviour
                     GFX.transform.LookAt(link);
                     GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
                     spat = false;
+                    anim.SetBool("Spitting", false);
                     attacking = false;
                     attackTimer = 0;
                 }
@@ -138,11 +151,11 @@ public class ChuChu : MonoBehaviour
                 }
                 else if (attackTimer >= attackCooldown + 0.75f)
                 {
-                    GFX.transform.Rotate(225 * Time.deltaTime, 0, 0);
+                    //GFX.transform.Rotate(225 * Time.deltaTime, 0, 0);
                 }
                 else if (attackTimer >= attackCooldown)
                 {
-                    GFX.transform.Rotate(-45 * Time.deltaTime, 0, 0);
+                    //GFX.transform.Rotate(-45 * Time.deltaTime, 0, 0);
                 }
             }
 
@@ -152,17 +165,19 @@ public class ChuChu : MonoBehaviour
                 {
                     attacking = false;
                     attackTimer = 0;
+                    anim.SetBool("Shaking", false);
                 }
                 if (shakeTimer>0)
                 {
                     shakeTimer -= Time.deltaTime;
-                    GFX.transform.Rotate(shakeDir*4*Time.deltaTime);
+                    //GFX.transform.Rotate(shakeDir*4*Time.deltaTime);
                 }
                 else
                 {
                     shakeDir = new Vector3(Random.Range(-45, 15), Random.Range(0, 360), 0);
                     GameObject tempShake = Instantiate(shakeSpit, shakeSpot.position,Quaternion.Euler(shakeDir)); //Quaternion.Euler(shakeSpot.eulerAngles+shakeSpit.transform.eulerAngles)
                     shakeTimer = 0.05f;
+
                     //GFX.transform.rotation = Quaternion.identity;
                     GFX.transform.rotation = lastGFXRot;
                     shakeDir = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
@@ -181,6 +196,7 @@ public class ChuChu : MonoBehaviour
             if (!jumping && !attacking)
             {
                 jumping = true;
+                anim.SetBool("Jumping", true);
             }
             if (jumpTimer >= jumpCooldown + 1 && !jumped)
             {
@@ -313,7 +329,10 @@ public class ChuChu : MonoBehaviour
 
         Sequence vulnerableSeq = DOTween.Sequence();
         //Tween fall = transform.DORotate(new Vector3(0, 0, 0 + 90 * fallDirection), 1);
-        Tween fall = transform.DORotate(GFX.transform.forward*90*fallDirection, 1);
+
+        //Tween fall = transform.DORotate(GFX.transform.forward*90*fallDirection, 1);
+
+        Tween fall = transform.DORotate(Vector3.zero, 1);
         fall.SetDelay(6);
         fall.OnStart(() => { 
             GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
@@ -337,6 +356,8 @@ public class ChuChu : MonoBehaviour
             fallen = false;
             wakingUp = false;
             waddleControl = Mathf.PI / 4;
+            
+            anim.SetBool("Waddling", false);
         });
         //vulnerableSeq.SetDelay(4).OnComplete(()=> { wakingUp = true; });
         //vulnerableSeq.Append(wakeUp);
@@ -389,6 +410,8 @@ public class ChuChu : MonoBehaviour
             jumpTimer = 0;
             jumping = false;
             jumped = false;
+
+            anim.SetBool("Jumping", false);
         });
         
     }
