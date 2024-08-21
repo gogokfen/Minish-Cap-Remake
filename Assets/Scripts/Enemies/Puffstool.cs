@@ -8,7 +8,8 @@ public class Puffstool : MonoBehaviour
     [SerializeField] float moveSpeed = 1;
     float moveTimer;
     float rotation;
-    bool doSpores;
+    [HideInInspector]
+    public bool doSpores;
     bool pooped;
     float sporesTimer;
     float dyingTimer  = 0.75f;
@@ -93,7 +94,7 @@ public class Puffstool : MonoBehaviour
                 if (Random.Range(0, 12) == 0) //(0, 8)
                 {
                     anim.SetBool("Walk", false);
-                    anim.SetBool("Jump", true);
+                    //anim.SetBool("Jump", true);
                     //anim.SetTrigger("Jump");
                     doSpores = true;
                 }
@@ -103,6 +104,12 @@ public class Puffstool : MonoBehaviour
             else if (doSpores)
             {
                 sporesTimer += Time.deltaTime;
+
+                if (sporesTimer>=1)
+                {
+                    anim.SetBool("Jump", true);
+                }
+
 
                 if (sporesTimer >= 2 && !pooped)
                 {

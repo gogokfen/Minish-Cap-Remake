@@ -14,6 +14,8 @@ public class Movement : MonoBehaviour
     float rollingCooldown;
     float rollYPos;
 
+    static bool stopRolling = false;
+
     [SerializeField] PlayerZone backwardCheck;
     public static bool cantPull;
 
@@ -129,6 +131,8 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
+        stopRolling = false;
+
         goToIdle = false;
 
         goToCombat = false;
@@ -188,6 +192,8 @@ public class Movement : MonoBehaviour
     {
         if (cutScene)
         {
+            midAction = false;
+            rolling = false;
             if (linkRiding)
             {
                 sword.SetActive(false);
@@ -228,6 +234,15 @@ public class Movement : MonoBehaviour
             }
             deadLink = true;
             return;
+        }
+
+        if (stopRolling)
+        {
+            stopRolling = false;
+            midAction = false;
+            rolling = false;
+            anim.SetBool("Rolling", false);
+
         }
 
         if (Physics.Raycast(transform.position, -Vector3.up, out player, 10, mask)) //ground check
@@ -1352,6 +1367,11 @@ public class Movement : MonoBehaviour
             linkRiding = false;
         }
 
+    }
+
+    public static void StopRolling()
+    {
+        stopRolling = true;
     }
 
 }

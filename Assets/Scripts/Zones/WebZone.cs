@@ -11,12 +11,29 @@ public class WebZone : MonoBehaviour
         {
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection /= 1.5f;
+            Movement.StopRolling();
             Movement.SmallHit(new Vector2 (tempDirection.x,tempDirection.z));
+
+            
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.tag == "Player" || other.tag == "Shield")
+        {
+            Movement.enemyShielded = true;
+            Vector3 tempDirection = (Movement.playerPosition - transform.position);
+            tempDirection.Normalize();
+            tempDirection /= 1.5f;
+            Movement.StopRolling();
+            Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
+
+
+        }
+
         if (other.tag == "GustJar")
         {
             suctionWindup += Time.deltaTime;

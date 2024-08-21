@@ -22,8 +22,6 @@ public class ChuChuCollider : MonoBehaviour
 
     bool startup = true;
 
-    private bool fade = false;
-
     [SerializeField] TextMeshProUGUI bossText;
 
 
@@ -38,7 +36,7 @@ public class ChuChuCollider : MonoBehaviour
         chuchuColor = new Color32(0, 255, 0, 255);
 
         hpBar.gameObject.SetActive(true);
-        hpBar.value = Mathf.InverseLerp(0, 20, 0); //chuchu.hp
+        hpBar.value = Mathf.InverseLerp(0, 40, 0); //chuchu.hp
     }
 
     // Update is called once per frame
@@ -46,20 +44,32 @@ public class ChuChuCollider : MonoBehaviour
     {
         if (startup)
         {
-            if (hpBar.value>0.275f)
+            Movement.Stun(3.5f);
+            if (hpBar.value > 0.7f)
+            {
+                bossText.characterSpacing += Time.deltaTime * 15;
+                bossText.alpha += (Time.deltaTime / 2);
+            }
+
+
+            /*
+            if (hpBar.value>0.75f)
             {
                 fade = true;
             }
 
-            if (!fade)
+            if (hpBar.value>0.5f && !fade)
             {
-                bossText.alpha += (Time.deltaTime / 2);
+                bossText.characterSpacing += Time.deltaTime * 15;
+                bossText.alpha+= (Time.deltaTime / 2);
             }
-            else
+            else if (fade)
+            {
+                bossText.characterSpacing += Time.deltaTime * 15;
                 bossText.alpha -= (Time.deltaTime / 2);
+            }
 
-            bossText.characterSpacing += Time.deltaTime * 15;
-
+            */
             if (hpBar.value < 1)
             {
                 hpBar.value += (Time.deltaTime / 7);
@@ -73,13 +83,12 @@ public class ChuChuCollider : MonoBehaviour
         }
         else
         {
-            /*
             if (bossText.alpha > 0)
             {
-                bossText.characterSpacing += Time.deltaTime * 10;
+                bossText.characterSpacing += Time.deltaTime * 15;
                 bossText.alpha -= (Time.deltaTime / 2);
             }
-            */
+            
                 
         }
 
@@ -121,7 +130,7 @@ public class ChuChuCollider : MonoBehaviour
 
                 chuchu.hp--;
 
-                hpBar.value = Mathf.InverseLerp(0, 20, chuchu.hp);
+                hpBar.value = Mathf.InverseLerp(0, 40, chuchu.hp);
 
                 gotHitTimer = 0.25f;
 

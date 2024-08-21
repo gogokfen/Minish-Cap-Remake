@@ -19,14 +19,17 @@ public class Door : MonoBehaviour
     public int playerYRotationWay1 = 0;
     public int playerYRotationWay2 = 0;
     public bool lockedDoor;
+
+    bool opened = false;
     void Update()
     {
         if (way1.inside)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !Movement.potUp && !Movement.midAction)
+            if (Input.GetKeyDown(KeyCode.Space) && !Movement.potUp && !Movement.midAction && !opened)
             {
                 if (!lockedDoor)
                 {
+                    opened = true;
                     //walkAnim.Play("Idle");
                     //Movement.playerYRotation = playerYRotationWay1;
                     //Movement.UpdateYRotation();
@@ -73,10 +76,11 @@ public class Door : MonoBehaviour
 
         if (way2.inside)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && !lockedDoor && !Movement.midAction)
+            if (Input.GetKeyDown(KeyCode.Space) && !lockedDoor && !Movement.midAction && !opened)
             {
                 if (!lockedDoor)
                 {
+                    opened = true;
                     //Movement.playerYRotation = playerYRotationWay2;
                     //Movement.UpdateYRotation();
                     Tween Down = door.transform.DOMoveY(-5, 1f); //1.5f

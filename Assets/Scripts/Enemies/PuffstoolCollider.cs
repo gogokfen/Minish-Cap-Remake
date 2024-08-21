@@ -32,7 +32,6 @@ public class PuffstoolCollider : MonoBehaviour
         {
 
 
-
             if (puffstool.vulnerable)
             {
                 Movement.swordHit = true;
@@ -115,9 +114,11 @@ public class PuffstoolCollider : MonoBehaviour
         {
             Movement.dustSucced = true;
 
+            puffstool.doSpores = false;
 
             puffstool.anim.SetBool("Sucked", true);
             puffstool.anim.SetBool("Walk", false);
+            puffstool.anim.SetBool("Jump", false);
             //puffstool.anim.SetTrigger("Sucked");
 
             vulnerableWindup += Time.deltaTime;

@@ -151,6 +151,7 @@ public class ChuChu : MonoBehaviour
                 }
                 else if (attackTimer >= attackCooldown + 0.75f)
                 {
+
                     //GFX.transform.Rotate(225 * Time.deltaTime, 0, 0);
                 }
                 else if (attackTimer >= attackCooldown)
@@ -257,7 +258,9 @@ public class ChuChu : MonoBehaviour
             {
                 waddleControl += Time.deltaTime;
                 //GFX.transform.eulerAngles = new Vector3(GFX.transform.eulerAngles.x, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z+30 * Mathf.Sin(Time.time * 2f));
-                GFX.transform.Rotate(0, 0, (Mathf.Sin(waddleControl * 2f) * Time.deltaTime)*60) ;
+
+                //GFX.transform.Rotate(0, 0, (Mathf.Sin(waddleControl * 2f) * Time.deltaTime)*60) ;
+
                 direction = (Movement.playerPosition - transform.position);
                 //transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
                 transform.Translate(new Vector3(direction.x,0,0) * moveSpeed * Time.deltaTime);
@@ -330,16 +333,46 @@ public class ChuChu : MonoBehaviour
         Sequence vulnerableSeq = DOTween.Sequence();
         //Tween fall = transform.DORotate(new Vector3(0, 0, 0 + 90 * fallDirection), 1);
 
+        CapsuleCollider physicalCC = GetComponent<CapsuleCollider>(); //making sure the physical hitbox can still be interacted with the new animations
+
+
+
         //Tween fall = transform.DORotate(GFX.transform.forward*90*fallDirection, 1);
 
         Tween fall = transform.DORotate(Vector3.zero, 1);
         fall.SetDelay(6);
         fall.OnStart(() => { 
             GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+
+            physicalCC.direction = 0;
+            if (fallDirection == 1)
+            {
+                physicalCC.center = new Vector3(-4, 1, 0);
+            }
+            else
+            {
+                physicalCC.center = new Vector3(4, 1, 0);
+            }  
+
+            if (fallDirection == 1)
+            {
+                anim.SetBool("FallingR", true);
+            }
+            else
+            {
+                anim.SetBool("FallingL", true);
+            }
+            
         });
         Tween wakeUp = transform.DORotate(Vector3.zero, 1);
         fall.OnComplete(() =>
         {
+            anim.SetBool("FallingR", false);
+            anim.SetBool("FallingL", false);
+
+            anim.SetBool("Fallen", true);
+            anim.SetBool("FallenL", true);
+
             fallen = true;
         });
         wakeUp.OnComplete(() =>
@@ -352,6 +385,12 @@ public class ChuChu : MonoBehaviour
         vulnerableSeq.AppendInterval(1);
         vulnerableSeq.OnComplete(() =>
         {
+            physicalCC.direction = 1;
+            physicalCC.center = new Vector3(0, 3, 0);
+
+            anim.SetBool("Fallen", false);
+            anim.SetBool("FallenL", false);
+
             vulnerable = false;
             fallen = false;
             wakingUp = false;

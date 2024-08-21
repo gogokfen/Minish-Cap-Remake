@@ -66,8 +66,8 @@ public class Slug : MonoBehaviour
         if (fallingFromSky)
         {
             slugShadow.GetComponent<Renderer>().material.SetColor("_BaseColor", new Color(0, 0, 0, 0));
-            slugDrop.SetDelay(2);
-            slugDrop = slugShadow.GetComponent<Renderer>().material.DOColor(new Color(0, 0, 0, 1), 2);
+            //slugDrop.SetDelay(2);
+            slugDrop = slugShadow.GetComponent<Renderer>().material.DOColor(new Color(0, 0, 0, 1), 0.75f);
 
 
         }
@@ -138,7 +138,7 @@ public class Slug : MonoBehaviour
                 fallingFromSky = false;
             }
 
-            if (fallingTimer > 2f)
+            if (fallingTimer > 0.75f)
             {
                 //Color shadow = new Color(0, 0, 0, Mathf.InverseLerp(maxFall - 2.5f, 0, fallingTimer - 2.5f));
                 //slugShadow.GetComponent<Renderer>().material.SetColor("_BaseColor", shadow);

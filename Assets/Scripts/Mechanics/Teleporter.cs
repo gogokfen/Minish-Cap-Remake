@@ -19,7 +19,7 @@ public class Teleporter : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && Chest.gotGotJar)
         {
             player.transform.position = teleportPoint.transform.position;
         }
