@@ -5,6 +5,36 @@ using UnityEngine;
 public class MudZone : MonoBehaviour
 {
     float suctionWindup;
+
+    bool dying = false;
+
+    Material sporeMaterial;
+    private float dissolveValue = -1;
+    private float hightValue = 0;
+
+    Vector3 originalPosition;
+    
+
+    private void Start()
+    {
+        sporeMaterial = GetComponent<Renderer>().material;
+        originalPosition = transform.position;
+    }
+    private void Update()
+    {
+        if (dying)
+        {
+            transform.position = Vector3.Lerp(originalPosition, Movement.gustJarPos,(hightValue/2));
+            //transform.localScale = new Vector3((1 - hightValue/2), (1 - hightValue / 2), (1 - hightValue / 2));
+            transform.localScale /= (1 + Time.deltaTime*4);
+
+            dissolveValue += Time.deltaTime *3f;
+            //sporeMaterial.SetFloat("DissolveHight",dissolveValue );
+            hightValue += Time.deltaTime *3;
+            //sporeMaterial.SetFloat("HightDiff", hightValue);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -15,13 +45,14 @@ public class MudZone : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "GustJar")
+        if (other.tag == "GustJar" && !dying)
         {
             suctionWindup += Time.deltaTime;
             if (suctionWindup>0.5f)
             {
+                dying = true;
                 Movement.dustSucced = true;
-                Destroy(gameObject);
+                Destroy(gameObject,2);
             }
         }
     }

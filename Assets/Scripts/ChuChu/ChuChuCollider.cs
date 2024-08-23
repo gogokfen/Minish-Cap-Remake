@@ -141,7 +141,24 @@ public class ChuChuCollider : MonoBehaviour
                 if (chuchu.hp <= 0)
                 {
                     hpBar.gameObject.SetActive(false);
-                    Destroy(chuchu.gameObject,1f);
+
+                    chuchu.dying = true;
+
+                    chuchu.anim.SetBool("Dying", true);
+
+                    chuchu.anim.SetBool("Jumping", false);
+                    chuchu.anim.SetBool("Spitting", false);
+                    chuchu.anim.SetBool("Shaking", false);
+                    chuchu.anim.SetBool("Waddling", false);
+                    chuchu.anim.SetBool("FallingR", false);
+                    chuchu.anim.SetBool("FallingL", false);
+                    chuchu.anim.SetBool("Fallen", false);
+                    chuchu.anim.SetBool("FallenL", false);
+
+                    //chuchu.anim.Play("Death");
+
+
+                    //Destroy(chuchu.gameObject,1f);
                 }
                 //Debug.Log(chuchu.hp);
             }

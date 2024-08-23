@@ -51,271 +51,290 @@ public class ChuChu : MonoBehaviour
 
     public Animator anim;
 
+    float dyingTimer = 6f;
+    [HideInInspector]
+    public bool dying = false;
+
+    public ParticleSystem dyingEffect;
 
     void Start()
     {
-
+        dyingTimer = 6f;
         //tempBody = new GameObject();
     }
 
     void Update()
     {
-        moveTimer += Time.deltaTime;
-
-        if (!vulnerable && !attacking)
+        if (dying)
         {
-            GFX.transform.LookAt(link);
-            GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
-        }
-
-        if (!vulnerable)
-        {
-            if (!attacking)
+            dyingTimer -= Time.deltaTime;
+            if (dyingTimer <= 0)
             {
-                jumpTimer += Time.deltaTime;
-            }
-            if (!jumping)
-            {
-                attackTimer += Time.deltaTime;
+                dying = false;
+                Die();
             }
         }
-
-        if (moveTimer >= 1 && !vulnerable && !jumping && !attacking)
+        else
         {
-            moveTimer = 0;
-            direction = (Movement.playerPosition - transform.position);
-            direction.Normalize(); //forgot about this
+            moveTimer += Time.deltaTime;
 
-            direction *= 10;
-
-            direction.y = 0;
-
-            //tempBody.transform.position = Movement.playerPosition;
-            //GFX.transform.LookAt(link);
-            //GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
-
-            move = true;
-        }
-        if (move)
-        {
-            moveAnim += Time.deltaTime;
-            transform.Translate(direction * moveSpeed * Time.deltaTime);
-            if (moveAnim >= 0.5)
+            if (!vulnerable && !attacking)
             {
-                move = false;
-                moveAnim = 0;
+                GFX.transform.LookAt(link);
+                GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
             }
 
-
-        }
-
-
-        if (attackTimer >= attackCooldown && !vulnerable)
-        {
-            if (!attacking)
+            if (!vulnerable)
             {
-                attackRoll = Random.Range(0, 2);
-                if (attackRoll == 0)
+                if (!attacking)
                 {
-                    lastGFXRot = GFX.transform.rotation;
-                    anim.SetBool("Shaking", true);
+                    jumpTimer += Time.deltaTime;
                 }
-
-                if (attackRoll == 1)
+                if (!jumping)
                 {
-                    anim.SetBool("Spitting", true);
+                    attackTimer += Time.deltaTime;
                 }
             }
-            attacking = true;
 
-            if (attackRoll == 1) //spit
+            if (moveTimer >= 1 && !vulnerable && !jumping && !attacking)
             {
-                if (attackTimer >= attackCooldown + 2)
+                moveTimer = 0;
+                direction = (Movement.playerPosition - transform.position);
+                direction.Normalize(); //forgot about this
+
+                direction *= 10;
+
+                direction.y = 0;
+
+                //tempBody.transform.position = Movement.playerPosition;
+                //GFX.transform.LookAt(link);
+                //GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+
+                move = true;
+            }
+            if (move)
+            {
+                moveAnim += Time.deltaTime;
+                transform.Translate(direction * moveSpeed * Time.deltaTime);
+                if (moveAnim >= 0.5)
                 {
-                    GFX.transform.LookAt(link);
-                    GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
-                    spat = false;
-                    anim.SetBool("Spitting", false);
-                    attacking = false;
-                    attackTimer = 0;
+                    move = false;
+                    moveAnim = 0;
                 }
-                else if (attackTimer >= attackCooldown + 1)
+
+
+            }
+
+
+            if (attackTimer >= attackCooldown && !vulnerable)
+            {
+                if (!attacking)
                 {
-                    //SFXController.PlaySFX("ChuChuSpit", 1); add sound
-                    if (!spat)
+                    attackRoll = Random.Range(0, 2);
+                    if (attackRoll == 0)
                     {
-                        GameObject tempSpit = Instantiate(targetedSpit, new Vector3(transform.position.x, 4, transform.position.z), transform.rotation);
-                        tempSpit.GetComponent<ChuChuTargetedSpit>().spitTarget = link;
+                        lastGFXRot = GFX.transform.rotation;
+                        anim.SetBool("Shaking", true);
                     }
-                    spat = true;
-                }
-                else if (attackTimer >= attackCooldown + 0.75f)
-                {
 
-                    //GFX.transform.Rotate(225 * Time.deltaTime, 0, 0);
+                    if (attackRoll == 1)
+                    {
+                        anim.SetBool("Spitting", true);
+                    }
                 }
-                else if (attackTimer >= attackCooldown)
+                attacking = true;
+
+                if (attackRoll == 1) //spit
                 {
-                    //GFX.transform.Rotate(-45 * Time.deltaTime, 0, 0);
+                    if (attackTimer >= attackCooldown + 2)
+                    {
+                        GFX.transform.LookAt(link);
+                        GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+                        spat = false;
+                        anim.SetBool("Spitting", false);
+                        attacking = false;
+                        attackTimer = 0;
+                    }
+                    else if (attackTimer >= attackCooldown + 1)
+                    {
+                        //SFXController.PlaySFX("ChuChuSpit", 1); add sound
+                        if (!spat)
+                        {
+                            GameObject tempSpit = Instantiate(targetedSpit, new Vector3(transform.position.x, 4, transform.position.z), transform.rotation);
+                            tempSpit.GetComponent<ChuChuTargetedSpit>().spitTarget = link;
+                        }
+                        spat = true;
+                    }
+                    else if (attackTimer >= attackCooldown + 0.75f)
+                    {
+
+                        //GFX.transform.Rotate(225 * Time.deltaTime, 0, 0);
+                    }
+                    else if (attackTimer >= attackCooldown)
+                    {
+                        //GFX.transform.Rotate(-45 * Time.deltaTime, 0, 0);
+                    }
+                }
+
+                else if (attackRoll == 0) //shake
+                {
+                    if (attackTimer >= attackCooldown + 2)
+                    {
+                        attacking = false;
+                        attackTimer = 0;
+                        anim.SetBool("Shaking", false);
+                    }
+                    if (shakeTimer > 0)
+                    {
+                        shakeTimer -= Time.deltaTime;
+                        //GFX.transform.Rotate(shakeDir*4*Time.deltaTime);
+                    }
+                    else
+                    {
+                        shakeDir = new Vector3(Random.Range(-45, 15), Random.Range(0, 360), 0);
+                        GameObject tempShake = Instantiate(shakeSpit, shakeSpot.position, Quaternion.Euler(shakeDir)); //Quaternion.Euler(shakeSpot.eulerAngles+shakeSpit.transform.eulerAngles)
+                        shakeTimer = 0.05f;
+
+                        //GFX.transform.rotation = Quaternion.identity;
+                        GFX.transform.rotation = lastGFXRot;
+                        shakeDir = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+                    }
+
+
+
+                }
+
+
+            }
+
+
+            if (jumpTimer >= jumpCooldown) //V2
+            {
+                if (!jumping && !attacking)
+                {
+                    jumping = true;
+                    anim.SetBool("Jumping", true);
+                }
+                if (jumpTimer >= jumpCooldown + 1 && !jumped)
+                {
+                    Jump();
+                }
+
+                /*
+                if (jumpTimer >jumpCooldown +0.5f)
+                {
+                    jumpAnim += Time.deltaTime;
+                    transform.position = Vector3.Lerp(chuchuLastPos, playerLastPos, jumpAnim);
+                }
+                */
+            }
+
+            /**
+            if (jumpTimer >= jumpCooldown) //10 V1
+            {
+                if (!jumping && !attacking)
+                {
+                    jumping = true;
+                }
+
+                if (jumpTimer > jumpCooldown + 1) //11
+                {
+                    if (!located)
+                    {
+                        located = true;
+                        playerLastPos = Movement.playerPosition;
+                        chuchuLastPos = transform.position;
+                        halfWayPoint = new Vector3((playerLastPos.x + chuchuLastPos.x) / 2, 6, (playerLastPos.z + chuchuLastPos.z) / 2);
+                    }
+                    jumpAnim += Time.deltaTime; // /1f
+                    if (jumpTimer > jumpCooldown + 1.5)
+                        transform.position = Vector3.Lerp(halfWayPoint, playerLastPos, (jumpAnim * 2) - 1);
+                    else
+                        transform.position = Vector3.Lerp(chuchuLastPos, halfWayPoint, jumpAnim * 2);
+                }
+
+                if (jumpTimer >= jumpCooldown + 2) //14
+                {
+                    jumpAnim = 0;
+                    jumpTimer = 0;
+                    jumping = false;
+                    located = false;
                 }
             }
 
-            else if (attackRoll == 0) //shake
+            */
+
+            if (vulnerable) //v2
             {
-                if (attackTimer >= attackCooldown + 2)
+                waddleTime += Time.deltaTime;
+
+
+
+                if (waddleTime < 5)
                 {
-                    attacking = false;
-                    attackTimer = 0;
-                    anim.SetBool("Shaking", false);
+                    waddleControl += Time.deltaTime;
+                    //GFX.transform.eulerAngles = new Vector3(GFX.transform.eulerAngles.x, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z+30 * Mathf.Sin(Time.time * 2f));
+
+                    //GFX.transform.Rotate(0, 0, (Mathf.Sin(waddleControl * 2f) * Time.deltaTime)*60) ;
+
+                    direction = (Movement.playerPosition - transform.position);
+                    //transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
+                    transform.Translate(new Vector3(direction.x, 0, 0) * moveSpeed * Time.deltaTime);
                 }
-                if (shakeTimer>0)
+            }
+            /**
+            if (vulnerable) //v1
+            {
+                waddleTime += Time.deltaTime;
+
+                //transform.eulerAngles = new Vector3(30*Mathf.Sin(Time.time), transform.eulerAngles.y, transform.eulerAngles.z);
+
+                if (waddleTime >= 5)
                 {
-                    shakeTimer -= Time.deltaTime;
-                    //GFX.transform.Rotate(shakeDir*4*Time.deltaTime);
+                    if (fallDirection == 0)
+                    {
+                        //GFX.transform.eulerAngles = new Vector3(0, 0, 0);
+                        fallDirection = Random.Range(1, 3);
+                        if (fallDirection == 2)
+                        {
+                            fallDirection = -1;
+                        }
+                    }
+
+                    if (waddleTime >= 6 && waddleTime <= 7)
+                    {
+                        fallen = true;
+                        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 90 * fallDirection * Time.deltaTime);
+                    }
+                    else if (waddleTime >= 11)
+                    {
+                        wakingUp = true;
+                        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 90 * -fallDirection * Time.deltaTime);
+                    }
+
+                    if (waddleTime >= 12)
+                    {
+                        transform.eulerAngles = Vector3.zero;
+                        fallDirection = 0;
+                        vulnerable = false;
+                        //wakingUp = false;
+                        fallen = false;
+                        waddleTime = 0;
+                    }
+
                 }
                 else
                 {
-                    shakeDir = new Vector3(Random.Range(-45, 15), Random.Range(0, 360), 0);
-                    GameObject tempShake = Instantiate(shakeSpit, shakeSpot.position,Quaternion.Euler(shakeDir)); //Quaternion.Euler(shakeSpot.eulerAngles+shakeSpit.transform.eulerAngles)
-                    shakeTimer = 0.05f;
-
-                    //GFX.transform.rotation = Quaternion.identity;
-                    GFX.transform.rotation = lastGFXRot;
-                    shakeDir = new Vector3(Random.Range(-180, 180), Random.Range(-180, 180), Random.Range(-180, 180));
+                    //GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
+                    GFX.transform.eulerAngles = new Vector3(0, 0, 30 * Mathf.Sin(Time.time * 2f));
+                    direction = (Movement.playerPosition - transform.position);
+                    transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
                 }
-                
-                
-
-            }
-
-
-        }
-
-
-        if (jumpTimer >= jumpCooldown) //V2
-        {
-            if (!jumping && !attacking)
-            {
-                jumping = true;
-                anim.SetBool("Jumping", true);
-            }
-            if (jumpTimer >= jumpCooldown + 1 && !jumped)
-            {
-                Jump();
-            }
-
-            /*
-            if (jumpTimer >jumpCooldown +0.5f)
-            {
-                jumpAnim += Time.deltaTime;
-                transform.position = Vector3.Lerp(chuchuLastPos, playerLastPos, jumpAnim);
             }
             */
         }
 
-        /**
-        if (jumpTimer >= jumpCooldown) //10 V1
-        {
-            if (!jumping && !attacking)
-            {
-                jumping = true;
-            }
 
-            if (jumpTimer > jumpCooldown + 1) //11
-            {
-                if (!located)
-                {
-                    located = true;
-                    playerLastPos = Movement.playerPosition;
-                    chuchuLastPos = transform.position;
-                    halfWayPoint = new Vector3((playerLastPos.x + chuchuLastPos.x) / 2, 6, (playerLastPos.z + chuchuLastPos.z) / 2);
-                }
-                jumpAnim += Time.deltaTime; // /1f
-                if (jumpTimer > jumpCooldown + 1.5)
-                    transform.position = Vector3.Lerp(halfWayPoint, playerLastPos, (jumpAnim * 2) - 1);
-                else
-                    transform.position = Vector3.Lerp(chuchuLastPos, halfWayPoint, jumpAnim * 2);
-            }
-
-            if (jumpTimer >= jumpCooldown + 2) //14
-            {
-                jumpAnim = 0;
-                jumpTimer = 0;
-                jumping = false;
-                located = false;
-            }
-        }
-
-        */
-
-        if (vulnerable) //v2
-        {
-            waddleTime += Time.deltaTime;
-
-
-            
-            if (waddleTime<5)
-            {
-                waddleControl += Time.deltaTime;
-                //GFX.transform.eulerAngles = new Vector3(GFX.transform.eulerAngles.x, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z+30 * Mathf.Sin(Time.time * 2f));
-
-                //GFX.transform.Rotate(0, 0, (Mathf.Sin(waddleControl * 2f) * Time.deltaTime)*60) ;
-
-                direction = (Movement.playerPosition - transform.position);
-                //transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
-                transform.Translate(new Vector3(direction.x,0,0) * moveSpeed * Time.deltaTime);
-            }
-        }
-        /**
-        if (vulnerable) //v1
-        {
-            waddleTime += Time.deltaTime;
-
-            //transform.eulerAngles = new Vector3(30*Mathf.Sin(Time.time), transform.eulerAngles.y, transform.eulerAngles.z);
-
-            if (waddleTime >= 5)
-            {
-                if (fallDirection == 0)
-                {
-                    //GFX.transform.eulerAngles = new Vector3(0, 0, 0);
-                    fallDirection = Random.Range(1, 3);
-                    if (fallDirection == 2)
-                    {
-                        fallDirection = -1;
-                    }
-                }
-
-                if (waddleTime >= 6 && waddleTime <= 7)
-                {
-                    fallen = true;
-                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 90 * fallDirection * Time.deltaTime);
-                }
-                else if (waddleTime >= 11)
-                {
-                    wakingUp = true;
-                    transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 90 * -fallDirection * Time.deltaTime);
-                }
-
-                if (waddleTime >= 12)
-                {
-                    transform.eulerAngles = Vector3.zero;
-                    fallDirection = 0;
-                    vulnerable = false;
-                    //wakingUp = false;
-                    fallen = false;
-                    waddleTime = 0;
-                }
-
-            }
-            else
-            {
-                //GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
-                GFX.transform.eulerAngles = new Vector3(0, 0, 30 * Mathf.Sin(Time.time * 2f));
-                direction = (Movement.playerPosition - transform.position);
-                transform.Translate(new Vector3(0, 0, direction.z) * moveSpeed * Time.deltaTime);
-            }
-        }
-        */
     }
 
     public void Waddle()
@@ -454,4 +473,15 @@ public class ChuChu : MonoBehaviour
         });
         
     }
+
+    public void Die()
+    {
+        dyingEffect.transform.SetParent(null);
+        dyingEffect.transform.rotation = Quaternion.identity;
+        //dyingEffect.transform.localScale = Vector3.one;
+        dyingEffect.Play();
+        Destroy(gameObject);
+        Destroy(dyingEffect.gameObject, 3);
+    }
+
 }
