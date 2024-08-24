@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] UnityEvent disableAll;
     [SerializeField] Animator pauseMenuAnimator;
     [SerializeField] GameObject[] mapElements;
+    [SerializeField] GameObject[] uiElements;
     void Start()
     {
         paused = false;
@@ -36,6 +37,10 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             pauseMenu.SetActive(true);
+            foreach (GameObject uiElement in uiElements)
+            {
+                uiElement.SetActive(false);
+            }
             if (mapPaused)
             {
                 pauseMenuAnimator.Play("MapMenu", 0, 1f);
@@ -56,6 +61,10 @@ public class PauseMenu : MonoBehaviour
             pauseMenuAnimator.Play("LeftMenu", 0, 1f);
             Cursor.lockState = CursorLockMode.Locked;
             pauseMenu.SetActive(false);
+            foreach (GameObject uiElement in uiElements)
+            {
+                uiElement.SetActive(true);
+            }
         }
     }
 

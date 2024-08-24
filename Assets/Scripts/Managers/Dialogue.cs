@@ -14,6 +14,8 @@ public class Dialogue : MonoBehaviour
     private float timer;
     private static Dialogue instance;
     private bool typing;
+    public GameObject lastSaysBox;
+    public TextMeshProUGUI lastSaysText;
 
     void Start()
     {
@@ -43,6 +45,8 @@ public class Dialogue : MonoBehaviour
                 }
 
                 timer = 0;
+                lastSaysBox.SetActive(true);
+                lastSaysText.text = lines[index];
             }
         }
     }

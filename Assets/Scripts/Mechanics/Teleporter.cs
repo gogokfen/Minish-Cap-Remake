@@ -6,20 +6,10 @@ public class Teleporter : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] Transform teleportPoint;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool on;
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.tag == "Player" && Chest.gotGotJar)
+        if (other.tag == "Player" && (Chest.gotGotJar || on))
         {
             player.transform.position = teleportPoint.transform.position;
         }
