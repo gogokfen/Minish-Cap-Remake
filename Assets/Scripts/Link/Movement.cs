@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using DG.Tweening;
+using UnityEngine.Animations.Rigging;
 
 public class Movement : MonoBehaviour
 {
@@ -129,6 +129,8 @@ public class Movement : MonoBehaviour
     [SerializeField] LayerMask mask;
     bool grounded = false;
 
+    [SerializeField] Rig headRig;
+
     void Start()
     {
         stopRolling = false;
@@ -148,7 +150,7 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; //confined?
         hp = 12;
 
-        linkMat.EnableKeyword(("_EMISSION"));
+        //linkMat.EnableKeyword(("_EMISSION"));
 
         swordCol = sword.GetComponent<BoxCollider>();
         shieldCol = shield.GetComponent<BoxCollider>();
@@ -194,6 +196,14 @@ public class Movement : MonoBehaviour
         {
             midAction = false;
             rolling = false;
+            if (busy)
+            {
+                busy = false;
+                anim.SetBool("Moving", false);
+                anim.SetBool("Rolling", false);
+                anim.SetBool("ShieldUp", false);
+                anim.Play("Idle");
+            }
             if (linkRiding)
             {
                 sword.SetActive(false);
@@ -234,6 +244,15 @@ public class Movement : MonoBehaviour
             }
             deadLink = true;
             return;
+        }
+
+        if (gustJar.activeSelf)
+        {
+            headRig.weight = 1;
+        }
+        else
+        {
+            headRig.weight = 0;
         }
 
         if (stopRolling)
@@ -332,7 +351,7 @@ public class Movement : MonoBehaviour
                 //linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
                 //linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
 
-                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 10, 0.25f)); //(1, 0.5f, 0, 0) *10
+                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, 0.25f)); //(1, 0.5f, 0, 0) *10
                 linkHit.Append(linkMat.DOColor(new Color(0.82f, 0.62f, 0.41f, 1) * 1, 0.25f));
 
 
@@ -1334,6 +1353,8 @@ public class Movement : MonoBehaviour
     {
         cutScene = true;
         sceneTimer = timer;
+
+        busy = true;
     }
 
     public static void BarrelRiding(bool riding, bool GoToIdle)

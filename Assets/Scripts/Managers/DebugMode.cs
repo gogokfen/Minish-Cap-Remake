@@ -13,6 +13,10 @@ public class DebugMode : MonoBehaviour
     [SerializeField] GameObject debugMenuUI;
     //List<GameObject> yoyos;
 
+    [SerializeField] GameObject post1;
+    [SerializeField] GameObject post2;
+    [SerializeField] GameObject post3;
+
     public static bool mobileShield = false;
     void Start()
     {
@@ -29,6 +33,27 @@ public class DebugMode : MonoBehaviour
 
         if (debugModeOn)
         {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                post1.SetActive(true);
+                post2.SetActive(false);
+                post3.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                post1.SetActive(false);
+                post2.SetActive(true);
+                post3.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                post1.SetActive(false);
+                post2.SetActive(false);
+                post3.SetActive(true);
+            }
+
+
+
             if (Input.GetKeyDown(KeyCode.Keypad1))
             {
                 HealthSystem.Heal(1);

@@ -61,8 +61,11 @@ public class ChuChuLegs : MonoBehaviour
                     succAnimTimer = 0.4f;
 
                     Sequence chuchuSucced = DOTween.Sequence();
-                    chuchuSucced.Append(chuchuMat.DOColor(new Color32(0, 125, 0, 255), 0.2f));
-                    chuchuSucced.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.2f));
+                    //chuchuSucced.Append(chuchuMat.DOColor(new Color32(0, 125, 0, 255), 0.2f));
+                    //chuchuSucced.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.2f));
+
+                    chuchuSucced.Append(chuchuMat.DOColor(new Color32(100, 100, 100, 125), 0.2f));
+                    chuchuSucced.Append(chuchuMat.DOColor(new Color32(255, 255, 255, 255), 0.2f));
                 }
 
 

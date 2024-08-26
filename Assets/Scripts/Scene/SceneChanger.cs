@@ -74,4 +74,9 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene("OsherScene");
     }
+
+    public void LightScene()
+    {
+        SceneManager.LoadScene("Light Practice");
+    }
 }

@@ -12,6 +12,9 @@ scopes = {
 	"last_search.2138236A" = "health"
 	"OpenInspectorPreview.2138236A" = "0"
 	"currentGroup.2138236A" = "asset"
+	"last_search.66F56946" = "p: t:texture"
+	"OpenInspectorPreview.66F56946" = "0"
+	"currentGroup.66F56946" = "all"
 }
 providers = {
 	adb = {
@@ -63,7 +66,10 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"p: t:texture"
 	""
+	"glob:Assets/**/*.ttf"
+	":"
 ]
 searchItemFavorites = [
 ]
@@ -74,7 +80,7 @@ expandedQueries = [
 ]
 queryBuilder = false
 ignoredProperties = "id;name;classname;imagecontentshash"
-helperWidgetCurrentArea = "all"
+helperWidgetCurrentArea = "p:"
 disabledIndexers = ""
 minIndexVariations = 2
 findProviderIndexHelper = true

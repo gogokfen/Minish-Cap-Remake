@@ -3,7 +3,17 @@ guid: ac78f181c606eb648b9b80db5b1e5b20
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cylinder Pressure Plate
+    second: {fileID: 2100000, guid: a62d45f6e92288e44bd51fa1078deaa9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Square Pressure Plate
+    second: {fileID: 2100000, guid: 25a416a157001734ab164853d38c22ff, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

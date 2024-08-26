@@ -51,11 +51,9 @@ public class Pot : MonoBehaviour
             {
                 case 1:
                     SFXController.PlaySFX("LinkLift1", 0.35f);
-                    Debug.Log("Lifting1");
                     break;
                 case 2:
                     SFXController.PlaySFX("LinkLift2", 0.35f);
-                    Debug.Log("Lifting2");
                     break;
             }
         }

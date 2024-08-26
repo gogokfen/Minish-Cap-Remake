@@ -37,6 +37,9 @@ public class ChuChuCollider : MonoBehaviour
 
         hpBar.gameObject.SetActive(true);
         hpBar.value = Mathf.InverseLerp(0, 40, 0); //chuchu.hp
+
+
+        chuchuMat.EnableKeyword(("_EMISSION"));
     }
 
     // Update is called once per frame
@@ -135,8 +138,18 @@ public class ChuChuCollider : MonoBehaviour
                 gotHitTimer = 0.25f;
 
                 Sequence chuchuHit = DOTween.Sequence();
-                chuchuHit.Append(chuchuMat.DOColor(new Color32(175, 0, 0, 255), 0.125f));
-                chuchuHit.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.125f));
+                //chuchuHit.Append(chuchuMat.DOColor(new Color32(175, 0, 0, 255), 0.125f));
+                //chuchuHit.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.125f));
+
+                //chuchuHit.Append(chuchuMat.DOColor(new Color(1, 0, 0, 1) * 5, 0.125f));
+                //chuchuHit.Append(chuchuMat.DOColor(new Color(1, 1, 1, 1) * 1, 0.125f));
+
+                chuchuHit.Append(chuchuMat.DOColor(new Color(1, 0, 0, 1) * 1, "_EmissionColor", 0.125f));
+                chuchuHit.Append(chuchuMat.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.125f));
+
+
+                //chuchuMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(gotHitTimer*50)));
+
 
                 if (chuchu.hp <= 0)
                 {

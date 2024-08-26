@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraRotator : MonoBehaviour
 {
     [SerializeField] Vector2 turn;
-    [SerializeField] float sens = 0.5f;
+    public float sens = 0.5f;
 
     [SerializeField] Transform playerPos;
 

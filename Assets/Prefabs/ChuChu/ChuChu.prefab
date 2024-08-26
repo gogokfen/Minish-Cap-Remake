@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2030518134063829239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4303491820388240541}
+  m_Layer: 0
+  m_Name: SpitSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4303491820388240541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030518134063829239}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6875, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4665783430042382236}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3609152117303099391
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +720,7 @@ MonoBehaviour:
   attackCooldown: 5
   targetedSpit: {fileID: 1197084889558817133, guid: abf377bb83bb4ec43b939cdfc0d4d414,
     type: 3}
+  spitPos: {fileID: 4303491820388240541}
   shakeSpit: {fileID: 3473256619319220266, guid: 58cc5f614c2b85f47b28dbe1c26ecf3c,
     type: 3}
   shakeSpot: {fileID: 2008151965824282926}
@@ -1564,6 +1596,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2899556479528841689, guid: 9da714862623ba249b9e375c3ce5d936,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3087471632440436202, guid: 9da714862623ba249b9e375c3ce5d936,
         type: 3}
       propertyPath: m_IsActive
@@ -1596,6 +1633,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2008151965824282926}
+    - targetCorrespondingSourceObject: {fileID: 711921668454534183, guid: 9da714862623ba249b9e375c3ce5d936,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4303491820388240541}
     - targetCorrespondingSourceObject: {fileID: 7952578745298943900, guid: 9da714862623ba249b9e375c3ce5d936,
         type: 3}
       insertIndex: -1

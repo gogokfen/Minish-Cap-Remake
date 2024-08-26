@@ -38,6 +38,7 @@ public class ChuChu : MonoBehaviour
     int attackRoll;
     bool spat = false;
     [SerializeField] GameObject targetedSpit;
+    [SerializeField] Transform spitPos;
     [SerializeField] GameObject shakeSpit;
     [SerializeField] Transform shakeSpot;
     float shakeTimer;
@@ -51,7 +52,7 @@ public class ChuChu : MonoBehaviour
 
     public Animator anim;
 
-    float dyingTimer = 6f;
+    float dyingTimer = 6.5f;
     [HideInInspector]
     public bool dying = false;
 
@@ -160,7 +161,7 @@ public class ChuChu : MonoBehaviour
                         //SFXController.PlaySFX("ChuChuSpit", 1); add sound
                         if (!spat)
                         {
-                            GameObject tempSpit = Instantiate(targetedSpit, new Vector3(transform.position.x, 4, transform.position.z), transform.rotation);
+                            GameObject tempSpit = Instantiate(targetedSpit, spitPos.position, transform.rotation);
                             tempSpit.GetComponent<ChuChuTargetedSpit>().spitTarget = link;
                         }
                         spat = true;
