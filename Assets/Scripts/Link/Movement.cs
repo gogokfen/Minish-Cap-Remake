@@ -271,7 +271,6 @@ public class Movement : MonoBehaviour
             midAction = false;
             rolling = false;
             anim.SetBool("Rolling", false);
-
         }
 
         if (Physics.Raycast(transform.position, -Vector3.up, out player, 10, mask)) //ground check
@@ -644,6 +643,7 @@ public class Movement : MonoBehaviour
                 if (!gustJarSuction.isPlaying && !succed)
                 {
                     gustJarSuction.Play();
+                    SFXController.PlaySFX("GustJarThump", 0.5f);
                 }
                 else if (succed)
                 {

@@ -23,8 +23,8 @@ public class MudZone : MonoBehaviour
     private void Update()
     {
         if (dying)
-        {
-            transform.position = Vector3.Lerp(originalPosition, Movement.gustJarPos,(hightValue/2));
+        { 
+            transform.position = Vector3.Lerp(originalPosition, new Vector3 (Movement.gustJarPos.x, Movement.gustJarPos.y+0.5f, Movement.gustJarPos.z), (hightValue/2)); //Movement.gustJarPos
             //transform.localScale = new Vector3((1 - hightValue/2), (1 - hightValue / 2), (1 - hightValue / 2));
             transform.localScale /= (1 + Time.deltaTime*4);
 
@@ -55,6 +55,10 @@ public class MudZone : MonoBehaviour
                 SFXController.PlaySFX("GustJarThump", 0.5f);
                 Destroy(gameObject,2);
             }
+        }
+        if (other.tag == "Player" && dying)
+        {
+            Movement.mud = false;
         }
     }
 

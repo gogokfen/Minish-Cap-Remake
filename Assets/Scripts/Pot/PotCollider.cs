@@ -67,6 +67,9 @@ public class PotCollider : MonoBehaviour
             suctionWindup += Time.deltaTime;
             if (suctionWindup>=1)
             {
+                if (!pot.succed)
+                    SFXController.PlaySFX("GustJarThump", 0.5f);
+
                 pot.succed = true;
                 Movement.succed = true;
 

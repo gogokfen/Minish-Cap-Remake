@@ -239,7 +239,7 @@ public class Mulldozer : MonoBehaviour
         attackingEffect.SetActive(false);
         charging = false;
         attackTimer = 0;
-        chargeRotationTimer = 0.25f;
+        chargeRotationTimer = 0.15f; //0.25f
         attackCooldown = updatedAttackCooldown;
     }
 

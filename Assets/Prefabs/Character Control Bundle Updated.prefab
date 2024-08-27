@@ -4276,6 +4276,7 @@ Transform:
   - {fileID: 7062719981852607611}
   - {fileID: 2791502478089510663}
   - {fileID: 6953715666340665534}
+  - {fileID: 7029380453684829989}
   m_Father: {fileID: 4751773112426457122}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &9080092261318859997
@@ -9621,7 +9622,6 @@ Transform:
   - {fileID: 1917227145936676496}
   - {fileID: 9160591642231134283}
   - {fileID: 3505564930801142244}
-  - {fileID: 7029380453684829989}
   - {fileID: 5127953578933638443}
   - {fileID: 3662469010308286324}
   m_Father: {fileID: 1009556564078204873}
@@ -25912,12 +25912,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5861805033140557762}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.375, z: 1.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.375, z: 0.89753914}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4751773112426457122}
+  m_Father: {fileID: 3505564930801142244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5895930853531920270
 GameObject:
@@ -40977,6 +40977,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   headRig: {fileID: 4366903249355079826}
+  gustJarUI: {fileID: 0}
 --- !u!65 &1218859509817229229
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46078,7 +46079,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 86aae7de1dc543642ac8420e0674673d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
