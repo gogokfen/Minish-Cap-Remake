@@ -643,7 +643,7 @@ public class Movement : MonoBehaviour
                 if (!gustJarSuction.isPlaying && !succed)
                 {
                     gustJarSuction.Play();
-                    SFXController.PlaySFX("GustJarThump", 0.5f);
+                    //SFXController.PlaySFX("GustJarThump", 0.5f);
                 }
                 else if (succed)
                 {
