@@ -47,6 +47,7 @@ public class PuffstoolCollider : MonoBehaviour
                 puffstool.puffstoolBody.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
                 puffstool.puffstoolLeg1.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
                 puffstool.puffstoolLeg2.GetComponent<Renderer>().material.DOColor(new Color32(255, 0, 0, 255), 0.70f);
+                SFXController.PlaySFX("PuffstoolHit", 0.2f);
                 //puffstool.Die();
                 //Destroy(puffstool.gameObject,0.75f); 
                 puffstool.gotHit = true;

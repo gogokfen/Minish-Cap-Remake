@@ -12,7 +12,12 @@ public class RandomAudioPlayerWithPitch : MonoBehaviour
     public float minPitch = 0.8f;  // Minimum pitch value
     public float maxPitch = 1.2f;  // Maximum pitch value
 
+    [Header("SphereCast Settings")]
+    public float sphereRadius = 5f;
+    public LayerMask mask;
+
     private AudioSource audioSource;
+    private bool isPlayingRandomClip = false;
 
     void Start()
     {
@@ -24,8 +29,25 @@ public class RandomAudioPlayerWithPitch : MonoBehaviour
         }
     }
 
+    private void Update() 
+    {
+        if (Physics.CheckSphere(transform.position, sphereRadius, mask))
+        {
+            if (!isPlayingRandomClip)
+            {
+                PlayRandomAudioClip();
+            }
+        }
+        else
+        {
+            StopAudio();
+        }
+    }
+
     void PlayRandomAudioClip()
     {
+        isPlayingRandomClip = true;
+
         if (audioClips.Length == 0)
         {
             Debug.LogWarning("No audio clips assigned.");
@@ -46,20 +68,37 @@ public class RandomAudioPlayerWithPitch : MonoBehaviour
         // Randomize the delay for the next clip
         float randomDelay = Random.Range(minDelay, maxDelay);
 
-        // Schedule the next clip
-        Invoke("PlayRandomAudioClip", randomDelay);
+        // Schedule the next clip and reset the flag
+        Invoke("ResetIsPlayingFlag", selectedClip.length + randomDelay);
+    }
+
+    void ResetIsPlayingFlag()
+    {
+        isPlayingRandomClip = false;
     }
 
     // Optional: Method to stop the sound playback
     public void StopAudio()
     {
         CancelInvoke("PlayRandomAudioClip");
+        isPlayingRandomClip = false;
         audioSource.Stop();
     }
 
-    // Optional: Method to start playing sounds again
-    public void StartAudio()
+    void OnDrawGizmosSelected()
     {
-        PlayRandomAudioClip();
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
+    }
+
+    public void AnimationSound(AudioClip clip)
+    {
+        if (Physics.CheckSphere(transform.position, sphereRadius, mask))
+        {
+            CancelInvoke("PlayRandomAudioClip");
+            isPlayingRandomClip = false;
+            audioSource.clip = clip;
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

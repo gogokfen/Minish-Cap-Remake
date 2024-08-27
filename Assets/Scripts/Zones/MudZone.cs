@@ -52,6 +52,7 @@ public class MudZone : MonoBehaviour
             {
                 dying = true;
                 Movement.dustSucced = true;
+                SFXController.PlaySFX("GustJarThump", 0.5f);
                 Destroy(gameObject,2);
             }
         }

@@ -10227,6 +10227,10 @@ MonoBehaviour:
   playOnStart: 1
   minPitch: 0.8
   maxPitch: 1.2
+  sphereRadius: 5
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &7001174188916682367
 GameObject:
   m_ObjectHideFlags: 0

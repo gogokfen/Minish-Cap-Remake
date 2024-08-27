@@ -130,6 +130,7 @@ public class Movement : MonoBehaviour
     bool grounded = false;
 
     [SerializeField] Rig headRig;
+    [SerializeField] GameObject gustJarUI;
 
     void Start()
     {
@@ -192,6 +193,15 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (gustJar.activeSelf)
+        {
+            gustJarUI.SetActive(true);
+        }
+        else
+        {
+            gustJarUI.SetActive(false);
+        }
+        
         if (cutScene)
         {
             midAction = false;
@@ -289,6 +299,7 @@ public class Movement : MonoBehaviour
         {
             swordBlockedEffect.Play();
             swordBlocked = false;
+            SFXController.PlaySFX("SwordBonk", 0.8f);
         }
 
         if (potUp)
@@ -637,6 +648,7 @@ public class Movement : MonoBehaviour
                 else if (succed)
                 {
                     gustJarSuction.Stop();
+                    //SFXController.PlaySFX("GustJarThump", 0.5f);  Infinite sound
                 }
 
                 if (!gustJarDustParticles.isPlaying && dustSucced)

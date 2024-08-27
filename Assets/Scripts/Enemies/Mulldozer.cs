@@ -124,6 +124,7 @@ public class Mulldozer : MonoBehaviour
                         chargingEffect.Play();
                         attacking = true;
                         originalPos = transform.position;
+                        SFXController.PlaySFX("MulldozerCharge", 0.5f);
                     }
                 }
             }
@@ -146,6 +147,7 @@ public class Mulldozer : MonoBehaviour
                     chargeRotationTimer -= Time.deltaTime;
                     if (!charging)
                     {
+                        SFXController.PlaySFX("MulldozerSwoosh", 0.5f);
                         attackingEffect.SetActive(true);
                         charging = true;
 
@@ -160,6 +162,7 @@ public class Mulldozer : MonoBehaviour
                     }
                     if (chargeRotationTimer <= 0)
                     {
+                        SFXController.PlaySFX("MulldozerSwoosh", 0.5f);
                         chargeRotationTimer = 0.15f; //0.25f
                         rotationDirection *= -1;
                         transform.Rotate(0, rotationDirection, 0);
@@ -246,7 +249,7 @@ public class Mulldozer : MonoBehaviour
         {
             Instantiate(heartDropPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
         }
-
+        SFXController.PlaySFX("EnemyPoof", 0.4f);
         dyingEffect.transform.SetParent(null);
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;

@@ -17,7 +17,7 @@ public class MulldozerCollider : MonoBehaviour
         if (other.tag == "Weapon" && !mulldozer.dying) // && !puffstool.dying
         {
             mulldozer.StopAttacking(); //attacking mulldozer stops him from attacking
-
+            SFXController.PlaySFX("MulldozerHit", 0.5f);
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             tempDirection.Normalize();
             tempDirection *= 2f;
@@ -49,7 +49,7 @@ public class MulldozerCollider : MonoBehaviour
             tempDirection.Normalize();
             tempDirection *= 1.5f;
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
-
+            SFXController.PlaySFX("MulldozerShield", 0.5f);
             tempDirection = (transform.position - Movement.playerPosition);
             tempDirection.Normalize();
             tempDirection *= 3;

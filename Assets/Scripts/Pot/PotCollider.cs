@@ -26,6 +26,7 @@ public class PotCollider : MonoBehaviour
             Movement.succed = false;
             suctionWindup = 0;
             pot.Throw(angleX, angleY);
+            SFXController.PlaySFX("GustJarSuctionPot", 0.5f);
 
             //pot.potPhysicalCol.enabled = true;
             triggerCollider.tag = "Weapon";
@@ -73,7 +74,7 @@ public class PotCollider : MonoBehaviour
                 //pot.transform.position = new Vector3(Movement.playerPosition.x,Movement.playerPosition.y+1f,Movement.playerPosition.z);
                 //pot.transform.position = Vector3.Lerp(pot.transform.position,new Vector3(Movement.playerPosition.x, Movement.playerPosition.y + 1f, Movement.playerPosition.z),suctionWindup-1);
                 pot.transform.position = Vector3.Lerp(pot.transform.position, Movement.gustJarPos, suctionWindup - 1);
-             
+                
 
                 angleX = other.transform.eulerAngles.x;
                 angleY = other.transform.eulerAngles.y;

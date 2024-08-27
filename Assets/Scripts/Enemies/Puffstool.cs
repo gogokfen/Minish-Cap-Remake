@@ -203,6 +203,7 @@ public class Puffstool : MonoBehaviour
         dyingEffect.transform.rotation = Quaternion.identity;
         dyingEffect.transform.localScale = Vector3.one;
         dyingEffect.Play();
+        SFXController.PlaySFX("EnemyPoof", 0.4f);
         Destroy(gameObject);
         Destroy(dyingEffect.gameObject, 3);
     }

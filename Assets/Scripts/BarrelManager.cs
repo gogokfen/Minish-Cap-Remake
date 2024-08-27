@@ -10,6 +10,8 @@ public class BarrelManager : MonoBehaviour
     private bool linkRiding;
     private bool canGetOff = true;
     private float stationTimer;
+    private bool playOnce;
+    public AudioSource audioSource;
     public float station;
 
     float rotationAmount;
@@ -71,6 +73,11 @@ public class BarrelManager : MonoBehaviour
                 rotationSpeed *= (1 + (Time.deltaTime / 2f));
                 //Debug.Log(barrel.transform.eulerAngles.x);
                 playerAnimator.SetInteger("BarrelTurn", 1);
+                if (!playOnce)
+                {
+                audioSource.Play();
+                playOnce = true;
+                }
                 if (rotationSpeed >= 60f)
                 {
                     rotationSpeed = 60f;
@@ -89,6 +96,11 @@ public class BarrelManager : MonoBehaviour
                 wheel.transform.Rotate(Vector3.right * rotationSpeed * 7 * Time.deltaTime, Space.World);
                 rotationSpeed *= (1 + (Time.deltaTime / 2f));
                 //Debug.Log(barrel.transform.eulerAngles.x);
+                if (!playOnce)
+                {
+                audioSource.Play();
+                playOnce = true;
+                }
                 playerAnimator.SetInteger("BarrelTurn", -1);
                 if (rotationSpeed >= 60f)
                 {
@@ -99,6 +111,8 @@ public class BarrelManager : MonoBehaviour
             {
                 rotationSpeed = 10f;
                 playerAnimator.SetInteger("BarrelTurn", 0);
+                
+                playOnce = false;
             }
 
             if ((int)rotationAmount % station >= 0 && (int)rotationAmount % station <=3 && stationTimer <-3) //(int)barrel.transform.eulerAngles.x == (station)
@@ -108,6 +122,8 @@ public class BarrelManager : MonoBehaviour
                 rotationSpeed = 10;
                 stationTimer = 2f;
                 playerAnimator.SetInteger("BarrelTurn", 0);
+                SFXController.PlaySFX("BarrelStop", 0.5f);
+                audioSource.Stop();
             }
         }
 

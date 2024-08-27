@@ -14,7 +14,8 @@ public class Door : MonoBehaviour
     [SerializeField] Animator walkAnim;
     [SerializeField] DoorZone way1;
     [SerializeField] DoorZone way2;
-    [SerializeField] GameObject Lock;
+    [SerializeField] Animator lockAnimation;
+    //[SerializeField] GameObject Lock;
     public int playerYRotationWay1 = 0;
     public int playerYRotationWay2 = 0;
     public bool lockedDoor;
@@ -28,6 +29,7 @@ public class Door : MonoBehaviour
                 if (!lockedDoor)
                 {
                     opened = true;
+                    SFXController.PlaySFX("OpenDoor", 0.5f);
                     Tween Down = door.transform.DOMoveY(-5, 1f); 
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way1.transform.position, 0.75f); 
@@ -49,12 +51,15 @@ public class Door : MonoBehaviour
                 {
                     lockedDoor = false;
                     KeyInventory.RemoveKey();
-                    Lock.SetActive(false);
+                    //Lock.SetActive(false);
                     opened = true;
+                    SFXController.PlaySFX("OpenDoor", 0.5f);
                     Tween Down = door.transform.DOMoveY(-5, 1f); 
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way1.transform.position, 0.75f); 
                     Sequence doorSequence = DOTween.Sequence();
+                    doorSequence.AppendCallback(() => SFXController.PlaySFX("UnlockKey", 0.5f));
+                    doorSequence.AppendCallback(() => lockAnimation.Play("Lock"));
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
                     doorSequence.OnStart(() => Movement.Scene(3));
@@ -77,6 +82,7 @@ public class Door : MonoBehaviour
                 if (!lockedDoor)
                 {
                     opened = true;
+                    SFXController.PlaySFX("OpenDoor", 0.5f);
                     Tween Down = door.transform.DOMoveY(-5, 1f); 
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way2.transform.position, 0.75f); 
@@ -97,12 +103,15 @@ public class Door : MonoBehaviour
                 {
                     lockedDoor = false;
                     KeyInventory.RemoveKey();
-                    Lock.SetActive(false);
+                    //Lock.SetActive(false);
                     opened = true;
+                    SFXController.PlaySFX("OpenDoor", 0.5f);
                     Tween Down = door.transform.DOMoveY(-5, 1f); 
                     Down.SetEase(Ease.InQuint);
                     Tween Move = player.transform.DOMove(pos2way2.transform.position, 0.75f); 
                     Sequence doorSequence = DOTween.Sequence();
+                    doorSequence.AppendCallback(() => SFXController.PlaySFX("UnlockKey", 0.5f));
+                    doorSequence.AppendCallback(() => lockAnimation.Play("Lock"));
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
                     doorSequence.AppendCallback(() => Movement.Scene(3));
