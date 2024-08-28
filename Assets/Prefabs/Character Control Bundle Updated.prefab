@@ -1069,9 +1069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3199614543016702404}
   - component: {fileID: 6154779226095942835}
-  - component: {fileID: 6058634654732427849}
   - component: {fileID: 6306290568518601979}
-  - component: {fileID: 5969016437307663402}
   m_Layer: 8
   m_Name: VirtualCamera
   m_TagString: Untagged
@@ -1134,27 +1132,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 3890677925526951380}
---- !u!65 &6058634654732427849
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303407426884687568}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6306290568518601979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,36 +1145,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {fileID: 9160591642231134283}
-  CameraOriginalPos: {fileID: 723779979919791711}
-  pushAmount: 1
-  gustJarPov: {fileID: 0}
---- !u!54 &5969016437307663402
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303407426884687568}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
+  cameraOriginalPos: {fileID: 723779979919791711}
+  collisionDistance: 0.1
+  obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+    m_Bits: 4096
+  smoothSpeed: 5
+  gustJarPov: {fileID: 7147712378042269558}
 --- !u!1 &318900234909049411
 GameObject:
   m_ObjectHideFlags: 0
@@ -9751,9 +9705,7 @@ GameObject:
   - component: {fileID: 6849207077124109401}
   - component: {fileID: 599984165538736707}
   - component: {fileID: 4962862145079419949}
-  - component: {fileID: 1037303298422474727}
   - component: {fileID: 1995361086243810625}
-  - component: {fileID: 3395514491336822603}
   - component: {fileID: 1255658657788756140}
   m_Layer: 8
   m_Name: Main Camera
@@ -9886,27 +9838,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!65 &1037303298422474727
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2167640495287012231}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1995361086243810625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9920,36 +9851,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {fileID: 9160591642231134283}
-  CameraOriginalPos: {fileID: 723779979919791711}
-  pushAmount: 1
-  gustJarPov: {fileID: 0}
---- !u!54 &3395514491336822603
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2167640495287012231}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
+  cameraOriginalPos: {fileID: 723779979919791711}
+  collisionDistance: 0.1
+  obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+    m_Bits: 4096
+  smoothSpeed: 5
+  gustJarPov: {fileID: 7147712378042269558}
 --- !u!114 &1255658657788756140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46079,7 +45987,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 86aae7de1dc543642ac8420e0674673d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

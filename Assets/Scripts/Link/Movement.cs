@@ -72,6 +72,10 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem gustJarChuchuParticles;
     [SerializeField] ParticleSystem gustJarDustParticles;
 
+    float gustJarSoundTimer = 0;
+    bool gustJarLoopSound = false;
+    bool gustJarSoundStop = false;
+
     [Header("Other Stuff")]
 
     //[SerializeField] GameObject crosshair;
@@ -351,6 +355,7 @@ public class Movement : MonoBehaviour
             gotHitTimer = 0.15f;
             if (enemyShielded)
             {
+                SFXController.PlaySFX("ShieldBonk", 0.5f);
                 //gotHitTimer = 0.15f;
             }
             if (!invul && !enemyShielded) //checking if the enemy actually got shielded or the shield was just up
@@ -638,11 +643,26 @@ public class Movement : MonoBehaviour
                 }
                 gustJarSpinningComponent.Rotate(0, 0, -gustJarRotationSpeed * Time.deltaTime);
 
+                if (!gustJarUp)
+                {
+                    SFXController.PlaySFX("SuctionStart",1f);
+                    //SFXController.PlaySFX("SuctionLoop", 1f, true);
+                    gustJarSoundStop = true;
+                }
+
+                    gustJarSoundTimer += Time.deltaTime;
+                    if (gustJarSoundTimer>=1f && !gustJarLoopSound)
+                    {
+                        gustJarLoopSound = true;
+                        SFXController.PlaySFX("SuctionLoop", 1f, true);
+                    }
+
                 gustJarUp = true;
                 gustJarCol.enabled = true;
                 if (!gustJarSuction.isPlaying && !succed)
                 {
                     gustJarSuction.Play();
+                    //SFXController.PlaySFX("SuctionLoop", 4f, true);
                     //SFXController.PlaySFX("GustJarThump", 0.5f);
                 }
                 else if (succed)
@@ -659,6 +679,15 @@ public class Movement : MonoBehaviour
             }
             else
             {
+                if (gustJarSoundStop)
+                {
+                    gustJarSoundStop = false;
+                    gustJarLoopSound = false;
+                    SFXController.StopSFX();
+                    SFXController.PlaySFX("SuctionEnd", 1f);
+                    gustJarSoundTimer = 0;
+                }
+
                 if (gustJarRotationSpeed >= 0)
                 {
                     gustJarRotationSpeed -= (720 * Time.deltaTime);
@@ -751,6 +780,16 @@ public class Movement : MonoBehaviour
 
             gustJar.transform.LookAt(gustJarTarget);
             gustJarPos = gustJarHoleTrans.position;
+
+
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                gustJarSoundStop = false;
+                gustJarLoopSound = false;
+                SFXController.StopSFX();
+                SFXController.PlaySFX("SuctionEnd", 1f);
+                gustJarSoundTimer = 0;
+            }
         }
 
         else if (Input.GetKeyDown(KeyCode.E) && !rolling && !busy && !potUp && !stunned && !shieldUp && Chest.gotGotJar)

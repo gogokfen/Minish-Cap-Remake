@@ -55,6 +55,8 @@ public class Slug : MonoBehaviour
 
     private void Start()
     {
+        trail.Stop();
+
         randomizer = Random.Range(0, 10f);
         maxFall = fallingTimer;
         slugMat = slugBody.GetComponent<Renderer>().material;
@@ -136,6 +138,7 @@ public class Slug : MonoBehaviour
             if (fallingTimer <= 0)
             {
                 fallingFromSky = false;
+                trail.Play();
             }
 
             if (fallingTimer > 0.75f)

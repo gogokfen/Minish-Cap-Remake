@@ -10055,7 +10055,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   slugBody: {fileID: 2263234107190723764}
   hitEffect: {fileID: 7356865063287510932}
-  trail: {fileID: 7001174188916682364}
+  trail: {fileID: 8517347552796122845}
   dyingEffect: {fileID: 2748238403984738450}
   parent: {fileID: 0}
   deathTimer: 1.5

@@ -19477,7 +19477,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   slugBody: {fileID: 927220068126136102}
   hitEffect: {fileID: 315888923868747851}
-  trail: {fileID: 6845254148630868730}
+  trail: {fileID: 3634778975299811540}
   dyingEffect: {fileID: 1569268561444557975}
   parent: {fileID: 6993441715870391082}
   deathTimer: 1.5
@@ -19649,6 +19649,10 @@ MonoBehaviour:
   playOnStart: 1
   minPitch: 0.8
   maxPitch: 1.2
+  sphereRadius: 5
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &6993441716277102505
 GameObject:
   m_ObjectHideFlags: 0

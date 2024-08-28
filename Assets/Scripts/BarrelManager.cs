@@ -22,6 +22,8 @@ public class BarrelManager : MonoBehaviour
     [SerializeField] Animator playerAnimator;
     [SerializeField] Transform seatPosition;
     [SerializeField] GameObject barrelCamera;
+
+    [SerializeField] GameObject ButtonUI;
     private void Update()
     {
         if (linkRiding)
@@ -29,6 +31,8 @@ public class BarrelManager : MonoBehaviour
 
         if (linkInZone && Input.GetKeyDown(KeyCode.Space) && linkRiding == false)
         {
+            ButtonUI.SetActive(true);
+
             ActionText.UpdateText("");
             //ActionText.UpdateText("Exit");
             playerAnimator.SetBool("Moving", false);
@@ -46,6 +50,8 @@ public class BarrelManager : MonoBehaviour
         }
         else if (linkRiding == true && Input.GetKeyDown(KeyCode.Space) && canGetOff)
         {
+            ButtonUI.SetActive(false);
+
             player.transform.position = seatPosition.position;
             Movement.playerPosition = seatPosition.position;
             player.transform.eulerAngles = new Vector3(0, -90, 0); //making sure link is looking at the wheel

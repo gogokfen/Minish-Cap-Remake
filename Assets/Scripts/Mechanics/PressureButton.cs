@@ -30,6 +30,8 @@ public class PressureButton : MonoBehaviour
             animator.SetTrigger("HardPress");
             hardButtonPressed.Invoke();
             pressed = true;
+
+            SFXController.PlaySFX("PressurePlate", 1f);
         }
 
         /**
@@ -49,6 +51,8 @@ public class PressureButton : MonoBehaviour
             animator.SetBool("SoftPress", true);
             softButtonPressed.Invoke();
             pressed = true;
+
+            SFXController.PlaySFX("PressurePlate", 1f);
         }
     }
 
@@ -59,6 +63,8 @@ public class PressureButton : MonoBehaviour
             animator.SetBool("SoftPress", false);
             softButtonReleased.Invoke();
             pressed = false;
+
+            SFXController.PlaySFX("PressurePlateUp", 1f);
         }
     }
 }
