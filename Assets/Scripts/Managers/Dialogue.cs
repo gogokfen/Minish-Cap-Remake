@@ -29,7 +29,7 @@ public class Dialogue : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Space) && timer >= 1)
+            if (Input.GetKeyDown(KeyCode.Space) && timer >= 0.75f)
             {
                 if (typing)
                 {
@@ -42,9 +42,10 @@ public class Dialogue : MonoBehaviour
                     CloseDialogue();
                     dialogueOpen = false;
                     Movement.BarrelRiding(false);
+                    timer = 0;
                 }
 
-                timer = 0;
+
                 lastSaysBox.SetActive(true);
                 lastSaysText.text = lines[index];
             }

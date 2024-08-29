@@ -16,13 +16,13 @@ public class SlugRoom : MonoBehaviour
     private void Start() 
     {
         volumeProfile.TryGet<ColorAdjustments>(out ColorAdjustments expo);
-        expo.postExposure.value = -1;
+        expo.postExposure.value = 0.8f; //-1 originally
     }
     public void PressureButton()
     {
         pressureButtonCounter++;
         volumeProfile.TryGet<ColorAdjustments>(out ColorAdjustments expo);
-        expo.postExposure.value += 0.5f;
+        expo.postExposure.value += 0.25f;
         if (pressureButtonCounter == 4)
         {
             if (sequentialTrigger)

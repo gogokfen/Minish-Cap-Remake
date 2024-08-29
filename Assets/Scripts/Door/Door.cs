@@ -36,7 +36,7 @@ public class Door : MonoBehaviour
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.OnStart(() => Movement.Scene(3));
+                    doorSequence.OnStart(() => Movement.Scene(1.75f));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay1, player.transform.eulerAngles.z));
                     player.transform.position = pos1way1.position;
@@ -62,7 +62,7 @@ public class Door : MonoBehaviour
                     doorSequence.AppendCallback(() => lockAnimation.Play("Lock"));
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.OnStart(() => Movement.Scene(3));
+                    doorSequence.OnStart(() => Movement.Scene(1.75f));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay1, player.transform.eulerAngles.z));
                     player.transform.position = pos1way1.position;
@@ -89,7 +89,7 @@ public class Door : MonoBehaviour
                     Sequence doorSequence = DOTween.Sequence();
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.AppendCallback(() => Movement.Scene(3));
+                    doorSequence.AppendCallback(() => Movement.Scene(1.75f));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay2, player.transform.eulerAngles.z));
                     player.transform.position = pos1way2.position;
@@ -114,7 +114,7 @@ public class Door : MonoBehaviour
                     doorSequence.AppendCallback(() => lockAnimation.Play("Lock"));
                     doorSequence.AppendCallback(() => walkAnim.SetBool("Moving", false));
                     doorSequence.AppendCallback(() => walkAnim.Play("Idle"));
-                    doorSequence.AppendCallback(() => Movement.Scene(3));
+                    doorSequence.AppendCallback(() => Movement.Scene(1.75f));
                     doorSequence.AppendCallback(() => doorCamera.SetActive(true));
                     player.transform.rotation =Quaternion.Euler(new Vector3(player.transform.eulerAngles.x, playerYRotationWay2, player.transform.eulerAngles.z));
                     player.transform.position = pos1way2.position;
