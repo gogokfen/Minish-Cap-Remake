@@ -645,7 +645,7 @@ public class Movement : MonoBehaviour
 
                 if (!gustJarUp)
                 {
-                    SFXController.PlaySFX("SuctionStart",1f);
+                    SFXController.PlaySFX("SuctionStart",0.7f);
                     //SFXController.PlaySFX("SuctionLoop", 1f, true);
                     gustJarSoundStop = true;
                 }
@@ -654,7 +654,7 @@ public class Movement : MonoBehaviour
                     if (gustJarSoundTimer>=1f && !gustJarLoopSound)
                     {
                         gustJarLoopSound = true;
-                        SFXController.PlaySFX("SuctionLoop", 1f, true);
+                        SFXController.PlaySFX("SuctionLoop", 0.7f, true);
                     }
 
                 gustJarUp = true;
@@ -684,7 +684,7 @@ public class Movement : MonoBehaviour
                     gustJarSoundStop = false;
                     gustJarLoopSound = false;
                     SFXController.StopSFX();
-                    SFXController.PlaySFX("SuctionEnd", 1f);
+                    SFXController.PlaySFX("SuctionEnd", 0.7f);
                     gustJarSoundTimer = 0;
                 }
 

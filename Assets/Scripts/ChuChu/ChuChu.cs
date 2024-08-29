@@ -27,7 +27,7 @@ public class ChuChu : MonoBehaviour
     [HideInInspector]
     public bool fallen = false;
     float waddleTime;
-    float waddleControl =Mathf.PI/4;
+    float waddleControl = Mathf.PI / 4;
     int fallDirection = 0; //consider deleteing later
     [HideInInspector]
     public bool wakingUp = false;
@@ -72,6 +72,7 @@ public class ChuChu : MonoBehaviour
             if (dyingTimer <= 0)
             {
                 dying = false;
+                SFXController.PlaySFX("EnemyPoof", 0.7f);
                 Die();
             }
         }
@@ -106,6 +107,26 @@ public class ChuChu : MonoBehaviour
                 direction *= 10;
 
                 direction.y = 0;
+                int randomSFX = Random.Range(1, 6);
+
+                switch (randomSFX)
+                {
+                    case 1:
+                        SFXController.PlaySFX("ChuChuStep1", 0.55f);
+                        break;
+                    case 2:
+                        SFXController.PlaySFX("ChuChuStep2", 0.55f);
+                        break;
+                    case 3:
+                        SFXController.PlaySFX("ChuChuStep3", 0.55f);
+                        break;
+                    case 4:
+                        SFXController.PlaySFX("ChuChuStep4", 0.55f);
+                        break;
+                    case 5:
+                        SFXController.PlaySFX("ChuChuStep5", 0.55f);
+                        break;
+                }
 
                 //tempBody.transform.position = Movement.playerPosition;
                 //GFX.transform.LookAt(link);
@@ -361,7 +382,8 @@ public class ChuChu : MonoBehaviour
 
         Tween fall = transform.DORotate(Vector3.zero, 1);
         fall.SetDelay(6);
-        fall.OnStart(() => { 
+        fall.OnStart(() =>
+        {
             GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, 0);
 
             physicalCC.direction = 0;
@@ -372,7 +394,7 @@ public class ChuChu : MonoBehaviour
             else
             {
                 physicalCC.center = new Vector3(4, 1, 0);
-            }  
+            }
 
             if (fallDirection == 1)
             {
@@ -382,7 +404,7 @@ public class ChuChu : MonoBehaviour
             {
                 anim.SetBool("FallingL", true);
             }
-            
+
         });
         Tween wakeUp = transform.DORotate(Vector3.zero, 1);
         fall.OnComplete(() =>
@@ -415,7 +437,7 @@ public class ChuChu : MonoBehaviour
             fallen = false;
             wakingUp = false;
             waddleControl = Mathf.PI / 4;
-            
+
             anim.SetBool("Waddling", false);
         });
         //vulnerableSeq.SetDelay(4).OnComplete(()=> { wakingUp = true; });
@@ -472,7 +494,7 @@ public class ChuChu : MonoBehaviour
 
             anim.SetBool("Jumping", false);
         });
-        
+
     }
 
     public void Die()

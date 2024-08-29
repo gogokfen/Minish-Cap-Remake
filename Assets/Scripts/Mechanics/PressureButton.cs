@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class PressureButton : MonoBehaviour
 {
@@ -66,5 +67,10 @@ public class PressureButton : MonoBehaviour
 
             SFXController.PlaySFX("PressurePlateUp", 1f);
         }
+    }
+
+    public void SelfDestruct()
+    {
+        Destroy(this);
     }
 }

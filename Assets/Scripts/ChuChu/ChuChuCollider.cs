@@ -23,6 +23,7 @@ public class ChuChuCollider : MonoBehaviour
     bool startup = true;
 
     [SerializeField] TextMeshProUGUI bossText;
+    bool playOnce;
 
 
     void Start()
@@ -91,11 +92,11 @@ public class ChuChuCollider : MonoBehaviour
                 bossText.characterSpacing += Time.deltaTime * 15;
                 bossText.alpha -= (Time.deltaTime / 2);
             }
-            
-                
+
+
         }
 
-        if (gotHitTimer>=0)
+        if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
             //chuchuMat.SetColor("_BaseColor", chuchuColor);
@@ -120,7 +121,7 @@ public class ChuChuCollider : MonoBehaviour
             //Vector3 tempDirection = (Movement.playerPosition - transform.position);
             Vector3 knockBack = chuchu.transform.position - other.transform.position;
             knockBack.Normalize();
-            chuchu.transform.position = new Vector3(chuchu.transform.position.x+ knockBack.x, chuchu.transform.position.y, chuchu.transform.position.z+knockBack.z);
+            chuchu.transform.position = new Vector3(chuchu.transform.position.x + knockBack.x, chuchu.transform.position.y, chuchu.transform.position.z + knockBack.z);
         }
 
         if (other.tag == "Weapon")
@@ -130,6 +131,20 @@ public class ChuChuCollider : MonoBehaviour
                 Movement.swordHit = true;
                 //hitEffect.Play();
                 //SFXController.PlaySFX("ChuchuHurt", 1); //add getting hit sound
+                int randomSFX = Random.Range(1, 4);
+
+                switch (randomSFX)
+                {
+                    case 1:
+                        SFXController.PlaySFX("ChuChuHit1", 0.55f);
+                        break;
+                    case 2:
+                        SFXController.PlaySFX("ChuChuHit2", 0.55f);
+                        break;
+                    case 3:
+                        SFXController.PlaySFX("ChuChuHit3", 0.55f);
+                        break;
+                }
 
                 chuchu.hp--;
 
@@ -167,6 +182,11 @@ public class ChuChuCollider : MonoBehaviour
                     chuchu.anim.SetBool("FallingL", false);
                     chuchu.anim.SetBool("Fallen", false);
                     chuchu.anim.SetBool("FallenL", false);
+                    if (!playOnce)
+                    {
+                        SFXController.PlaySFX("BossWin", 0.7f);
+                        playOnce = true;
+                    }
 
                     //chuchu.anim.Play("Death");
 
