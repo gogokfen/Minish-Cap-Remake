@@ -633,6 +633,12 @@ public class Movement : MonoBehaviour
                 gustJarUp = false;
                 gustCamera = false;
                 anim.SetBool("HoldGustJar", false);
+
+
+                gustJarSoundStop = false;
+                gustJarLoopSound = false;
+                SFXController.StopSFX();
+                gustJarSoundTimer = 0;
             }
 
             if (Input.GetMouseButton(1))
@@ -714,6 +720,12 @@ public class Movement : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0)) //V2 right mouse click attacks instead and puts off the gust jar
             {
+                gustJarSoundStop = false;
+                gustJarLoopSound = false;
+                SFXController.StopSFX();
+                gustJarSoundTimer = 0;
+
+
                 gustJar.SetActive(false);
                 //crosshair.SetActive(false);
                 gustJarUp = false;
@@ -787,7 +799,6 @@ public class Movement : MonoBehaviour
                 gustJarSoundStop = false;
                 gustJarLoopSound = false;
                 SFXController.StopSFX();
-                SFXController.PlaySFX("SuctionEnd", 1f);
                 gustJarSoundTimer = 0;
             }
         }
