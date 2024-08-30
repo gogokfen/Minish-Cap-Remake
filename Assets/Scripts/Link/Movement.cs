@@ -660,7 +660,7 @@ public class Movement : MonoBehaviour
                     if (gustJarSoundTimer>=1f && !gustJarLoopSound)
                     {
                         gustJarLoopSound = true;
-                        SFXController.PlaySFX("SuctionLoop", 0.7f, true);
+                        SFXController.PlaySFX("SuctionLoop", 0.5f, true);
                     }
 
                 gustJarUp = true;
