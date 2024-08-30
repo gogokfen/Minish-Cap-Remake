@@ -29,7 +29,7 @@ public class WebZone : MonoBehaviour
     {
         if (other.tag == "Player" || other.tag == "Shield")
         {
-            SFXController.PlaySFX("SwordBonk", 0.8f);
+            SFXController.PlaySFX("SwordBonk", 0.5f);
 
             Movement.enemyShielded = true;
             Vector3 tempDirection = (Movement.playerPosition - transform.position);

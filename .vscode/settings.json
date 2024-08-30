@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Minish Cap Remake.sln"
+    "dotnet.defaultSolution": "Minish-Cap-Remake.sln"
 }
