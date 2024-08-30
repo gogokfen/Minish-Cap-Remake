@@ -83,92 +83,114 @@ MonoBehaviour:
   m_SpriteCharacterTable:
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 0
-    m_Scale: 1.2
+    m_GlyphIndex: 5
+    m_Scale: 1.3
     m_Name: LeftClick
     m_HashCode: 1843987829
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 1
-    m_Scale: 2
+    m_GlyphIndex: 6
+    m_Scale: 1.1
     m_Name: PressE
     m_HashCode: -1222046206
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 2
+    m_GlyphIndex: 7
+    m_Scale: 1.2
+    m_Name: Zelda
+    m_HashCode: 110317878
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 8
     m_Scale: 1.5
     m_Name: GustJar
     m_HashCode: -1014294676
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 3
-    m_Scale: 1.5
+    m_GlyphIndex: 9
+    m_Scale: 1
     m_Name: Key
     m_HashCode: 82935
   m_SpriteGlyphTable:
-  - m_Index: 0
+  - m_Index: 5
     m_Metrics:
-      m_Width: 1024
-      m_Height: 1024
-      m_HorizontalBearingX: 56.3
-      m_HorizontalBearingY: 819.3
-      m_HorizontalAdvance: 924
+      m_Width: 520.6558
+      m_Height: 738.26666
+      m_HorizontalBearingX: 1.2
+      m_HorizontalBearingY: 575.7
+      m_HorizontalAdvance: 520.6558
     m_GlyphRect:
-      m_X: 0
-      m_Y: 1024
-      m_Width: 1024
-      m_Height: 1024
+      m_X: 62
+      m_Y: 796
+      m_Width: 520
+      m_Height: 738
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: 1101676979, guid: a3e14f257af3f634cb94770309959697, type: 3}
-  - m_Index: 1
+    sprite: {fileID: -220293701, guid: a3e14f257af3f634cb94770309959697, type: 3}
+  - m_Index: 6
     m_Metrics:
-      m_Width: 1024
-      m_Height: 1024
-      m_HorizontalBearingX: -167.2
-      m_HorizontalBearingY: 713.35
-      m_HorizontalAdvance: 735.9
+      m_Width: 381.5094
+      m_Height: 419.43997
+      m_HorizontalBearingX: 17.3
+      m_HorizontalBearingY: 348.2
+      m_HorizontalAdvance: 381.5094
     m_GlyphRect:
-      m_X: 1024
-      m_Y: 1024
-      m_Width: 1024
-      m_Height: 1024
+      m_X: 953
+      m_Y: 955
+      m_Width: 381
+      m_Height: 419
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: -1133760196, guid: a3e14f257af3f634cb94770309959697, type: 3}
-  - m_Index: 2
+    sprite: {fileID: -1168743999, guid: a3e14f257af3f634cb94770309959697, type: 3}
+  - m_Index: 7
     m_Metrics:
-      m_Width: 1024
-      m_Height: 1024
-      m_HorizontalBearingX: -61.1
-      m_HorizontalBearingY: 739.2
-      m_HorizontalAdvance: 884.9
+      m_Width: 442.91675
+      m_Height: 489.34665
+      m_HorizontalBearingX: -1.4
+      m_HorizontalBearingY: 435.1
+      m_HorizontalAdvance: 442.08
     m_GlyphRect:
-      m_X: 0
-      m_Y: 0
-      m_Width: 1024
-      m_Height: 1024
+      m_X: 1456
+      m_Y: 928
+      m_Width: 442
+      m_Height: 489
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: 2054734159, guid: a3e14f257af3f634cb94770309959697, type: 3}
-  - m_Index: 3
+    sprite: {fileID: -933746463, guid: a3e14f257af3f634cb94770309959697, type: 3}
+  - m_Index: 8
     m_Metrics:
-      m_Width: 1024
-      m_Height: 1024
-      m_HorizontalBearingX: -146.5
-      m_HorizontalBearingY: 692.3
-      m_HorizontalAdvance: 511.5
+      m_Width: 650.0032
+      m_Height: 743.4933
+      m_HorizontalBearingX: -0.7
+      m_HorizontalBearingY: 585.1
+      m_HorizontalAdvance: 650.0032
     m_GlyphRect:
-      m_X: 1024
-      m_Y: 0
-      m_Width: 1024
-      m_Height: 1024
+      m_X: 62
+      m_Y: 41
+      m_Width: 650
+      m_Height: 743
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: 496479601, guid: a3e14f257af3f634cb94770309959697, type: 3}
+    sprite: {fileID: -925339516, guid: a3e14f257af3f634cb94770309959697, type: 3}
+  - m_Index: 9
+    m_Metrics:
+      m_Width: 303.77032
+      m_Height: 550.75995
+      m_HorizontalBearingX: -12.41
+      m_HorizontalBearingY: 466.3
+      m_HorizontalAdvance: 303.77032
+    m_GlyphRect:
+      m_X: 954
+      m_Y: 185
+      m_Width: 303
+      m_Height: 550
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: -2016814711, guid: a3e14f257af3f634cb94770309959697, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []

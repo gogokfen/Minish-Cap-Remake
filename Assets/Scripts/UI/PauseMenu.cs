@@ -75,4 +75,9 @@ public class PauseMenu : MonoBehaviour
             mapElement.SetActive(true);
         }
     }
+
+    public void ShowCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

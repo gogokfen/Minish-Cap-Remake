@@ -113,10 +113,10 @@ TextureImporter:
       name: DialogueIcons_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1200
-        width: 1200
-        height: 1200
+        x: 96
+        y: 1219
+        width: 797
+        height: 1130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80e04968283b3ec4ba8367ae68541d9b
-      internalID: 1101676979
+      spriteID: 0861fe5645d239e44aceac11b5468169
+      internalID: -220293701
       vertices: []
       indices: 
       edges: []
@@ -134,10 +134,10 @@ TextureImporter:
       name: DialogueIcons_1
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 1200
-        width: 1200
-        height: 1200
+        x: 1460
+        y: 1463
+        width: 584
+        height: 642
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29ba5602cc712dc40834f5f0a2c3823c
-      internalID: -1133760196
+      spriteID: cb5bc9df6b54965479feacfa0604a2fc
+      internalID: -1168743999
       vertices: []
       indices: 
       edges: []
@@ -155,10 +155,10 @@ TextureImporter:
       name: DialogueIcons_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1200
-        height: 1200
+        x: 2230
+        y: 1421
+        width: 678
+        height: 749
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0415b072e11cfda49a9d30a9c664113f
-      internalID: 2054734159
+      spriteID: 9b8419b7f75723e46a43b6bd508155cb
+      internalID: -933746463
       vertices: []
       indices: 
       edges: []
@@ -176,10 +176,10 @@ TextureImporter:
       name: DialogueIcons_3
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 0
-        width: 1200
-        height: 1200
+        x: 96
+        y: 64
+        width: 995
+        height: 1138
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,8 +187,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 687526aaffa211b46ab84708e60ffab1
-      internalID: 496479601
+      spriteID: a6f403dbc3e56f44c8bf80ca64b2f829
+      internalID: -925339516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DialogueIcons_4
+      rect:
+        serializedVersion: 2
+        x: 1461
+        y: 284
+        width: 465
+        height: 843
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c76353f93ce8d1438655112be48680f
+      internalID: -2016814711
       vertices: []
       indices: 
       edges: []
@@ -196,7 +217,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f8e6a8626943f2249b445e1e2d394595
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -204,10 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DialogueIcons_0: 1101676979
-      DialogueIcons_1: -1133760196
-      DialogueIcons_2: 2054734159
-      DialogueIcons_3: 496479601
+      DialogueIcons_0: -220293701
+      DialogueIcons_1: -1168743999
+      DialogueIcons_2: -933746463
+      DialogueIcons_3: -925339516
+      DialogueIcons_4: -2016814711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
