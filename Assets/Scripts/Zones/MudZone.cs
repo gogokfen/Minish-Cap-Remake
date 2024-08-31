@@ -7,6 +7,7 @@ public class MudZone : MonoBehaviour
     float suctionWindup;
 
     bool dying = false;
+    bool played = false;
 
     Material sporeMaterial;
     private float dissolveValue = -1;
@@ -32,6 +33,12 @@ public class MudZone : MonoBehaviour
             //sporeMaterial.SetFloat("DissolveHight",dissolveValue );
             hightValue += Time.deltaTime *3;
             //sporeMaterial.SetFloat("HightDiff", hightValue);
+
+            if (!played && (transform.position - Movement.gustJarPos ).magnitude<0.6f)
+            {
+                SFXController.PlaySFX("GustJarThump", 0.6f);
+                played = true;
+            }
         }
     }
 
@@ -52,7 +59,7 @@ public class MudZone : MonoBehaviour
             {
                 dying = true;
                 Movement.dustSucced = true;
-                SFXController.PlaySFX("GustJarThump", 0.5f);
+                //SFXController.PlaySFX("GustJarThump", 0.5f);
                 Destroy(gameObject,2);
             }
         }
