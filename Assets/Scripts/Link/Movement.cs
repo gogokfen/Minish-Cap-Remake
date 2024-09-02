@@ -32,8 +32,19 @@ public class Movement : MonoBehaviour
     public static Vector2 enemyDirection;
     bool invul = false;
     float invulTimer;
+    /*
     [SerializeField] GameObject linkModel; //for blinking effect
     Material linkMat;
+
+    [SerializeField] GameObject linkSkin3; //for blinking effect
+    Material linkMatSkin3;
+
+    [SerializeField] GameObject linkSkin4; //for blinking effect
+    Material linkMatSkin4;
+    */
+
+    [SerializeField] Material[] linkBlinkMats;
+
 
     public static bool mud = false;
 
@@ -144,8 +155,15 @@ public class Movement : MonoBehaviour
 
         goToCombat = false;
 
+        /*
+
         linkMat = linkModel.GetComponent<Renderer>().material;
 
+        linkMatSkin3 = linkSkin3.GetComponent<Renderer>().material;
+
+        linkMatSkin4 = linkSkin4.GetComponent<Renderer>().material;
+
+        */
         gustJarCol = gustJar.GetComponent<CapsuleCollider>();
 
         rigid = GetComponent<Rigidbody>();
@@ -154,6 +172,8 @@ public class Movement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked; //confined?
         hp = 12;
+
+        //linkMat.EnableKeyword(("_EMISSION"));
 
         //linkMat.EnableKeyword(("_EMISSION"));
 
@@ -240,7 +260,6 @@ public class Movement : MonoBehaviour
                 return;
 
         }
-
         if (PauseMenu.paused)
         {
             return;
@@ -362,12 +381,36 @@ public class Movement : MonoBehaviour
             {
                 //SFXController.PlaySFX("linkOUCHHHHH");
 
-                Sequence linkHit = DOTween.Sequence();
+                //Sequence linkHit = DOTween.Sequence();
+                //Sequence linkHit2 = DOTween.Sequence();
+                //Sequence linkHit3 = DOTween.Sequence();
                 //linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
                 //linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
 
-                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, 0.25f)); //(1, 0.5f, 0, 0) *10
-                linkHit.Append(linkMat.DOColor(new Color(0.82f, 0.62f, 0.41f, 1) * 1, 0.25f));
+                /*
+
+                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
+                linkHit.Append(linkMat.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
+
+                linkHit2.Append(linkMatSkin3.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
+                linkHit2.Append(linkMatSkin3.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
+
+                linkHit3.Append(linkMatSkin4.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
+                linkHit3.Append(linkMatSkin4.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
+
+                */
+
+                for (int i=0;i<linkBlinkMats.Length;i++)
+                {
+                    Sequence linkHit = DOTween.Sequence();
+                    linkBlinkMats[i].EnableKeyword(("_EMISSION"));
+                    linkHit.Append(linkBlinkMats[i].DOColor(new Color(1, 0, 0, 1) * 1, "_EmissionColor", 0.25f));
+                    linkHit.Append(linkBlinkMats[i].DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
+                }
+
+
+                //linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f)); //(1, 0.5f, 0, 0) *10
+                //linkHit.Append(linkMat.DOColor(new Color(0.82f, 0.62f, 0.41f, 1) * 1, "_EmissionColor", 0.25f));
 
 
 

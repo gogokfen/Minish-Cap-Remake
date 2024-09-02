@@ -48,7 +48,7 @@ public class ChuChuCollider : MonoBehaviour
     {
         if (startup)
         {
-            Movement.Stun(3.5f);
+            Movement.Stun(2.5f);
             if (hpBar.value > 0.7f)
             {
                 bossText.characterSpacing += Time.deltaTime * 15;
