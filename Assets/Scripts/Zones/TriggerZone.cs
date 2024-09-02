@@ -5,16 +5,6 @@ using UnityEngine;
 public class TriggerZone : MonoBehaviour
 {
     [SerializeField] GameObject activateable;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,7 +12,6 @@ public class TriggerZone : MonoBehaviour
         {
             activateable.SetActive(true);
             Destroy(gameObject);
-        }
-            
+        } 
     }
 }

@@ -13,7 +13,6 @@ public class Puffstool : MonoBehaviour
     bool pooped;
     float sporesTimer;
     float dyingTimer  = 0.75f;
-    int doRotate;
 
     [HideInInspector]
     public bool gotHit;
@@ -35,15 +34,12 @@ public class Puffstool : MonoBehaviour
     public GameObject puffstoolLeg2;
     [HideInInspector]
     public Material puffstoolMat;
-    Color32 puffstoolColor;
 
     [HideInInspector]
     public bool whitend = false;
 
     [HideInInspector]
     public bool dying = false;
-
-    //[SerializeField] ParticleSystem hitEffect;
 
     public ParticleSystem dyingEffect;
 
@@ -56,13 +52,9 @@ public class Puffstool : MonoBehaviour
 
     [SerializeField] GameObject heartDropPrefab;
 
-    //[SerializeField] Transform parent;
     void Start()
     {
         puffstoolMat = puffstoolBody.GetComponent<Renderer>().material;
-        //puffstoolColor = new Color32(255, 250, 146, 255);
-
-        //anim.SetTrigger("Walk");
     }
 
     void Update()
@@ -75,7 +67,6 @@ public class Puffstool : MonoBehaviour
                 moveTimer += Time.deltaTime;
 
                 anim.SetBool("Walk", true);
-                //anim.SetTrigger("Walk");
             }
 
 
@@ -87,15 +78,11 @@ public class Puffstool : MonoBehaviour
                     rotation = Random.Range(0f, 360f);
 
                     transform.rotation = Quaternion.Euler(transform.eulerAngles.x, rotation, transform.eulerAngles.z);
-
-                    //anim.SetTrigger("Walk");
                 }
 
                 if (Random.Range(0, 12) == 0) //(0, 8)
                 {
                     anim.SetBool("Walk", false);
-                    //anim.SetBool("Jump", true);
-                    //anim.SetTrigger("Jump");
                     doSpores = true;
                 }
 
@@ -125,7 +112,6 @@ public class Puffstool : MonoBehaviour
 
                     anim.SetBool("Walk", true);
                     anim.SetBool("Jump", false);
-                    //anim.SetTrigger("Walk");
                 }
 
             }
@@ -141,13 +127,10 @@ public class Puffstool : MonoBehaviour
                 whitend = false;
 
                 puffstoolBody.GetComponent<Renderer>().material = originalMaterial;
-                //puffstoolMat = originalMaterial;
-                //puffstoolMat.DOColor(new Color32(255, 250, 146, 255), 3);
 
                 anim.SetBool("Sucked", false);
                 anim.SetBool("Confused", false);
                 anim.SetBool("Walk", true);
-                //anim.SetTrigger("Walk");
             }
         }
 
@@ -161,28 +144,12 @@ public class Puffstool : MonoBehaviour
             }
         }
 
-        /**
-        if (vulnerable)
-        {
-            puffstoolMat.SetColor("_BaseColor", puffstoolColor);
-
-            //puffstoolColor = new Color32(255, 255, 255, 255);
-            puffstoolColor = Color.white;
-        }
-        else
-        {
-            puffstoolMat.SetColor("_BaseColor", puffstoolColor);
-
-            puffstoolColor = new Color32(255, 250, 146, 255);
-        }
-        */
         if (gotHit)
         {
             gotHit = false;
             gotHitTimer = 0.15f;
             if (vulnerable)
                 Movement.swordHit = true;
-                //hitEffect.Play();
         }
 
         if (gotHitTimer >= 0)

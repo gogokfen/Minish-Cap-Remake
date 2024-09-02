@@ -41,12 +41,6 @@ public class WaterZone : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        
-        
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
@@ -64,34 +58,3 @@ public class WaterZone : MonoBehaviour
         }
     }
 }
-
-/**
- * 
- *     private void OnTriggerStay(Collider other)
-    {
-        
-        
-        if (other.tag == "Player")
-        {
-            if (Movement.playerPosition.y<=transform.position.y && !fall)
-            {
-                fall = true;
-                lastPos = Movement.playerPosition;
-            }
-        }
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            if (fall)
-            {
-                Movement.playerPosition = lastPos;
-                Movement.Stun(0.5f);
-            }
-        }
-    }
- * 
- */

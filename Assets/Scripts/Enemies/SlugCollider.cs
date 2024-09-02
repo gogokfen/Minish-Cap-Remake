@@ -10,14 +10,12 @@ public class SlugCollider : MonoBehaviour
     {
         if (other.tag.Equals("Moveable"))
         {
-            // slug.transform.Rotate(0, 180, 0);
-            slug.rotation = (int)(transform.eulerAngles.y + 180);
+            slug.rotation = (int)(transform.eulerAngles.y + 180); //preventing the slug from sticking to walls
         }
 
         if (other.tag.Equals("Weapon") && !slug.dying)
         {
             Movement.swordHit = true;
-            //slug.hitEffect.Play();
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             tempDirection.Normalize();
             tempDirection *= 2.5f;
@@ -29,23 +27,17 @@ public class SlugCollider : MonoBehaviour
                 slug.hp--;
                 if (slug.hp <= 0)
                 {
-                    //SFXController.PlaySFX("SlugHit", 0.55f); //Play slug dying SFX
                     slug.trail.transform.SetParent(slug.parent);   
                     var main = slug.trail.main;
                     main.simulationSpeed = 3;
                     
                     slug.trail.Stop();
-                    //slug.trail.main.loop
                     slug.dying = true;
                     slug.BecomeRed();
-                    //Destroy(slug.gameObject,0.25f);
                 }
-                //SFXController.PlaySFX("SlugDie", 0.55f); //Play slug getting hit SFX
             }
             slug.gotHit = true;
-            slug.gameObject.layer = 8; //character layer
-            //gameObject.layer = 8; 
-            //slug.enemyText.text = "Hp: " + slug.hp;
+            slug.gameObject.layer = 8; //character layer, make it possible for the slug to fall into water when knocked back
         }
 
 
@@ -58,7 +50,6 @@ public class SlugCollider : MonoBehaviour
             slug.direction.y = tempDirection.z;
             Movement.enemyHitAmount = 1;
             Movement.SmallHit(slug.direction);
-            
         }
 
 
@@ -80,7 +71,6 @@ public class SlugCollider : MonoBehaviour
             slug.direction.y = tempDirection.z;
 
             slug.gameObject.layer = 8; //character layer
-            //gameObject.layer = 8; 
         }
     }
 }

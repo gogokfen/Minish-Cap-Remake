@@ -21,7 +21,6 @@ public class Slug : MonoBehaviour
     Quaternion prevRot;
 
     public int hp;
-    //public TextMeshPro enemyText;
 
     [SerializeField] GameObject slugShadow;
 
@@ -55,7 +54,10 @@ public class Slug : MonoBehaviour
 
     private void Start()
     {
-        trail.Stop();
+        if (fallingFromSky)
+        {
+            trail.Stop();
+        }
 
         randomizer = Random.Range(0, 10f);
         maxFall = fallingTimer;
@@ -68,19 +70,14 @@ public class Slug : MonoBehaviour
         if (fallingFromSky)
         {
             slugShadow.GetComponent<Renderer>().material.SetColor("_BaseColor", new Color(0, 0, 0, 0));
-            //slugDrop.SetDelay(2);
             slugDrop = slugShadow.GetComponent<Renderer>().material.DOColor(new Color(0, 0, 0, 1), 0.75f);
-
-
         }
-
     }
 
     void Update()
     {
         if (dying)
         {
-            
             deathTimer -= Time.deltaTime;
             if (deathTimer<=0)
             {
@@ -88,13 +85,11 @@ public class Slug : MonoBehaviour
                 Die();
             }
         }
-
-        //enemyText.text = "hp: " + hp;
         else if (!fallingFromSky)
         {
             moveSpeed = 0.2f + originalSpeed * Mathf.Abs(Mathf.Sin(((Time.time / 1.5f) + randomizer + rotRandomizer))) * Mathf.Pow(((Time.time / 1.5f) + randomizer + rotRandomizer) % Mathf.PI / 2f, 3); //riz cooked? base move speed 0.2f? in inspector 1.75?
 
-            float strechValue = Mathf.InverseLerp(0.2f, 3, moveSpeed);
+            float strechValue = Mathf.InverseLerp(0.2f, 3, moveSpeed); //made his movement speed and scaling strech back and forth like a slug
             strechValue = strechValue * 2 / 3;
 
             if (!idle)
@@ -102,12 +97,9 @@ public class Slug : MonoBehaviour
             else
                 transform.localScale = new Vector3( transform.localScale.x / (1 + ((transform.localScale.x-1)/100)),1,1);
 
-
-            //Debug.Log(moveSpeed);
-            //moveSpeed = originalSpeed* Mathf.Abs(Mathf.Sin((Time.time+randomizer)))*Mathf.Pow((Time.time+randomizer)%Mathf.PI/2f,2); //riz cooked?
             rotationTimer -= Time.deltaTime;
             animationTime += Time.deltaTime / 2; //*4
-            //transform.rotation = Quaternion.Lerp(prevRot, Quaternion.Euler(0, rotation * 45, 0), animationTime);
+
             transform.rotation = Quaternion.Lerp(prevRot, Quaternion.Euler(0, prevRot.eulerAngles.y + rotation, 0), animationTime); //makes more sense he can only rotate+-180 degress from his current rotation
 
             if (rotationTimer <= 0)
@@ -116,7 +108,6 @@ public class Slug : MonoBehaviour
                 prevRot = transform.rotation;
                 rotRandomizer = Random.Range(-1, 2);
                 rotationTimer = 4 + rotRandomizer; // + Random.Range(-1,1);
-                //rotation = Random.Range(-2, 3); //(1,9)
                 rotation = Random.Range(-90, 91);
                 if (Random.Range(0, 4) == 0)
                 {
@@ -125,12 +116,9 @@ public class Slug : MonoBehaviour
                 }
                 else
                     idle = false;
-                //transform.DORotate(new Vector3(0, rotation * 45, 0), 1);
-                //transform.DORotateQuaternion(Quaternion.Euler(0, rotation * 45, 0), 1);
             }
             if (gotHitTimer <= 0 && !idle)
                 transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-
         }
         else
         {
@@ -141,13 +129,10 @@ public class Slug : MonoBehaviour
                 trail.Play();
             }
 
-            if (fallingTimer > 0.75f)
+            if (fallingTimer < 0.75f)
             {
-                //Color shadow = new Color(0, 0, 0, Mathf.InverseLerp(maxFall - 2.5f, 0, fallingTimer - 2.5f));
-                //slugShadow.GetComponent<Renderer>().material.SetColor("_BaseColor", shadow);
-            }
-            else
                 slugShadow.SetActive(false);
+            }
         }
 
         if (gotHit)
@@ -157,12 +142,10 @@ public class Slug : MonoBehaviour
             if (!dying)
             {
                 Sequence slugHit = DOTween.Sequence();
-                //slugHit.Append(slugMat.DOColor(new Color32(255, 125, 146, 255), 0.25f));
-                //slugHit.Append(slugMat.DOColor(new Color32(255, 255, 146, 255), 0.25f));
+
                 slugHit.Append(slugMat.DOColor(new Color32(255, 125, 255, 255), 0.25f));
                 slugHit.Append(slugMat.DOColor(new Color32(255, 255, 255, 255), 0.25f));
             }
-
         }
 
         if (gotHitTimer >= 0)
@@ -171,21 +154,6 @@ public class Slug : MonoBehaviour
 
             if (gotHitTimer > 0.25f)
                 transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 3), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 3)); //originally *2 and not timedeltatime
-
-            //slugMat.SetColor("_BaseColor", slugColor);
-
-
-            /*
-            if (gotHitTimer > 0.25f)
-            {
-                slugColor = new Color32(255, (byte)(0 + (gotHitTimer * 650)), 146, 255);
-                transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 3), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 3)); //originally *2 and not timedeltatime
-            }
-            else
-            {
-                slugColor = new Color32(255, (byte)(125+ ((0.25-gotHitTimer) * 500)), 146, 255);
-            }
-            */
         }
         else
         {

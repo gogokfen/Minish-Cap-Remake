@@ -1,21 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using TMPro;
 
 public class Pillar : MonoBehaviour
 {
-    //[SerializeField] Zone[] zones = new Zone[4];
-
     [SerializeField] Zone N;
     [SerializeField] Zone S;
     [SerializeField] Zone E;
     [SerializeField] Zone W;
 
     [SerializeField] float pushAmount;
-
-    //[SerializeField] TextMeshProUGUI moveText;
-    //[SerializeField] GameObject moveText;
 
     float animationTime;
 
@@ -36,12 +30,6 @@ public class Pillar : MonoBehaviour
     Vector3 originalPos;
     Vector3 playerOriginalPos;
 
-    void Start()
-    {
-
-    }
-
-
     void Update()
     {
 
@@ -58,13 +46,11 @@ public class Pillar : MonoBehaviour
             holdingPillarSound = false;
         }
 
-
-        //Debug.Log(animationTime);
         if (busy)
         {
             animationTime += Time.deltaTime;
 
-            Movement.Stun(0.5f);
+            Movement.Stun(0.5f); //Link can't move during the push duration, depending on where he stands relating to the pillar his & pillar position changes
 
             if (n)
             {
@@ -118,12 +104,8 @@ public class Pillar : MonoBehaviour
 
             if (animationTime >= 0.5)
             {
-                //Movement.push = -2;
-
                 if (!(Input.GetKey(KeyCode.Space) && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))))
                     Movement.push = 0;
-
-
 
                 animationTime = 0;
 
@@ -138,18 +120,12 @@ public class Pillar : MonoBehaviour
                 sR = false;
                 eR = false;
                 wR = false;
-
             }
-
         }
         else
         {
             animationTime = 0;
         }
-
-
-
-
 
         if (!Movement.midAction)
         {
@@ -183,7 +159,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 sR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                         {
@@ -197,7 +172,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 sR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                         {
@@ -227,7 +201,6 @@ public class Pillar : MonoBehaviour
                             }
 
                         }
-
                     }
                     else if (!busy)
                     {
@@ -235,8 +208,6 @@ public class Pillar : MonoBehaviour
                         Movement.busy = false;
                         holdingPillar = false;
                     }
-
-
                 }
                 else
                     ActionText.UpdateText("");
@@ -271,7 +242,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 nR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                         {
@@ -285,7 +255,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 nR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                         {
@@ -299,7 +268,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 nR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                         {
@@ -313,9 +281,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 nR = true;
                             }
-
                         }
-
                     }
                     else if (!busy)
                     {
@@ -323,11 +289,9 @@ public class Pillar : MonoBehaviour
                         Movement.busy = false;
                         holdingPillar = false;
                     }
-
                 }
                 else
                     ActionText.UpdateText("");
-
             }
             if (E.inZone)
             {
@@ -359,7 +323,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 wR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                         {
@@ -373,7 +336,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 wR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                         {
@@ -387,7 +349,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 wR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                         {
@@ -401,9 +362,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 wR = true;
                             }
-
                         }
-
                     }
                     else if (!busy)
                     {
@@ -411,7 +370,6 @@ public class Pillar : MonoBehaviour
                         Movement.busy = false;
                         holdingPillar = false;
                     }
-
                 }
                 else
                     ActionText.UpdateText("");
@@ -446,7 +404,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 eR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 315 || Camera.main.transform.eulerAngles.y < 45))
                         {
@@ -460,7 +417,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 eR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 45 && Camera.main.transform.eulerAngles.y < 135))
                         {
@@ -474,7 +430,6 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 eR = true;
                             }
-
                         }
                         if ((Camera.main.transform.eulerAngles.y > 225 && Camera.main.transform.eulerAngles.y < 315))
                         {
@@ -488,9 +443,7 @@ public class Pillar : MonoBehaviour
                                 busy = true;
                                 eR = true;
                             }
-
                         }
-
                     }
                     else if (!busy)
                     {
@@ -498,19 +451,10 @@ public class Pillar : MonoBehaviour
                         Movement.busy = false;
                         holdingPillar = false;
                     }
-
                 }
                 else
                     ActionText.UpdateText("");
             }
         }
     }
-
-
-
-    //timer = 0;
-    //transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
-
-    //transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), animationTime);
-
 }

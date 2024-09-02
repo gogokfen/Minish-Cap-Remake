@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 2f;
     float originalSpeed; // in case of running allowed
+    //---------Rolling----------//
     bool rolling;
     float rollingSpeed;
     float rollingTimer;
@@ -19,12 +20,10 @@ public class Movement : MonoBehaviour
     [SerializeField] PlayerZone backwardCheck;
     public static bool cantPull;
 
-    //[SerializeField] Camera mainCamera;
-
     [Header("Link Model & Equipment")]
 
     [SerializeField] Animator anim;
-
+    //---------Geting Hit----------//
     public static float hp;
     public static bool gotHit = false;
     public static int enemyHitAmount;
@@ -32,24 +31,11 @@ public class Movement : MonoBehaviour
     public static Vector2 enemyDirection;
     bool invul = false;
     float invulTimer;
-    /*
-    [SerializeField] GameObject linkModel; //for blinking effect
-    Material linkMat;
-
-    [SerializeField] GameObject linkSkin3; //for blinking effect
-    Material linkMatSkin3;
-
-    [SerializeField] GameObject linkSkin4; //for blinking effect
-    Material linkMatSkin4;
-    */
 
     [SerializeField] Material[] linkBlinkMats;
 
-
     public static bool mud = false;
-
-    //[SerializeField] TextMeshPro linkHp;
-
+    //---------Sword & Shield----------//
     [SerializeField] GameObject sword;
     bool swordSwing = false;
     float swordTimer = 0;
@@ -64,7 +50,7 @@ public class Movement : MonoBehaviour
     public static bool enemyShielded = false;
     BoxCollider shieldCol;
 
-
+    //---------Gust Jar----------//
     [Header("Gust Jar")]
     [SerializeField] GameObject gustJar;
     CapsuleCollider gustJarCol;
@@ -76,8 +62,6 @@ public class Movement : MonoBehaviour
     public static bool dustSucced = false;
     [SerializeField] Transform gustJarHoleTrans;
     public static Vector3 gustJarPos;
-    //float gustJarWindup;
-    //[SerializeField] GameObject gustJarShot;
     [SerializeField] Transform gustJarTarget;
     [SerializeField] ParticleSystem gustJarSuction;
     [SerializeField] ParticleSystem gustJarChuchuParticles;
@@ -89,22 +73,14 @@ public class Movement : MonoBehaviour
 
     [Header("Other Stuff")]
 
-    //[SerializeField] GameObject crosshair;
     [SerializeField] GameObject swordAndShieldOnBack;
     [SerializeField] TrailRenderer swordSlash;
 
-
+    //---------States Set By Link's Interactions----------//
     public static bool potUp = false;
     public static bool throwing = false;
 
-
-    public static int push = -2; //idle
-
-    //Transform originalTrans;
-    Vector3 originalRot;
-
-    //int directionX
-    //Vector2 direction;
+    public static int push = -2; //pillar pushing idle state
 
     public static float playerYRotation;
     static bool updateYRotation;
@@ -130,9 +106,9 @@ public class Movement : MonoBehaviour
 
     Rigidbody rigid;
     Vector3 velocityRestter;
-    Vector3 knockbackPosition;
     public static bool disableGravity = false;
 
+    //---------UI----------//
     [SerializeField] GameObject gameOverScreen;
     private bool deadLink;
     [SerializeField] AudioSource BGM;
@@ -140,6 +116,7 @@ public class Movement : MonoBehaviour
 
     private AnimatorClipInfo[] ACI;
 
+    //---------Ground Check----------//
     RaycastHit player;
     [SerializeField] LayerMask mask;
     bool grounded = false;
@@ -147,7 +124,7 @@ public class Movement : MonoBehaviour
     [SerializeField] Rig headRig;
     [SerializeField] GameObject gustJarUI;
 
-    void Start()
+    void Start() //making sure no static bool is on by accident from previous run
     {
         stopRolling = false;
 
@@ -155,15 +132,6 @@ public class Movement : MonoBehaviour
 
         goToCombat = false;
 
-        /*
-
-        linkMat = linkModel.GetComponent<Renderer>().material;
-
-        linkMatSkin3 = linkSkin3.GetComponent<Renderer>().material;
-
-        linkMatSkin4 = linkSkin4.GetComponent<Renderer>().material;
-
-        */
         gustJarCol = gustJar.GetComponent<CapsuleCollider>();
 
         rigid = GetComponent<Rigidbody>();
@@ -172,10 +140,6 @@ public class Movement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked; //confined?
         hp = 12;
-
-        //linkMat.EnableKeyword(("_EMISSION"));
-
-        //linkMat.EnableKeyword(("_EMISSION"));
 
         swordCol = sword.GetComponent<BoxCollider>();
         shieldCol = shield.GetComponent<BoxCollider>();
@@ -217,16 +181,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if (gustJar.activeSelf)
-        {
-            gustJarUI.SetActive(true);
-        }
-        else
-        {
-            gustJarUI.SetActive(false);
-        }
-        
-        if (cutScene)
+        if (cutScene) //link doesn't act during a cutscene, at least not from this script
         {
             midAction = false;
             rolling = false;
@@ -279,13 +234,15 @@ public class Movement : MonoBehaviour
             return;
         }
 
-        if (gustJar.activeSelf)
+        if (gustJar.activeSelf) //head movement & gust jar UI during gust jar usage
         {
             headRig.weight = 1;
+            gustJarUI.SetActive(true);
         }
         else
         {
             headRig.weight = 0;
+            gustJarUI.SetActive(false);
         }
 
         if (stopRolling)
@@ -304,20 +261,19 @@ public class Movement : MonoBehaviour
             }
             else
                 grounded = true;
-            //Debug.Log(player.distance);
         }
 
+        anim.SetInteger("Push", push); //setting the pillar pushing state
 
+        hp = HealthSystem.currentHealth; //updating link's hp according the script taking care of the UI as well
 
-        anim.SetInteger("Push", push);
-
-        if (swordHit)
+        if (swordHit) //playing the hitting visual when someting set the "swordHit" variable to true
         {
             swordHitEffect.Play();
             swordHit = false;
         }
 
-        if (swordBlocked)
+        if (swordBlocked) //same for the blocking
         {
             swordBlockedEffect.Play();
             swordBlocked = false;
@@ -341,14 +297,12 @@ public class Movement : MonoBehaviour
             anim.SetTrigger("Throwing");
         }
 
-
         if (busy || rolling)
         {
-            sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
-            shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            sword.SetActive(false);
+            shield.SetActive(false);
             swordAndShieldOnBack.SetActive(true);
         }
-
 
         if (backwardCheck.immoveable)
         {
@@ -365,64 +319,24 @@ public class Movement : MonoBehaviour
         else
             playerYRotation = transform.eulerAngles.y;
 
-        hp = HealthSystem.currentHealth;
-
         if (gotHit)
         {
             gotHit = false;
-            rigid.AddForce(new Vector3(enemyDirection.x * 20, 0, enemyDirection.y * 20), ForceMode.Impulse);
+            rigid.AddForce(new Vector3(enemyDirection.x * 20, 0, enemyDirection.y * 20), ForceMode.Impulse); //originally was done without rigidbody, interactions with things while knockbacked was rough
             gotHitTimer = 0.15f;
             if (enemyShielded)
             {
                 SFXController.PlaySFX("ShieldBonk", 0.5f);
-                //gotHitTimer = 0.15f;
             }
             if (!invul && !enemyShielded) //checking if the enemy actually got shielded or the shield was just up
             {
-                //SFXController.PlaySFX("linkOUCHHHHH");
-
-                //Sequence linkHit = DOTween.Sequence();
-                //Sequence linkHit2 = DOTween.Sequence();
-                //Sequence linkHit3 = DOTween.Sequence();
-                //linkHit.Append(linkMat.DOColor(new Color32(255, 125, 0, 0), 0.25f));
-                //linkHit.Append(linkMat.DOColor(new Color32(208, 160, 105, 255), 0.25f));
-
-                /*
-
-                linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
-                linkHit.Append(linkMat.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
-
-                linkHit2.Append(linkMatSkin3.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
-                linkHit2.Append(linkMatSkin3.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
-
-                linkHit3.Append(linkMatSkin4.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f));
-                linkHit3.Append(linkMatSkin4.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
-
-                */
-
-                for (int i=0;i<linkBlinkMats.Length;i++)
+                for (int i = 0; i < linkBlinkMats.Length; i++) //making his whole body light up when taking damage
                 {
                     Sequence linkHit = DOTween.Sequence();
                     linkBlinkMats[i].EnableKeyword(("_EMISSION"));
                     linkHit.Append(linkBlinkMats[i].DOColor(new Color(1, 0, 0, 1) * 1, "_EmissionColor", 0.25f));
                     linkHit.Append(linkBlinkMats[i].DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.25f));
                 }
-
-
-                //linkHit.Append(linkMat.DOColor(new Color(1, 0, 0, 1) * 5, "_EmissionColor", 0.25f)); //(1, 0.5f, 0, 0) *10
-                //linkHit.Append(linkMat.DOColor(new Color(0.82f, 0.62f, 0.41f, 1) * 1, "_EmissionColor", 0.25f));
-
-
-
-                //linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
-
-
-
-                //gotHitTimer = 0.15f;
-
-                //enemyDirection.Normalize();
-                //knockbackPosition = new Vector3(transform.position.x + (enemyDirection.x*5), transform.position.y,transform.position.z + (enemyDirection.y*5));
-                //rigid.AddForce(new Vector3(enemyDirection.x*20,0,enemyDirection.y*20),ForceMode.Impulse);
 
                 invulTimer = 0.5f;
                 invul = true;
@@ -444,39 +358,22 @@ public class Movement : MonoBehaviour
                 }
             }
             enemyShielded = false;
-
             if (goToCombat)
             {
                 anim.SetBool("Moving", false);
                 anim.SetBool("Rolling", false);
                 anim.SetBool("ShieldUp", false);
-                anim.Play("Attack Blocked",-1,0.7f);
+                anim.Play("Attack Blocked", -1, 0.7f);
             }
-
         }
-
-        /*
-        if (gotHitTimer >= 0)
-        {
-            gotHitTimer -= Time.deltaTime;
-            transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.deltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.deltaTime * 20)); //originally *2 and not timedeltatime
-        }
-
-        */
-
 
         if (invul)
         {
             invulTimer -= Time.deltaTime;
 
-            //linkMat.SetColor("_BaseColor", Color.yellow);
-            //linkMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(invulTimer*50)));
-
             if (invulTimer <= 0)
             {
                 invul = false;
-                //linkMat.SetColor("_EmissionColor", Color.black);
-                //linkMat.SetColor("_BaseColor", Color.white);
             }
         }
 
@@ -488,52 +385,31 @@ public class Movement : MonoBehaviour
             rigid.useGravity = true;
 
 
-        if (Input.GetKey(KeyCode.Space) && busy)
+        if (Input.GetKey(KeyCode.Space) && busy) //used mainly for pushing pillars, prevents weird gravity interactions
         {
-            //busy = true;
-            //stunned = true;
-            //Debug.Log(playerPosition);
             transform.position = playerPosition;
-            //return; //stunned while holding space
-            //rigid.isKinematic = true;
+
             rigid.constraints = (RigidbodyConstraints)116; //I can't believe this actually worked
-            //rigid.constraints = RigidbodyConstraints.FreezePositionY;
-            //rigid.freezeRotation = true;
 
             gustJar.SetActive(false);
-            //crosshair.SetActive(false);
             gustJarUp = false;
             gustCamera = false;
-
         }
         else
         {
-            //rigid.isKinematic = false;
             if (rigid.constraints == (RigidbodyConstraints)116)
             {
                 rigid.constraints = RigidbodyConstraints.FreezeRotation;
             }
-            //rigid.constraints = RigidbodyConstraints.None;
-            //rigid.freezeRotation = true;
-
-
-            //rigid.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
-        /*
-        else
-            busy = false;
-        */
-        if (stunned)
+        if (stunned) //using the "stunned" bool when affecting the players position from other scripts
         {
-
-
             stunCount += Time.deltaTime;
             if (!(goToIdle || goToCombat))
             {
                 transform.position = playerPosition;
             }
-                
 
             if (stunCount > stunTime)
             {
@@ -545,23 +421,13 @@ public class Movement : MonoBehaviour
                 goToIdle = false;
                 goToCombat = false;
             }
-
-
-
-            //return; //no bothering do other movement when stunned
         }
         else
         {
             playerPosition = transform.position;
         }
 
-
-
-        //playerPosition = transform.position;
-
-        //Debug.Log(playerYRotation);
-
-        if (Input.GetMouseButtonDown(0) && !gustJar.activeSelf && !rolling && !busy && !potUp && gotHitTimer < 0 && (swordTimer == 0 || swordTimer > 0.25f)) //&& !shieldUp
+        if (Input.GetMouseButtonDown(0) && !gustJar.activeSelf && !rolling && !busy && !potUp && gotHitTimer < 0 && (swordTimer == 0 || swordTimer > 0.25f)) //Attack
         {
             midAction = true;
             int randomSFX = Random.Range(1, 5);
@@ -581,19 +447,15 @@ public class Movement : MonoBehaviour
                     SFXController.PlaySFX("LinkAttack4", 0.55f);
                     break;
             }
-
-            //SFXController.PlaySFX("LinkAttack1", 1.0f);
             swordCol.enabled = true;
             swordSwing = true;
             swordTimer = 0;
-            Stun(0.7f); //0.7f
-            sword.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            Stun(0.7f);
+            sword.SetActive(true);
             shield.SetActive(true);
             swordAndShieldOnBack.SetActive(false);
-            //originalTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
-            //originalRot = transform.eulerAngles; //???
             int randomAnim = Random.Range(1, 4);
-            switch (randomAnim)
+            switch (randomAnim) //multiple attack animations play randomly
             {
                 case 1:
                     anim.Play("Attack1", -1, 0.15f);
@@ -605,25 +467,18 @@ public class Movement : MonoBehaviour
                     anim.Play("Attack3", -1, 0.15f);
                     break;
             }
-            //anim.Play("Attack", -1, 0.15f);
-            //swordSlash.emitting = true;
-            //anim.Play("Attack");
-
-            if (shieldUp)
+            if (shieldUp) //making sure shield is not up when attacking
             {
                 shieldCol.enabled = false;
                 shieldUp = false;
                 anim.SetBool("ShieldUp", false);
                 SFXController.PlaySFX("ShieldIn");
             }
-
         }
 
         if (swordSwing)
         {
             swordTimer += (Time.deltaTime);
-            //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y-90, originalTrans.eulerAngles.z), new Vector3(originalTrans.eulerAngles.x, originalTrans.eulerAngles.y+90, originalTrans.eulerAngles.z), swordTimer);
-            //sword.transform.eulerAngles = Vector3.Lerp(new Vector3(originalRot.x, originalRot.y - 90, originalRot.z), new Vector3(originalRot.x, originalRot.y + 90, originalRot.z), swordTimer); // ORON PUT IN COMMENT WHEN ANIMATING
             if (swordTimer >= 0.02)
             {
                 swordSlash.emitting = true;
@@ -639,44 +494,29 @@ public class Movement : MonoBehaviour
                 midAction = false;
                 swordSwing = false;
             }
-            if (swordTimer >= 0.7)
-            {
-                /*
-                midAction = false;
-                swordSwing = false;
-                swordTimer = 0;
-
-                */
-                //swordCol.enabled = false;
-
-                //sword.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
-            }
         }
 
-
-        if (mud)
+        if (mud) //movement speed reduction while stepping on mud, having shield or gust jar active
         {
             moveSpeed = originalSpeed * 0.6f;
         }
         else if (shieldUp || gustJarUp)
         {
-            moveSpeed = originalSpeed * 0.75f; //6
+            moveSpeed = originalSpeed * 0.75f;
         }
         else
         {
             moveSpeed = originalSpeed;
         }
 
-        if (gustJar.activeSelf && !rolling && !midAction && !stunned && !potUp && Chest.gotGotJar)
+        if (gustJar.activeSelf && !rolling && !midAction && !stunned && !potUp && Chest.gotGotJar) //gust jar behaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 gustJar.SetActive(false);
-                //crosshair.SetActive(false);
                 gustJarUp = false;
                 gustCamera = false;
                 anim.SetBool("HoldGustJar", false);
-
 
                 gustJarSoundStop = false;
                 gustJarLoopSound = false;
@@ -694,30 +534,27 @@ public class Movement : MonoBehaviour
 
                 if (!gustJarUp)
                 {
-                    SFXController.PlaySFX("SuctionStart",0.7f);
-                    //SFXController.PlaySFX("SuctionLoop", 1f, true);
+                    SFXController.PlaySFX("SuctionStart", 0.7f);
                     gustJarSoundStop = true;
                 }
 
-                    gustJarSoundTimer += Time.deltaTime;
-                    if (gustJarSoundTimer>=1f && !gustJarLoopSound)
-                    {
-                        gustJarLoopSound = true;
-                        SFXController.PlaySFX("SuctionLoop", 0.5f, true);
-                    }
+                gustJarSoundTimer += Time.deltaTime;
+
+                if (gustJarSoundTimer >= 1f && !gustJarLoopSound) //looping the gust jar sound after it starts
+                {
+                    gustJarLoopSound = true;
+                    SFXController.PlaySFX("SuctionLoop", 0.5f, true);
+                }
 
                 gustJarUp = true;
                 gustJarCol.enabled = true;
                 if (!gustJarSuction.isPlaying && !succed)
                 {
                     gustJarSuction.Play();
-                    //SFXController.PlaySFX("SuctionLoop", 4f, true);
-                    //SFXController.PlaySFX("GustJarThump", 0.5f);
                 }
                 else if (succed)
                 {
                     gustJarSuction.Stop();
-                    //SFXController.PlaySFX("GustJarThump", 0.5f);  Infinite sound
                 }
 
                 if (!gustJarDustParticles.isPlaying && dustSucced)
@@ -749,18 +586,6 @@ public class Movement : MonoBehaviour
                 gustJarChuchuParticles.Stop();
             }
 
-            /** V1 - right mouse click shoots air
-            if (Input.GetMouseButtonDown(1))
-            {
-                gustJarUp = false;
-                if (!succed)
-                {
-                    Stun(0.25f);
-                    Instantiate(gustJarShot, gustJar.transform.position, gustJar.transform.rotation);
-                }
-            }
-            */
-
             if (Input.GetMouseButtonDown(0)) //V2 right mouse click attacks instead and puts off the gust jar
             {
                 gustJarSoundStop = false;
@@ -768,9 +593,7 @@ public class Movement : MonoBehaviour
                 SFXController.StopSFX();
                 gustJarSoundTimer = 0;
 
-
                 gustJar.SetActive(false);
-                //crosshair.SetActive(false);
                 gustJarUp = false;
                 gustCamera = false;
                 anim.SetBool("HoldGustJar", false);
@@ -792,7 +615,6 @@ public class Movement : MonoBehaviour
                         SFXController.PlaySFX("LinkAttack4", 0.55f);
                         break;
                 }
-
                 int randomAnim = Random.Range(1, 4);
                 switch (randomAnim)
                 {
@@ -807,35 +629,23 @@ public class Movement : MonoBehaviour
                         break;
                 }
 
-
                 if (goToCombat)
                 {
                     swordCol.enabled = false;
                 }
                 else
                     swordCol.enabled = true;
+
                 swordSwing = true;
                 swordTimer = 0;
-                Stun(0.7f); //0.7f
+                Stun(0.7f);
                 sword.SetActive(true);
                 shield.SetActive(true);
                 swordAndShieldOnBack.SetActive(false);
-                //anim.Play("Attack", -1, 0.15f);
-
-                /*
-                if (shieldUp)
-                {
-                    shieldCol.enabled = false;
-                    shieldUp = false;
-                    anim.SetBool("ShieldUp", false);
-                    SFXController.PlaySFX("ShieldIn");
-                }
-                */
             }
 
             gustJar.transform.LookAt(gustJarTarget);
             gustJarPos = gustJarHoleTrans.position;
-
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -853,57 +663,16 @@ public class Movement : MonoBehaviour
             sword.SetActive(false);
             shield.SetActive(false);
             swordAndShieldOnBack.SetActive(true);
-            //crosshair.SetActive(true);
             gustCamera = true;
         }
 
-
-        /**
-        if ((Input.GetKey(KeyCode.E) ||Input.GetMouseButton(2) ) && !rolling && !busy && !potUp && !stunned && !shieldUp)
-        {
-            gustJarUp = true;
-            gustJar.SetActive(true);
-            gustJar.transform.LookAt(gustJarTarget);
-            crosshair.SetActive(true);
-            gustJarPos = gustJarHoleTrans.position;
-
-            if (!gustJarSuction.isPlaying && !succed)
-            {
-                gustJarSuction.Play();
-            }
-            else if (succed)
-            {
-                gustJarSuction.Stop();
-            }
-
-        }
-        else
-        {
-            if (gustJarUp)
-            {
-                Stun(0.25f);
-                gustJarUp = false;
-                gustJar.SetActive(false);
-                crosshair.SetActive(false);
-
-                if (!succed)
-                {
-                    Instantiate(gustJarShot, gustJar.transform.position, gustJar.transform.rotation);
-                }
-
-            }
-
-        }
-        */
-
-        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !busy && !potUp && !swordSwing && rollingTimer <= 0.1f) //shield    && swordTimer>0.2f && !rolling
+        if (Input.GetMouseButtonDown(1) && !gustJar.activeSelf && !busy && !potUp && !swordSwing && rollingTimer <= 0.1f)// Shield behaviour
         {
             midAction = true;
-            shield.SetActive(true); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
+            shield.SetActive(true);
             sword.SetActive(true);
             swordAndShieldOnBack.SetActive(false);
 
-            //Debug.Log("Shield up!");
             shieldCol.enabled = true;
             shieldUp = true;
             anim.Play("Block Start Anim");
@@ -913,7 +682,7 @@ public class Movement : MonoBehaviour
 
 
 
-        if (Input.GetMouseButton(1) && !gustJar.activeSelf && !busy && !potUp && !swordSwing && rollingTimer <= 0.1f) //shield   && !rolling
+        if (Input.GetMouseButton(1) && !gustJar.activeSelf && !busy && !potUp && !swordSwing && rollingTimer <= 0.1f)// making it possible to use shield right when another action ends
         {
             midAction = true;
             shield.SetActive(true);
@@ -927,43 +696,34 @@ public class Movement : MonoBehaviour
             {
                 ACI = anim.GetCurrentAnimatorClipInfo(0);
 
-                //Debug.Log(ACI[0].clip.name);
-
-                if (ACI[0].clip.name == "Idle" || ACI[0].clip.name == "Attack Anim" || ACI[0].clip.name == "Rolling" || ACI[0].clip.name == "Attack2" || ACI[0].clip.name == "Attack3")
+                if (ACI[0].clip.name == "Idle" || ACI[0].clip.name == "Attack Anim" || ACI[0].clip.name == "Rolling" || ACI[0].clip.name == "Attack2" || ACI[0].clip.name == "Attack3") //making sure the sound and animation don't loop infinitely
                 {
                     anim.Play("Block Start Anim");
                     anim.SetBool("ShieldUp", true);
                     SFXController.PlaySFX("ShieldOut");
                 }
             }
-
-
         }
 
-        if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp && !gustJar.activeSelf) //&& !swordSwing
+        if (Input.GetMouseButtonUp(1) && !rolling && !busy && !potUp && !gustJar.activeSelf)//shield release
         {
             midAction = false;
-            //shield.SetActive(false); // ORON MAYBE PUT IN COMMENT WHEN ANIMATING
             shieldCol.enabled = false;
             shieldUp = false;
             anim.SetBool("ShieldUp", false);
             SFXController.PlaySFX("ShieldIn");
-
         }
 
         if (!stunned && !rolling && !busy)
         {
-
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
             {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp && grounded)
+                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp && grounded) //rolling start behaviour
                 {
                     invulTimer = 0.25f;
                     invul = true;
 
-                    //making sure gust jar is not up
                     gustJar.SetActive(false);
-                    //crosshair.SetActive(false);
                     gustJarUp = false;
                     gustCamera = false;
 
@@ -975,214 +735,15 @@ public class Movement : MonoBehaviour
                     anim.SetBool("HoldGustJar", false);
                     anim.Play("Rolling");
                     anim.SetBool("Rolling", true);
-                    rollingTimer = 0.75f; //0.3f //original was 0.25f
+                    rollingTimer = 0.75f;
                 }
             }
         }
-
-        /**
-        if (rolling)
-        {
-            rollingTimer -= Time.deltaTime; //0.75 seconds
-            //6 *3 = 18 (0.75)
-            //Debug.Log(rollingSpeed);
-            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
-            transform.Translate(Vector3.forward * Time.deltaTime * rollingSpeed);
-
-            shieldUp = false; //making sure shield isn't up when rolling
-            anim.SetBool("ShieldUp", false);
-
-            if (rollingTimer <= 0)
-            {
-                midAction = false;
-                rolling = false;
-                anim.SetBool("Rolling", false);
-                rollingCooldown = 0.10f;
-            }
-
-
-        }
-        else
-        {
-            rollingCooldown -= Time.deltaTime;
-        }
-        */
-        /**
-        if (!stunned && !rolling && !busy)
-        {
-
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
-            {
-                if (Input.GetKeyDown(KeyCode.LeftShift) && rollingCooldown <= 0 && !potUp)
-                {
-                    midAction = true;
-                    rolling = true;
-                    SFXController.PlaySFX("LinkRoll", 0.5f);
-                    anim.Play("Rolling");
-                    anim.SetBool("Rolling", true);
-                    rollingTimer = 0.75f; //0.3f //original was 0.25f
-                }
-
-                anim.SetBool("Moving", true);
-
-                transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
-
-                if (Input.GetKey(KeyCode.W))
-                {
-                    //ActionText.UpdateText("Roll");
-                    if (Input.GetKey(KeyCode.A))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                        if (DirectionX > -0.7)
-                            DirectionX -= Time.deltaTime * 5;
-                        if (DirectionY < 0.7)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else if (Input.GetKey(KeyCode.D))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                        if (DirectionX < 0.7)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY < 0.7)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 0f, 0);
-                        if (DirectionX < 0)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY < 1)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                }
-                else if (Input.GetKey(KeyCode.D))
-                {
-                    //ActionText.UpdateText("Roll");
-                    if (Input.GetKey(KeyCode.W))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
-                        if (DirectionX < 0.7)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY < 0.7)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else if (Input.GetKey(KeyCode.S))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                        if (DirectionX < 0.7)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY > -0.7)
-                            DirectionY -= Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 90f, 0);
-                        if (DirectionX < 1)
-                            DirectionX += Time.deltaTime*5;
-                        if (DirectionY < 0)
-                            DirectionY += Time.deltaTime*5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                }
-                else if (Input.GetKey(KeyCode.S))
-                {
-                    //ActionText.UpdateText("Roll");
-                    if (Input.GetKey(KeyCode.D))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
-                        if (DirectionX < 0.7)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY > -0.7)
-                            DirectionY -= Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else if (Input.GetKey(KeyCode.A))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                        if (DirectionX > -0.7)
-                            DirectionX -= Time.deltaTime * 5;
-                        if (DirectionY > -0.7)
-                            DirectionY -= Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 180f, 0);
-                        if (DirectionX < 0)
-                            DirectionX += Time.deltaTime * 5;
-                        if (DirectionY > -1)
-                            DirectionY -= Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                }
-                else if (Input.GetKey(KeyCode.A))
-                {
-                    //ActionText.UpdateText("Roll");
-                    if (Input.GetKey(KeyCode.S))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
-                        if (DirectionX > -0.7)
-                            DirectionX -= Time.deltaTime * 5;
-                        if (DirectionY > -0.7)
-                            DirectionY -= Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else if (Input.GetKey(KeyCode.W))
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
-                        if (DirectionX > -0.7)
-                            DirectionX -= Time.deltaTime * 5;
-                        if (DirectionY < 0.7)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                    else
-                    {
-                        transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 270f, 0);
-                        if (DirectionX > -1)
-                            DirectionX -= Time.deltaTime * 5;
-                        if (DirectionY < 0)
-                            DirectionY += Time.deltaTime * 5;
-                        anim.SetFloat("DirectionX", DirectionX);
-                        anim.SetFloat("DirectionY", DirectionY);
-                    }
-                }
-            }
-            else
-            {
-                DirectionX = DirectionX / (1+Time.deltaTime*10);
-                DirectionY = DirectionY / (1 + Time.deltaTime*10);
-                anim.SetFloat("DirectionX", DirectionX);
-                anim.SetFloat("DirectionY", DirectionY);
-
-                anim.SetBool("Moving", false);
-            }
-
-        }
-        else
-            anim.SetBool("Moving", false);
-        */
     }
 
     private void FixedUpdate() //for all movements related to collision with rigid body
     {
-        if (cutScene)
+        if (cutScene) //during cutscenes, pause and death these don't occur
         {
             return;
         }
@@ -1197,17 +758,14 @@ public class Movement : MonoBehaviour
 
         if (!stunned && !rolling && !busy)
         {
-
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) //if any movement
             {
-
                 anim.SetBool("Moving", true);
 
-                transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed);
+                transform.Translate(Vector3.forward * Time.fixedDeltaTime * moveSpeed); //link just goes forward, really simple
 
-                if (Input.GetKey(KeyCode.W))
+                if (Input.GetKey(KeyCode.W)) //making multiple buttons/directions clicking sequences possible for best player feel
                 {
-                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.A))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 315f, 0);
@@ -1241,7 +799,6 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.D))
                 {
-                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.W))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 45f, 0);
@@ -1275,7 +832,6 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.S))
                 {
-                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.D))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 135f, 0);
@@ -1309,7 +865,6 @@ public class Movement : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
-                    //ActionText.UpdateText("Roll");
                     if (Input.GetKey(KeyCode.S))
                     {
                         transform.eulerAngles = new Vector3(0, Camera.main.transform.eulerAngles.y + 225f, 0);
@@ -1351,46 +906,33 @@ public class Movement : MonoBehaviour
 
                 anim.SetBool("Moving", false);
             }
-
         }
         else
             anim.SetBool("Moving", false);
 
 
-        if (rolling)
+        if (rolling) //Rolling behaviour
         {
-            velocityRestter = new Vector3(0, rigid.velocity.y, 0); //1
+            velocityRestter = new Vector3(0, rigid.velocity.y, 0);
 
             rollingTimer -= Time.deltaTime; //0.75 seconds
-            //6 *3 = 18 (0.75)
-            //Debug.Log(rollingSpeed);
-            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
-            //transform.Translate(Vector3.forward * Time.fixedDeltaTime * rollingSpeed); //remember
 
-            rigid.velocity = rollingSpeed * transform.forward + velocityRestter; //2
+            rollingSpeed = (moveSpeed * 3 - (moveSpeed * ((1 - rollingTimer) * 2)));
+
+            rigid.velocity = rollingSpeed * transform.forward + velocityRestter;
 
             shieldUp = false; //making sure shield isn't up when rolling
             anim.SetBool("ShieldUp", false);
 
             if (Mathf.Abs(transform.position.y - rollYPos) > 0.35f) //checking if link goes up or down while rolling
             {
-                //rollingTimer = 0;
-                rigid.velocity = Vector3.zero + velocityRestter; //3
+                rigid.velocity = Vector3.zero + velocityRestter;
                 midAction = false;
                 rolling = false;
-                //anim.SetBool("Rolling", false);
                 rollingCooldown = 0.10f;
 
                 Stun(rollingTimer);
                 rollingTimer = 0;
-            }
-            else if (rollingTimer <= 0.35f && rollingTimer > 0)
-            {
-                //rigid.velocity = Vector3.zero + velocityRestter; //3
-                //midAction = false;
-                //rolling = false;
-                //anim.SetBool("Rolling", false);
-                //rollingCooldown = 0.10f;
             }
             else if (rollingTimer <= 0)
             {
@@ -1400,35 +942,23 @@ public class Movement : MonoBehaviour
                 anim.SetBool("Rolling", false);
                 rollingCooldown = 0.10f;
             }
-
-
         }
         else
         {
             rollingCooldown -= Time.deltaTime;
         }
 
-        if (gotHitTimer >= 0) //currently strictly changes position, might need to change later with collision problems
+        if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
             if (gotHitTimer < 0)
             {
-                rigid.velocity = Vector3.zero;
+                rigid.velocity = Vector3.zero; //restting momentum when knockback timer ends
             }
-            //transform.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
-
-            //rigid.MovePosition(knockbackPosition);
-            //rigid.position = new Vector3(transform.position.x + (enemyDirection.x * Time.fixedDeltaTime * 20), transform.position.y, transform.position.z + (enemyDirection.y * Time.fixedDeltaTime * 20)); //originally *2 and not timedeltatime
-            //rigid.AddForce(knockbackPosition);
         }
-        /*
-        else
-        {
-            //rigid.ResetInertiaTensor();
-            //rigid.velocity = Vector3.zero;
-        }
-        */
     }
+
+    //-----------------Functions to be called from other scripts to affect link without a serialize field------------------//
 
     public static void Stun(float newStunTime)
     {
@@ -1478,7 +1008,6 @@ public class Movement : MonoBehaviour
             cutScene = false;
             linkRiding = false;
         }
-
     }
     public static void BarrelRiding(bool riding)
     {
@@ -1492,13 +1021,10 @@ public class Movement : MonoBehaviour
             cutScene = false;
             linkRiding = false;
         }
-
     }
 
     public static void StopRolling()
     {
         stopRolling = true;
     }
-
 }
-

@@ -10,13 +10,11 @@ public class ChuChuShake : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(60 * Time.deltaTime, 0, 0);
         transform.Translate(Vector3.forward * Time.deltaTime * shakeSpeed);
-        shakeSpeed *= 1 + Time.deltaTime;
-
+        shakeSpeed *= 1 + Time.deltaTime; //slowly but gradually increasing the move speed
     }
 
     private void OnTriggerEnter(Collider other)

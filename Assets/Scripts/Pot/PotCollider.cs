@@ -22,15 +22,13 @@ public class PotCollider : MonoBehaviour
     {
         if (Movement.gustJarUp == false && suctionWindup >= 1)
         {
-            //pot.succed = true;
             Movement.succed = false;
             suctionWindup = 0;
             pot.Throw(angleX, angleY);
             SFXController.PlaySFX("GustJarSuctionPot", 0.5f);
 
-            //pot.potPhysicalCol.enabled = true;
-            triggerCollider.tag = "Weapon";
-            triggerCollider.size = new Vector3(0.1f, 0.1f, 0.1f);
+            triggerCollider.tag = "Weapon"; //throwing the pot making it a weapon
+            triggerCollider.size = new Vector3(0.1f, 0.1f, 0.1f); //to prevent it from hitting things accidently
         }
     }
 
@@ -43,9 +41,6 @@ public class PotCollider : MonoBehaviour
         }
         if (other.tag == "Player")
         {
-            //pot.interactableEffect.Play();
-            //pot.interactableEffect.SetActive(true);
-
             pot.inZone = true;
             pot.playerChild = other.transform;
             ActionText.UpdateText("Lift");
@@ -62,8 +57,6 @@ public class PotCollider : MonoBehaviour
     {
         if (other.tag == "GustJar" && (pot.succed || !Movement.succed))
         {
-
-
             suctionWindup += Time.deltaTime;
             if (suctionWindup>=1)
             {
@@ -74,11 +67,8 @@ public class PotCollider : MonoBehaviour
                 Movement.succed = true;
 
                 pot.potPhysicalCol.enabled = false;
-                //pot.transform.position = new Vector3(Movement.playerPosition.x,Movement.playerPosition.y+1f,Movement.playerPosition.z);
-                //pot.transform.position = Vector3.Lerp(pot.transform.position,new Vector3(Movement.playerPosition.x, Movement.playerPosition.y + 1f, Movement.playerPosition.z),suctionWindup-1);
                 pot.transform.position = Vector3.Lerp(pot.transform.position, Movement.gustJarPos, suctionWindup - 1);
                 
-
                 angleX = other.transform.eulerAngles.x;
                 angleY = other.transform.eulerAngles.y;
 
@@ -89,17 +79,12 @@ public class PotCollider : MonoBehaviour
                 pot.transform.Translate(randomShake * Time.deltaTime);
             }
         }
-
-
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
-            //pot.interactableEffect.Stop();
-            //pot.interactableEffect.SetActive(false);
-
             pot.inZone = false;
             ActionText.UpdateText("");
         }

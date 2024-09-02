@@ -21,7 +21,7 @@ public class WebZone : MonoBehaviour
         if (dying)
         {
             dyingTimer += Time.deltaTime * 2;
-            transform.position = Vector3.Lerp(originalPosition, new Vector3(Movement.gustJarPos.x, Movement.gustJarPos.y + 0.5f, Movement.gustJarPos.z), dyingTimer);
+            transform.position = Vector3.Lerp(originalPosition, new Vector3(Movement.gustJarPos.x, Movement.gustJarPos.y + 0.5f, Movement.gustJarPos.z), dyingTimer); //making it go to the gust jar
             transform.localScale /= (1 + Time.deltaTime * 8);
         }
     }
@@ -36,9 +36,7 @@ public class WebZone : MonoBehaviour
             tempDirection.Normalize();
             tempDirection /= 1.5f;
             Movement.StopRolling();
-            Movement.SmallHit(new Vector2 (tempDirection.x,tempDirection.z));
-
-            
+            Movement.SmallHit(new Vector2 (tempDirection.x,tempDirection.z));  
         }
     }
 
@@ -52,8 +50,6 @@ public class WebZone : MonoBehaviour
             tempDirection /= 1.5f;
             Movement.StopRolling();
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
-
-
         }
 
         if (other.tag == "GustJar" && !dying)

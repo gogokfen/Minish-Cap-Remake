@@ -11,7 +11,6 @@ public class DebugMode : MonoBehaviour
     [SerializeField]Transform[] transportLocations;
     [SerializeField] GameObject[] enemiesPrefabs;
     [SerializeField] GameObject debugMenuUI;
-    //List<GameObject> yoyos;
 
     [SerializeField] GameObject post1;
     [SerializeField] GameObject post2;

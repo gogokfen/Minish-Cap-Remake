@@ -9,9 +9,6 @@ public class ChuChuCollider : MonoBehaviour
 {
     [SerializeField] ChuChu chuchu;
 
-
-    bool gotHit;
-    float gotHitTimer;
     [SerializeField] GameObject chuchuBody;
     [HideInInspector]
     public Material chuchuMat;
@@ -24,7 +21,6 @@ public class ChuChuCollider : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI bossText;
     bool playOnce;
-
 
     void Start()
     {
@@ -39,14 +35,12 @@ public class ChuChuCollider : MonoBehaviour
         hpBar.gameObject.SetActive(true);
         hpBar.value = Mathf.InverseLerp(0, 40, 0); //chuchu.hp
 
-
         chuchuMat.EnableKeyword(("_EMISSION"));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (startup)
+        if (startup) //Chuchu's opening scene
         {
             Movement.Stun(2.5f);
             if (hpBar.value > 0.7f)
@@ -54,36 +48,15 @@ public class ChuChuCollider : MonoBehaviour
                 bossText.characterSpacing += Time.deltaTime * 15;
                 bossText.alpha += (Time.deltaTime / 2);
             }
-
-
-            /*
-            if (hpBar.value>0.75f)
-            {
-                fade = true;
-            }
-
-            if (hpBar.value>0.5f && !fade)
-            {
-                bossText.characterSpacing += Time.deltaTime * 15;
-                bossText.alpha+= (Time.deltaTime / 2);
-            }
-            else if (fade)
-            {
-                bossText.characterSpacing += Time.deltaTime * 15;
-                bossText.alpha -= (Time.deltaTime / 2);
-            }
-
-            */
             if (hpBar.value < 1)
             {
-                hpBar.value += (Time.deltaTime / 7);
+                hpBar.value += (Time.deltaTime / 7); //the animation lasts about 7 seconds
             }
             else
             {
                 startup = false;
                 chuchu.enabled = true;
             }
-
         }
         else
         {
@@ -92,25 +65,6 @@ public class ChuChuCollider : MonoBehaviour
                 bossText.characterSpacing += Time.deltaTime * 15;
                 bossText.alpha -= (Time.deltaTime / 2);
             }
-
-
-        }
-
-        if (gotHitTimer >= 0)
-        {
-            gotHitTimer -= Time.deltaTime;
-            //chuchuMat.SetColor("_BaseColor", chuchuColor);
-
-            /*
-            if (gotHitTimer>0.125)
-            {
-                chuchuColor = new Color32(0, (byte)(0 + (gotHitTimer * 1000)), 0, 255);
-            }
-            else
-            {
-                chuchuColor = new Color32(0, (byte)(125 + ((0.125 - gotHitTimer) * 1000)), 0, 255);
-            }
-            */
         }
     }
 
@@ -118,7 +72,6 @@ public class ChuChuCollider : MonoBehaviour
     {
         if (other.tag == "Moveable") //helps chuchu avoid getting out of the map
         {
-            //Vector3 tempDirection = (Movement.playerPosition - transform.position);
             Vector3 knockBack = chuchu.transform.position - other.transform.position;
             knockBack.Normalize();
             chuchu.transform.position = new Vector3(chuchu.transform.position.x + knockBack.x, chuchu.transform.position.y, chuchu.transform.position.z + knockBack.z);
@@ -129,8 +82,6 @@ public class ChuChuCollider : MonoBehaviour
             if (chuchu.fallen)
             {
                 Movement.swordHit = true;
-                //hitEffect.Play();
-                //SFXController.PlaySFX("ChuchuHurt", 1); //add getting hit sound
                 int randomSFX = Random.Range(1, 4);
 
                 switch (randomSFX)
@@ -145,26 +96,14 @@ public class ChuChuCollider : MonoBehaviour
                         SFXController.PlaySFX("ChuChuHit3", 0.55f);
                         break;
                 }
-
                 chuchu.hp--;
 
                 hpBar.value = Mathf.InverseLerp(0, 40, chuchu.hp);
 
-                gotHitTimer = 0.25f;
-
                 Sequence chuchuHit = DOTween.Sequence();
-                //chuchuHit.Append(chuchuMat.DOColor(new Color32(175, 0, 0, 255), 0.125f));
-                //chuchuHit.Append(chuchuMat.DOColor(new Color32(0, 255, 0, 255), 0.125f));
-
-                //chuchuHit.Append(chuchuMat.DOColor(new Color(1, 0, 0, 1) * 5, 0.125f));
-                //chuchuHit.Append(chuchuMat.DOColor(new Color(1, 1, 1, 1) * 1, 0.125f));
 
                 chuchuHit.Append(chuchuMat.DOColor(new Color(1, 0, 0, 1) * 1, "_EmissionColor", 0.125f));
                 chuchuHit.Append(chuchuMat.DOColor(new Color(0, 0, 0, 0) * 1, "_EmissionColor", 0.125f));
-
-
-                //chuchuMat.SetColor("_EmissionColor", Color.red * Mathf.Pow(2, 1*Mathf.Sin(gotHitTimer*50)));
-
 
                 if (chuchu.hp <= 0)
                 {
@@ -174,7 +113,7 @@ public class ChuChuCollider : MonoBehaviour
 
                     chuchu.anim.SetBool("Dying", true);
 
-                    chuchu.anim.SetBool("Jumping", false);
+                    chuchu.anim.SetBool("Jumping", false); //just making sure
                     chuchu.anim.SetBool("Spitting", false);
                     chuchu.anim.SetBool("Shaking", false);
                     chuchu.anim.SetBool("Waddling", false);
@@ -188,17 +127,10 @@ public class ChuChuCollider : MonoBehaviour
                         playOnce = true;
                     }
 
-                    //chuchu.anim.Play("Death");
-
-
-                    //Destroy(chuchu.gameObject,1f);
                 }
-                //Debug.Log(chuchu.hp);
             }
             else
             {
-                //SFXController.PlaySFX("swordTINGGGGGG");
-
                 Movement.swordBlocked = true;
                 Movement.enemyShielded = true;
                 Vector3 tempDirection2 = (Movement.playerPosition - transform.position);
@@ -218,9 +150,7 @@ public class ChuChuCollider : MonoBehaviour
                 Movement.enemyHitAmount = 1;
                 Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
             }
-
         }
-
 
         if (other.tag == "Shield")
         {

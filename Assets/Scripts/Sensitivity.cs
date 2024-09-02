@@ -12,7 +12,6 @@ public class Sensitivity : MonoBehaviour
     {
         sensitivitySlider = GetComponent<Slider>();
         sensitivitySlider.value = Mathf.InverseLerp(0.25f, 2, CR.sens);
-        //sensitivitySlider.onValueChanged.AddListener(AdjustSensitivity);
     }
 
     public void AdjustSensitivity(float newSensitivity)

@@ -94,7 +94,7 @@ public class Chest : MonoBehaviour
             KeyInventory.AddKey();
             chestOpened = true;
             ActionText.UpdateText("");
-            Debug.Log("you got " + KeyInventory.Key);
+            //Debug.Log("you got " + KeyInventory.Key);
             Dialogue.StartDialogue(0);
             chestAnim.SetTrigger("Open");
         }
@@ -104,7 +104,7 @@ public class Chest : MonoBehaviour
              KeyInventory.bossKey++;
             chestOpened = true;
             ActionText.UpdateText("");
-            Debug.Log("you got " + KeyInventory.bossKey);
+            //Debug.Log("you got " + KeyInventory.bossKey);
             chestAnim.SetTrigger("Open");
             Dialogue.StartDialogue(4);
         }
@@ -115,7 +115,7 @@ public class Chest : MonoBehaviour
             chestOpened = true;
             gotGotJar = true;
             ActionText.UpdateText("");
-            Debug.Log("you got the Gust Jar");
+            //Debug.Log("you got the Gust Jar");
             Dialogue.StartDialogue(1);
             chestAnim.SetTrigger("Open");
         }

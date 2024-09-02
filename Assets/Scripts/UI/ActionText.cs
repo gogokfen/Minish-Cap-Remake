@@ -12,17 +12,13 @@ public class ActionText : MonoBehaviour
     private static string tempText;
     public static float textTimer = 0;
 
-
     private static ActionText instance;
     private bool fadedIn;
-    //public bool needsFading;
 
     [SerializeField] GameObject textOnObject;
 
     [SerializeField] TextMeshProUGUI textObject;
 
-    static Vector3 pos;
-    static float YRotation;
 
     void Awake()
     {
@@ -40,10 +36,6 @@ public class ActionText : MonoBehaviour
 
     void Update()
     {
-        //transform.position = pos;
-        //text.transform.position = pos;
-        //text.rectTransform.position = pos;
-
         text.text = tempText;
         textObject.text = tempText;
 
@@ -65,6 +57,8 @@ public class ActionText : MonoBehaviour
     {
         tempText = newText;
         textTimer = 3;
+
+
         if ((tempText != ("") || tempText != ("Throw")) && instance.fadedIn == false)
         {
             instance.StartCoroutine(instance.FadeIn());
@@ -75,25 +69,6 @@ public class ActionText : MonoBehaviour
             instance.StartCoroutine(instance.FadeOut());
             instance.fadedIn = false;
         }    
-        // else
-        // {
-        //     instance.StartCoroutine(instance.FadeOut());
-        // }
-        // if (instance != null && instance.canvasGroup != null)
-        // {
-        //     if (!instance.fadedIn && instance.needsFading)
-        //     {
-        //         instance.StartCoroutine(instance.FadeIn());
-        //     }
-        //     else
-        //     {
-        //         instance.StartCoroutine(instance.FadeOut());
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogWarning("Instance of ActionText or CanvasGroup is not set.");
-        // }
     }
 
     private IEnumerator FadeIn()
@@ -131,5 +106,4 @@ public class ActionText : MonoBehaviour
             canvasGroup.alpha = 0f;
         }
     }
-
 }

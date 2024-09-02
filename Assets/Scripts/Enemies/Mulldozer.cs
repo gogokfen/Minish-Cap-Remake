@@ -69,7 +69,6 @@ public class Mulldozer : MonoBehaviour
         spawnPosition = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (transform.position.y<-5)
@@ -97,26 +96,6 @@ public class Mulldozer : MonoBehaviour
                     transform.rotation = Quaternion.Euler(0, Random.Range(0, 8) * 45, 0); // Random.Range(0, 4) * 90 originally
                 }
 
-                /*
-                if (Physics.Raycast(transform.position, transform.forward, out player, 10, mask)) //raycast in the direction he is looking
-                {
-                    if (attackCooldown<=0)
-                    {
-                        attacking = true;
-                    }
-                }
-                */
-                /**
-                if (Physics.BoxCast(transform.position, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out player, Quaternion.identity, 10, mask)) //raycast in the direction he is looking
-                {
-                    if (attackCooldown <= 0)
-                    {
-                        chargingEffect.Play();
-                        attacking = true;
-                        originalPos = transform.position;
-                    }
-                }
-                */
                 if (Physics.BoxCast(transform.position, detectionBox, transform.forward, out player, Quaternion.identity, DetectionRange, mask)) //raycast in the direction he is looking
                 {
                     if (attackCooldown <= 0)
@@ -172,10 +151,8 @@ public class Mulldozer : MonoBehaviour
                     {
                         StopAttacking();
                     }
-
                 }
             }
-
         }
         else
         {
@@ -189,11 +166,9 @@ public class Mulldozer : MonoBehaviour
 
         if (gotHit)
         {
-
             gotHit = false;
             gotHitTimer = 0.15f;
             Movement.swordHit = true;
-            //hitEffect.Play();
 
             if (dying)
             {
@@ -210,12 +185,10 @@ public class Mulldozer : MonoBehaviour
         if (gotHitTimer >= 0)
         {
             gotHitTimer -= Time.deltaTime;
-
             if (gotHitTimer <0)
             {
                 rigid.velocity = Vector3.zero;
             }
-            //transform.position = new Vector3(transform.position.x + (direction.x * Time.deltaTime * 5), transform.position.y, transform.position.z + (direction.y * Time.deltaTime * 5)); //originally *2 and not timedeltatime
         }
 
         if (stunned)
@@ -226,10 +199,7 @@ public class Mulldozer : MonoBehaviour
                 stunned = false;
                 stunnedEffect.SetActive(false);
             }
-                
-
             transform.Rotate(0,720 * Time.deltaTime,0);
-            
         }
     }
 

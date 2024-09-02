@@ -7,7 +7,6 @@ public class Pot : MonoBehaviour
 
     float animationTime;
     Vector3 originalPos;
-    //Vector2 throwDirection = new Vector2 (0,1);
     bool lifting;
     [HideInInspector]
     public bool throwing;
@@ -17,18 +16,11 @@ public class Pot : MonoBehaviour
     public bool inZone = false;
     bool potUp = false;
 
-    Ray raycast;
-    RaycastHit player;
-    [SerializeField] LayerMask mask;
-
     [HideInInspector]
     public BoxCollider potPhysicalCol;
 
     [HideInInspector]
     public bool succed = false;
-
-    //public ParticleSystem interactableEffect;
-    //public GameObject interactableEffect;
 
     private void Start()
     {
@@ -37,8 +29,7 @@ public class Pot : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone && !Movement.gustCamera)
+        if (Input.GetKeyDown(KeyCode.Space) && !throwing && !Movement.potUp && inZone && !Movement.gustCamera) //pot lift
         {
             lifting = true;
             potUp = true;
@@ -68,7 +59,6 @@ public class Pot : MonoBehaviour
 
         if (throwing)
         {
-            //transform.Translate((Vector3.forward + -Vector3.up) * Time.deltaTime * 20);
             if (succed) // in case launched from gust jar
                 transform.Translate(Vector3.forward * 50 * Time.deltaTime);
             else
@@ -76,7 +66,6 @@ public class Pot : MonoBehaviour
 
             if (transform.position.y <= 0)
             {
-                //potUp = false;
                 Explode();
             }
         }
@@ -89,28 +78,7 @@ public class Pot : MonoBehaviour
             {
                 Throw();
             }
-
         }
-
-        //4 directions raycast check
-        /*
-        if (Physics.Raycast(transform.position,Vector3.forward, out player, 1, mask)) //north
-        {
-            //Debug.Log("north");
-        }
-        if (Physics.Raycast(transform.position, -Vector3.forward, out player, 1, mask)) //south
-        {
-            //Debug.Log("south");
-        }
-        if (Physics.Raycast(transform.position, Vector3.right, out player, 1, mask)) //east
-        {
-            //Debug.Log("east");
-        }
-        if (Physics.Raycast(transform.position, -Vector3.right, out player, 1, mask)) //west
-        {
-            //Debug.Log("west");
-        }
-        */
     }
 
     public void Throw()
@@ -121,7 +89,6 @@ public class Pot : MonoBehaviour
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, Movement.playerYRotation, transform.eulerAngles.z);
         throwing = true;
         transform.SetParent(null);
-        //Movement.potUp = false;
         Movement.throwing = true;
         potUp = false;
         int randomSFX = Random.Range(1, 3);
@@ -157,5 +124,4 @@ public class Pot : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
 }

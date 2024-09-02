@@ -2,23 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerZone : MonoBehaviour
+public class PlayerZone : MonoBehaviour //alt version of Zone script, exlcusive to the player
 {
     public bool inZone;
     public bool immoveable;
-
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-            inZone = true;
-
-        if (other.tag == "Moveable")
-            immoveable = true;
-
-    }
-    */
 
     private void OnTriggerStay(Collider other)
     {
@@ -29,7 +16,6 @@ public class PlayerZone : MonoBehaviour
         {
             immoveable = true;
         }
-
     }
     private void OnTriggerExit(Collider other)
     {

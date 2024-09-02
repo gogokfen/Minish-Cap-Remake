@@ -24,7 +24,7 @@ public class ChuChuTargetedSpit : MonoBehaviour
 
     void Update()
     {
-        if (GFX.transform.localScale.z<=1)
+        if (GFX.transform.localScale.z<=1) //making the spit gradually bigger for better visual and reaction time
         {
             GFX.transform.localScale = new Vector3(GFX.transform.localScale.x, GFX.localScale.y, GFX.localScale.z * (1 + Time.deltaTime));
         }
@@ -36,8 +36,7 @@ public class ChuChuTargetedSpit : MonoBehaviour
         lastRot = transform.rotation;
         transform.LookAt(new Vector3(spitTarget.position.x,spitTarget.position.y+1.5f,spitTarget.position.z));
 
-        transform.rotation = Quaternion.Lerp(lastRot, transform.rotation, Time.deltaTime*5f ); //0.005f
-
+        transform.rotation = Quaternion.Lerp(lastRot, transform.rotation, Time.deltaTime*5f ); //0.005f the spit slowly turns towards it's target
 
         transform.Translate(Vector3.forward * Time.deltaTime * spitSpeed);
         spitSpeed *= 1 + Time.deltaTime;

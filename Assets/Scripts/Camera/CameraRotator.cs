@@ -13,14 +13,10 @@ public class CameraRotator : MonoBehaviour
     [SerializeField] float max;
 
     [SerializeField] float yEasing;
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
-        if (Movement.cutScene)
+        if (Movement.cutScene) // Sometimes we don't want camera movement
         {
             return;
         }
@@ -28,16 +24,14 @@ public class CameraRotator : MonoBehaviour
         {
             return;
         }
-        //transform.position = playerPos.position;
 
-        transform.position = new Vector3(playerPos.position.x, transform.position.y + ((playerPos.position.y - transform.position.y)*yEasing), playerPos.position.z);
+        transform.position = new Vector3(playerPos.position.x, transform.position.y + ((playerPos.position.y - transform.position.y)*yEasing), playerPos.position.z); //making hight changes less jarring
         
-
         turn.x += Input.GetAxis("Mouse X") * sens;
         turn.y += Input.GetAxis("Mouse Y") * sens;
 
 
-        if (turn.y<-40)
+        if (turn.y<-40) //limiting the camera movement
         {
             turn.y = -max;
         }
@@ -45,7 +39,7 @@ public class CameraRotator : MonoBehaviour
         {
             turn.y = -min;
         }
-        transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
+        transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0); //preventing rotation on the Z axis
 
         if (HealthSystem.currentHealth<=0)
         {

@@ -21,8 +21,6 @@ public class MulldozerCollider : MonoBehaviour
             Vector3 tempDirection = (transform.position - Movement.playerPosition);
             tempDirection.Normalize();
             tempDirection *= 2f;
-            //mulldozer.direction.x = tempDirection.x; //1
-            //mulldozer.direction.y = tempDirection.z; //2
 
             mulldozer.rigid.AddForce(new Vector3(tempDirection.x * 10, 0, tempDirection.z * 10), ForceMode.Impulse);
 
@@ -30,14 +28,10 @@ public class MulldozerCollider : MonoBehaviour
             if (mulldozer.hp<=0)
             {
                 mulldozer.dying = true;
-                //puffstool.puffstoolMat.DOColor(new Color32(255, 0, 0, 255), 0.70f);
-                //mulldozer.Die();
-                //Destroy(mulldozer.gameObject,0.75f); 
             }
 
             mulldozer.gotHit = true;
 
-            
             mulldozer.stunned = false;
             mulldozer.stunnedEffect.SetActive(false);
         }
@@ -71,7 +65,6 @@ public class MulldozerCollider : MonoBehaviour
             Movement.enemyHitAmount = mulldozer.damage;
             tempDirection.Normalize();
             tempDirection *= 1.5f;
-            //tempDirection /= 1.25f; //reducing knockback amount
             Movement.SmallHit(new Vector2(tempDirection.x, tempDirection.z));
         }
     }

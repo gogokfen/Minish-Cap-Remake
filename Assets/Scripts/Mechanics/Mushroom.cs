@@ -6,8 +6,6 @@ using DG.Tweening;
 
 public class Mushroom : MonoBehaviour
 {
-    //[SerializeField] Zone[] zones = new Zone[4];
-
     [SerializeField] Zone N;
     [SerializeField] Zone S;
     [SerializeField] Zone E;
@@ -18,7 +16,6 @@ public class Mushroom : MonoBehaviour
     [SerializeField] int maximumWindup;
 
     float animationTime;
-    //float windUpTiles = 0;
     float windUp = 0;
 
     bool busy;
@@ -28,22 +25,12 @@ public class Mushroom : MonoBehaviour
     bool e;
     bool w;
 
-
-    //Vector3 originalPos;
     Vector3 playerOriginalPos;
 
     Vector3 halfWayPoint;
 
-
-    Ray raycast;
-    RaycastHit player;
-    [SerializeField] LayerMask mask;
-
     void Update()
     {
-
-
-        //Debug.Log(animationTime);
         if (windUp > 0f && !(Input.GetKey(KeyCode.Space) || Input.GetMouseButton(2)))
         {
             ActionText.UpdateText("");
@@ -57,7 +44,7 @@ public class Mushroom : MonoBehaviour
                 {
                     windUp = maximumWindup;
                 }
-
+                // deciding in which way to launch to player depending on his location
                 if (n)
                 {
                     Movement.disableGravity = true;
@@ -127,12 +114,10 @@ public class Mushroom : MonoBehaviour
 
                 Movement.disableGravity = false;
             }
-
         }
         else
         {
             animationTime = 0;
-            //windUp = 0;
             windUpText.text = "";
         }
             
@@ -150,7 +135,6 @@ public class Mushroom : MonoBehaviour
                         playerOriginalPos = Movement.playerPosition;
                         windUp += (Time.deltaTime * 2);
                         windUpText.text = "" + (int)windUp;
-                        //busy = true;
                         s = true;
                     }
                     else
@@ -171,12 +155,10 @@ public class Mushroom : MonoBehaviour
                         playerOriginalPos = Movement.playerPosition;
                         windUp += (Time.deltaTime * 2);
                         windUpText.text ="" + (int)windUp;
-                        //busy = true;
                         n = true;
                     }
                     else
                         Movement.busy = false;
-
                 }
                 else
                     ActionText.UpdateText("");
@@ -212,52 +194,14 @@ public class Mushroom : MonoBehaviour
                         playerOriginalPos = Movement.playerPosition;
                         windUp += (Time.deltaTime * 2);
                         windUpText.text = "" + (int)windUp;
-                        //busy = true;
                         e = true;
                     }
                     else
                         Movement.busy = false;
-
                 }
                 else
                     ActionText.UpdateText("");
             }
         }
-
     }
-
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "GustJar")
-        {/*
-            if (Physics.Raycast(transform.position, Vector3.forward, out player, 10, mask)) //north
-            {
-                
-                Movement.busy = true;
-                windUp += Time.deltaTime*2;
-                windUpText.text = "" + (int)windUp;
-                Debug.Log("north"+windUp);
-                s = true;
-                
-
-            }
-            if (Physics.Raycast(transform.position, -Vector3.forward, out player, 10, mask)) //south
-            {
-                Debug.Log("south");
-            }
-            if (Physics.Raycast(transform.position, Vector3.right, out player, 10, mask)) //east
-            {
-                Debug.Log("east");
-            }
-            if (Physics.Raycast(transform.position, -Vector3.right, out player, 10, mask)) //west
-            {
-                Debug.Log("west");
-            }
-            */
-        }
-
-    }
-
 }
