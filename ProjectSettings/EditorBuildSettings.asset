@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rooms Design.unity
     guid: eee0c980e25fa694aa2e50dc15c39cc9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OsherScene.unity
     guid: 4c705c857d0654a4eb4ccccf2a52a151
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Light Practice.unity
     guid: 12bdf2afafd97be42aef9e68f166d74c
   m_configObjects:
