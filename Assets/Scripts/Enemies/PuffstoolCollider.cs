@@ -6,7 +6,6 @@ using DG.Tweening;
 public class PuffstoolCollider : MonoBehaviour
 {
     [SerializeField] Puffstool puffstool;
-    [SerializeField] GameObject GFX;
 
     GameObject tempBody;
 
@@ -17,13 +16,6 @@ public class PuffstoolCollider : MonoBehaviour
         tempBody = new GameObject();
     }
 
-    private void Update()
-    {
-        if (!puffstool.stunned)
-        {
-            GFX.transform.eulerAngles = new Vector3(0, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z);
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Weapon" && !puffstool.dying)
@@ -110,11 +102,6 @@ public class PuffstoolCollider : MonoBehaviour
 
             tempBody.transform.position = Movement.playerPosition;
             puffstool.transform.LookAt(tempBody.transform.position); // not sure how else to make puffstool look at link without a serialize field reference
-            GFX.transform.Rotate(60 *Time.deltaTime, 0, 0);
-            if (GFX.transform.eulerAngles.x>=35)
-            {
-                GFX.transform.eulerAngles = new Vector3(35, GFX.transform.eulerAngles.y, GFX.transform.eulerAngles.z);
-            }
 
             if (vulnerableWindup >= 2)
             {

@@ -54,10 +54,7 @@ public class Slug : MonoBehaviour
 
     private void Start()
     {
-        if (fallingFromSky)
-        {
-            trail.Stop();
-        }
+        trail.Stop();
 
         randomizer = Random.Range(0, 10f);
         maxFall = fallingTimer;
@@ -126,7 +123,7 @@ public class Slug : MonoBehaviour
             if (fallingTimer <= 0)
             {
                 fallingFromSky = false;
-                trail.Play();
+                //trail.Play();
             }
 
             if (fallingTimer < 0.75f)
